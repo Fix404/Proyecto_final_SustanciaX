@@ -1,22 +1,98 @@
-import { useState } from "react";
-import { Button, Form, Modal} from "react-bootstrap";
+import { Button, Form, Modal} from "react-bootstrap"
+import { ICreateSucursal } from "../../../types/dtos/sucursal/ICreateSucursal"
+import { SucursalService } from "../../../services/ParticularServices/SucursalService"
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { removeElementActive } from "../../../redux/slices/TableReducer";
+import { Formik } from "formik";
 
-export const CrearSucursal = () => {
-  const [show, setShow]=useState(false)
+import * as Yup from "yup";
+const API_URL=import.meta.env.VITE_API_URL;
 
-  const handleShow=()=> setShow(true);
-  const handleClose=() => setShow(false);
+interface IPropsCreateSucursal{
+  getSucursales:Function
+  openModal: boolean
+  setOpenModal: (state:boolean) => void
+}
+
+export const CrearSucursal = ({
+  getSucursales,
+  openModal,
+  setOpenModal,
+}: IPropsCreateSucursal) => {
+  const initialValues: ICreateSucursal = {
+    nombre: "",
+  horarioApertura: "",
+  horarioCierre: "",
+  esCasaMatriz: false,
+  latitud: 0,
+  longitud: 0,
+  domicilio: {
+    calle: "",
+    numero: 0,
+    cp: 0,
+    piso: 0,
+    nroDpto: 0,
+    idLocalidad: 0,
+  },
+  idEmpresa: 0,
+  logo: null,
+  }
+
+  const apiSucursal = new SucursalService(API_URL + "/sucursales");
+
+  const elementActive=useAppSelector(
+    (state) => state.tablaReducer.elementActive);
+  const dispatch=useAppDispatch();
+
+  const handleClose=() => {
+    setOpenModal(false);
+    dispatch(removeElementActive())
+  }
   return (
     <>
-        <Button variant="primary" onClick={handleShow}>Test Me</Button>
-
-        <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
-          <Modal.Header>
-            <Modal.Title>Crear Sucursal:</Modal.Title>
+    <Button
+            onClick={() => {
+              setOpenModal(true);
+            }}
+            variant="contained"
+          >
+            Click Me
+          </Button>
+        <Modal show={openModal} onHide={handleClose} backdrop="static" keyboard={false} data-bs-theme="dark" size="lg" id={"modal"}>
+          <Modal.Header style={{display:"flex", alignContent:"center", justifyContent:"center"}}>
+            <Modal.Title style={{color:"white"}}>Crear Sucursal</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-              <Form>
-                      <Form.Group className="mb-3" controlId="nombre">
+            <Formik validationSchema={Yup.object({
+              nombre: Yup.string().required("Campo requerido"),
+              horarioApertura: Yup.string().required("Campo requerido"),
+              horarioCierre: Yup.string().required("Campo requerido"),
+              esCasaMatriz: Yup.boolean(),
+              latitud: Yup.number(),
+              longitud: Yup.number(),
+              domicilio:Yup.object({
+                calle: Yup.string().required("Campo requerido"),
+                numero: Yup.number(),
+                cp: Yup.number().required("Campo requerido"),
+                piso: Yup.number(),
+                nroDpto: Yup.number(),
+                idLocalidad: Yup.number(),
+              }),
+              idEmpresa: Yup.number()})}
+              initialValues={elementActive ? elementActive: initialValues}
+              enableReinitialize={true}
+              onSubmit={async (values:ICreateSucursal) => {
+                if(elementActive){
+                  await apiSucursal.post(values);
+                }
+                getSucursales();
+                handleClose();
+              }}>
+                {() => (
+                  <>
+                  <Form style={{display:"grid", gridTemplateColumns:"repeat(3, 1fr)"}} >
+                <div>
+                <Form.Group className="mb-3" controlId="nombre">
                         <Form.Control
                           type="text"
                           placeholder="Ingrese un nombre aquí"
@@ -37,7 +113,9 @@ export const CrearSucursal = () => {
                           autoFocus
                         />
                       </Form.Group>
-                      <Form.Select
+                </div>
+                <div>
+                <Form.Select
                         aria-label="Default select example"
                         id="pais"
                       >
@@ -78,7 +156,9 @@ export const CrearSucursal = () => {
                           autoFocus
                         />
                       </Form.Group>
-                      <Form.Group className="mb-3" controlId="nombreCalle">
+                </div>
+                <div>
+                <Form.Group className="mb-3" controlId="nombreCalle">
                         <Form.Control
                           type="text"
                           placeholder="Nombre de la calle"
@@ -116,19 +196,23 @@ export const CrearSucursal = () => {
                           autoFocus
                         />
                       </Form.Group>
-              </Form>
-              <Form>
+                </div>
+                <div>
                 <Form.Group controlId="imagenSucursal" className="mb-3">
                   <Form.Label>Suba una imagen</Form.Label>
                   <Form.Control type="file" />
                 </Form.Group>
+                </div>
               </Form>
+                  </>
+                )}
+            </Formik>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer style={{display:"flex", alignContent:"center", justifyContent:"space-evenly"}}>
             <Button variant="danger" onClick={handleClose}>Cancelar</Button>
-            <Button variant="primary" onClick={handleClose}>Aceptar</Button>
+            <Button variant="primary" type="submit">Aceptar</Button>
           </Modal.Footer>
         </Modal>
     </>
-  );
-};
+  )
+}
