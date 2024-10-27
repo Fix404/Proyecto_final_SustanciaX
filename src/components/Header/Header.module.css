@@ -1,0 +1,41 @@
+.containerHeader{
+    margin: 0px;
+    height: 135px;
+    padding: 20px 20px 20px 100px;
+    background-color: rgb(213, 212, 210);
+    display: flex;  
+    justify-content: space-between;
+
+}
+
+.containerTitulo{
+   display: flex;
+   align-items: center;
+   gap: 20px; 
+}
+
+.headerTitulo{
+    font-size: 20px;
+}
+
+.divContainerAddSucursal{
+    padding: 20px;
+}
+
+.containerAddSucursal{
+    width: 100%;
+    padding: 0.4rem 1rem;
+    color: black;
+    background-color: rgba(193, 98, 0, 0.5); 
+    border-radius: 0.4rem;
+    border: none;
+}
+
+  
+.containerAddSucursal:hover {
+    cursor: pointer;
+    background-color: rgb(147, 147, 221);
+    transition: 0.2s ease;
+  }
+
+
