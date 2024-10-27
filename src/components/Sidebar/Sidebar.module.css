@@ -1,0 +1,30 @@
+.containerSidebar{
+    height: 100vh;
+    background-color: rgb(244, 228, 186);
+}
+
+.containerTitle{
+    font-size: 30px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+.containerDivButtonEmpresa{
+  display: flex;
+  justify-content: center;
+}
+.containerButton{
+    width: 80%;
+    padding: 0.4rem;
+    color: black;
+    background-color: rgba(193, 98, 0, 0.5); 
+    border-radius: 0.4rem;
+    border: none;
+}
+
+  
+  .containerButton:hover {
+    cursor: pointer;
+    background-color: rgb(147, 147, 221);
+    transition: 0.2s ease;
+  }
