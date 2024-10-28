@@ -8,7 +8,7 @@ const API_URL=import.meta.env.VITE_API_URL;
 
 
 export const AppRouter = () => {
-    const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
   const sucursalService = new SucursalService(API_URL + "/sucursales");

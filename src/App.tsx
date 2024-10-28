@@ -1,29 +1,12 @@
-<<<<<<< HEAD
-
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { AppRouter } from './routes/AppRouter';
-
-
-function App() {
-  
-  return (
-      
-        <AppRouter />
-=======
-import { Sidebar } from "./components/Sidebar/Sidebar"
 import { Header } from "./components/Header/Header"
 import { Body } from "./components/Body/Body"
-import { useState } from "react";
-
-
+import { Sidebar } from './components/Sidebar/Sidebar';
 
 function App() {
+  const dummyFunction = () => {
 
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const toggleModal = () => {
-    setModalVisible(!modalVisible);
-  };
+  }
 
   return (
     <>
@@ -37,7 +20,7 @@ function App() {
             height: "100vh",
           }}
         >
-          <Sidebar onAddEmpresaClick={toggleModal}/>
+          <Sidebar onAddEmpresaClick={dummyFunction} />
         </div>
 
         {/* Header y Body */}
@@ -48,41 +31,9 @@ function App() {
           </div>
         </div>
 
-         {/* Modal */}
-      {modalVisible && (
-        <div style={modalStyles}>
-          <div style={modalContentStyles}>
-            <h2>Agregar Empresa</h2>
-            <button onClick={toggleModal}>Cerrar</button>
-          </div>
-        </div>
-      )}
-
       </div>
-
-
- 
     </>
->>>>>>> 6c13171466d4d2c23a0d2fee8c6ff8257bf57cf2
   )
 }
-const modalStyles: React.CSSProperties = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  backgroundColor: "rgba(0, 0, 0, 0.5)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-};
 
-const modalContentStyles: React.CSSProperties = {
-  backgroundColor: "#fff",
-  padding: "20px",
-  borderRadius: "8px",
-  width: "300px",
-  textAlign: "center",
-};
 export default App

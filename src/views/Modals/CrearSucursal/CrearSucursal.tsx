@@ -50,14 +50,6 @@ export const CrearSucursal = ({
   }
   return (
     <>
-    <Button
-            onClick={() => {
-              setOpenModal(true);
-            }}
-            variant="contained"
-          >
-            Click Me
-          </Button>
         <Modal show={openModal} onHide={handleClose} backdrop="static" keyboard={false} data-bs-theme="dark" size="lg" id={"modal"}>
           <Modal.Header style={{display:"flex", alignContent:"center", justifyContent:"center"}}>
             <Modal.Title style={{color:"white"}}>Crear Sucursal</Modal.Title>
