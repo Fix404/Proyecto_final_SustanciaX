@@ -1,17 +1,12 @@
-import { Sidebar } from "./components/Sidebar/Sidebar"
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Header } from "./components/Header/Header"
 import { Body } from "./components/Body/Body"
-import { useState } from "react";
-
-
+import { Sidebar } from './components/Sidebar/Sidebar';
 
 function App() {
+  const dummyFunction = () => {
 
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const toggleModal = () => {
-    setModalVisible(!modalVisible);
-  };
+  }
 
   return (
     <>
@@ -25,69 +20,18 @@ function App() {
             height: "100vh",
           }}
         >
-          <Sidebar onAddEmpresaClick={toggleModal} />
+          <Sidebar onAddEmpresaClick={dummyFunction} />
         </div>
 
         {/* Header y Body */}
         <div className="flex-grow-1 d-flex flex-column">
           <Header />
-          <div className="flex-grow-1">
-            <Body />
-          </div>
+          <Body />
         </div>
 
-        {/* Modal */}
-        {modalVisible && (
-          <div style={modalStyles}>
-            <div style={modalContentStyles}>
-              <h2>Agregar Empresa</h2>
-              <div>
-                <div className="section">
-                  <label htmlFor="nombre">Ingrese un nombre aquí:</label>
-                  <input type="text" id="nombre" placeholder="Nombre" />
-                </div>
-
-                <div className="section">
-                  <label htmlFor="razonSocial">Ingrese razón social:</label>
-                  <input type="text" id="razonSocial" placeholder="Razón Social" />
-                </div>
-
-                <div className="section">
-                  <label htmlFor="cuit">Ingrese CUIT:</label>
-                  <input type="text" id="cuit" placeholder="CUIT" />
-                </div>
-
-                <button>Enviar</button>
-              </div>
-              <button onClick={toggleModal}>Cerrar</button>
-            </div>
-          </div>
-        )}
-
       </div>
-
-
-
     </>
   )
 }
-const modalStyles: React.CSSProperties = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  backgroundColor: "rgba(0, 0, 0, 0.5)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-};
 
-const modalContentStyles: React.CSSProperties = {
-  backgroundColor: "#fff",
-  padding: "20px",
-  borderRadius: "8px",
-  width: "300px",
-  textAlign: "center",
-};
 export default App
