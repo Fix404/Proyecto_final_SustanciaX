@@ -26,9 +26,7 @@ function App() {
         {/* Header y Body */}
         <div className="flex-grow-1 d-flex flex-column">
           <Header />
-          <div className="flex-grow-1">
-            <Body />
-          </div>
+          <Body />
         </div>
 
       </div>

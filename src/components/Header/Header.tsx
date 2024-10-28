@@ -4,6 +4,7 @@ import { SucursalService } from "../../services/ParticularServices/SucursalServi
 import { useAppDispatch } from "../../hooks/redux";
 import { setDataTable } from "../../redux/slices/TableReducer";
 import { CrearSucursal } from "../../views/Modals/CrearSucursal/CrearSucursal";
+import { Body } from "../Body/Body";
 
 const API_URL=import.meta.env.VITE_API_URL;
 
