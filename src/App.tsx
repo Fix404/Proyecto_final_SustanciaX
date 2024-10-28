@@ -25,7 +25,7 @@ function App() {
             height: "100vh",
           }}
         >
-          <Sidebar onAddEmpresaClick={toggleModal}/>
+          <Sidebar onAddEmpresaClick={toggleModal} />
         </div>
 
         {/* Header y Body */}
@@ -36,20 +36,38 @@ function App() {
           </div>
         </div>
 
-         {/* Modal */}
-      {modalVisible && (
-        <div style={modalStyles}>
-          <div style={modalContentStyles}>
-            <h2>Agregar Empresa</h2>
-            <button onClick={toggleModal}>Cerrar</button>
+        {/* Modal */}
+        {modalVisible && (
+          <div style={modalStyles}>
+            <div style={modalContentStyles}>
+              <h2>Agregar Empresa</h2>
+              <div>
+                <div className="section">
+                  <label htmlFor="nombre">Ingrese un nombre aquí:</label>
+                  <input type="text" id="nombre" placeholder="Nombre" />
+                </div>
+
+                <div className="section">
+                  <label htmlFor="razonSocial">Ingrese razón social:</label>
+                  <input type="text" id="razonSocial" placeholder="Razón Social" />
+                </div>
+
+                <div className="section">
+                  <label htmlFor="cuit">Ingrese CUIT:</label>
+                  <input type="text" id="cuit" placeholder="CUIT" />
+                </div>
+
+                <button>Enviar</button>
+              </div>
+              <button onClick={toggleModal}>Cerrar</button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
       </div>
 
 
- 
+
     </>
   )
 }
