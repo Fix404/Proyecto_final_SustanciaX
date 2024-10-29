@@ -1,12 +1,19 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Header } from "./components/Header/Header"
-import { Body } from "./components/Body/Body"
+import { Header } from "./components/Header/Header";
+import { Body } from "./components/Body/Body";
 import { Sidebar } from './components/Sidebar/Sidebar';
+import { useState } from 'react';
+import { CrearEmpresa } from './views/Modals/CrearEmpresa/CrearEmpresa'; // Importa CrearEmpresa
 
 function App() {
-  const dummyFunction = () => {
+  const [openModal, setOpenModal] = useState(false);
 
-  }
+  const handleOpenModal = () => setOpenModal(true);
+  const handleClose = () => setOpenModal(false);
+
+  const getEmpresas = () => {
+    // Lógica para actualizar la lista de empresas (agrega tu implementación aquí)
+  };
 
   return (
     <>
@@ -20,7 +27,7 @@ function App() {
             height: "100vh",
           }}
         >
-          <Sidebar onAddEmpresaClick={dummyFunction} />
+          <Sidebar onAddEmpresaClick={handleOpenModal} /> {/* Pasa handleOpenModal */}
         </div>
 
         {/* Header y Body */}
@@ -29,9 +36,15 @@ function App() {
           <Body />
         </div>
 
+        {/* Modal Crear Empresa */}
+        <CrearEmpresa
+          getEmpresas={getEmpresas}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        />
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
