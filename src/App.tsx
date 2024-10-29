@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Header } from "./components/Header/Header";
-import { Body } from "./components/Body/Body";
-import { Sidebar } from './components/Sidebar/Sidebar';
+import { Header } from './Home/components/Header/Header';
+import { Body } from './Home/components/Body/Body';
+import { Sidebar } from './Home/components/Sidebar/Sidebar';
 import { useState } from 'react';
 import { CrearEmpresa } from './views/Modals/CrearEmpresa/CrearEmpresa'; // Importa CrearEmpresa
 

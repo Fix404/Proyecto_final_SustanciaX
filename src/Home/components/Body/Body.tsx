@@ -1,5 +1,5 @@
-import { sucrsalesData } from "../../data/sucursalesEjemplo"
-import { ListSucursales } from "../../ui/ListSucursales/ListSucursales"
+import { sucrsalesData } from "../../../data/sucursalesEjemplo"
+import { ListSucursales } from "../../../ui/ListSucursales/ListSucursales"
 import styles from "./Body.module.css"
 
 export const Body = () => {
