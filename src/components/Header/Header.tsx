@@ -6,10 +6,7 @@ import { useAppDispatch } from "../../hooks/redux";
 import { setDataTable } from "../../redux/slices/TableReducer";
 import { CrearSucursal } from "../../modals/SucursalModals/CrearSucursal";
 
-
-
 const API_URL=import.meta.env.VITE_API_URL;
-
 
 export const Header = () => {
 
