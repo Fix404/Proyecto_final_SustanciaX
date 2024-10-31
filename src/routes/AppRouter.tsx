@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"
+/*import { Route, Routes } from "react-router-dom"
 import { CrearSucursal } from "../views/Modals/CrearSucursal/CrearSucursal"
 import { useEffect, useState } from "react";
 import { SucursalService } from "../services/ParticularServices/SucursalService";
@@ -28,10 +28,10 @@ export const AppRouter = () => {
   }, []);
   return (
     <Routes>
-        {/* Ruta para la pantalla de personas */}
+        {/* Ruta para la pantalla de personas 
         <Route path="/" element={<CrearSucursal getSucursales={getSucursales}
         openModal={openModal}
         setOpenModal={setOpenModal} />} />
       </Routes>
   )
-}
+} */

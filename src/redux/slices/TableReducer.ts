@@ -1,12 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-<<<<<<< HEAD
-import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
-
-
-interface IInitialState {
-    dataTable: ISucursal[]; 
-    elementActive: null | ISucursal; 
-=======
 import { IEmpresa } from "../../types/dtos/empresa/IEmpresa";
 import { ICreateEmpresaDto } from "../../types/dtos/empresa/ICreateEmpresaDto";
 
@@ -14,7 +6,6 @@ import { ICreateEmpresaDto } from "../../types/dtos/empresa/ICreateEmpresaDto";
 interface IInitialState {
     dataTable: IEmpresa[]; 
     elementActive: null | ICreateEmpresaDto; 
->>>>>>> 73ff9feea0854e6fcd6eb876815746b8bd02922b
   }
 
   const initialState: IInitialState = {
@@ -24,11 +15,7 @@ interface IInitialState {
   
   // Interfaz para la acción del payload personalizado
   interface PayloadSetElement {
-<<<<<<< HEAD
-    element: ISucursal; // Elemento de tipo ISucursal
-=======
     element: ICreateEmpresaDto; // Elemento de tipo ISucursal
->>>>>>> 73ff9feea0854e6fcd6eb876815746b8bd02922b
   }
   
   // Creamos un slice con Redux Toolkit para manejar la tabla

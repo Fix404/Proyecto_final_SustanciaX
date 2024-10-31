@@ -1,16 +1,10 @@
-<<<<<<< HEAD
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "../../hooks/redux";
-import { setDataTable } from "../../redux/slices/TableReducer";
-import { SucursalService } from "../../services/ParticularServices/SucursalService";
-=======
-
-
-import { sucrsalesData } from "../../data/sucursalesEjemplo"
->>>>>>> 73ff9feea0854e6fcd6eb876815746b8bd02922b
 import { ListSucursales } from "../../ui/ListSucursales/ListSucursales"
 import styles from "./Body.module.css"
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
+import { useEffect, useState } from "react";
+import { SucursalService } from "../../services/ParticularServices/SucursalService";
+import { useAppDispatch } from "../../hooks/redux";
+import { setDataTable } from "../../redux/slices/TableReducerSucursal";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
