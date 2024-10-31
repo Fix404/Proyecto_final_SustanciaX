@@ -1,11 +1,11 @@
 import { Button, Form, Modal} from "react-bootstrap"
-import { ICreateSucursal } from "../../../types/dtos/sucursal/ICreateSucursal"
-import { SucursalService } from "../../../services/ParticularServices/SucursalService"
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import { removeElementActive } from "../../../redux/slices/TableReducer";
 import { Formik } from "formik";
 
 import * as Yup from "yup";
+import { ICreateSucursal } from "../../types/dtos/sucursal/ICreateSucursal";
+import { SucursalService } from "../../services/ParticularServices/SucursalService";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { removeElementActive } from "../../redux/slices/TableReducerSucursal";
 const API_URL=import.meta.env.VITE_API_URL;
 
 interface IPropsCreateSucursal{
@@ -41,7 +41,7 @@ export const CrearSucursal = ({
   const apiSucursal = new SucursalService(API_URL + "/sucursales");
 
   const elementActive=useAppSelector(
-    (state) => state.tablaReducer.elementActive);
+    (state) => state.tablaReducerSucursal.elementActive);
   const dispatch=useAppDispatch();
 
   const handleClose=() => {
@@ -71,7 +71,7 @@ export const CrearSucursal = ({
                 idLocalidad: Yup.number(),
               }),
               idEmpresa: Yup.number()})}
-              initialValues={elementActive ? elementActive: initialValues}
+            initialValues={elementActive ? elementActive: initialValues}
               enableReinitialize={true}
               onSubmit={async (values:ICreateSucursal) => {
                 if(elementActive){

@@ -1,5 +1,5 @@
 
-
+import { Button} from 'react-bootstrap';
 import styles from './Sidebar.module.css'
 
 interface SidebarProps {
@@ -7,20 +7,21 @@ interface SidebarProps {
 }
 
 
-export const Sidebar: React.FC<SidebarProps> = ({ onAddEmpresaClick}) => {
+export const Sidebar: React.FC<SidebarProps> = ({ onAddEmpresaClick }) => {
 
 
-  
+
   return (
     <div >
 
       <div className={styles.containerTitle}>
         <p>Empresas</p>
       </div>
-      <div className={styles.containerDivButtonEmpresa} >
-        <button className={styles.containerButton} onClick={onAddEmpresaClick}>AGREGAR EMPRESA</button>
 
+      <div className={styles.containerDivButtonEmpresa} >
+          <Button variant="outline-success" onClick={onAddEmpresaClick}>AGREGAR EMPRESA</Button>
       </div>
+
     </div>
   )
 }

@@ -1,38 +1,25 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-<<<<<<< HEAD
+import { ICreateSucursal } from "../../types/dtos/sucursal/ICreateSucursal";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 
 
-interface IInitialState {
+interface IInitialStateSucursal {
     dataTable: ISucursal[]; 
-    elementActive: null | ISucursal; 
-=======
-import { IEmpresa } from "../../types/dtos/empresa/IEmpresa";
-import { ICreateEmpresaDto } from "../../types/dtos/empresa/ICreateEmpresaDto";
-
-
-interface IInitialState {
-    dataTable: IEmpresa[]; 
-    elementActive: null | ICreateEmpresaDto; 
->>>>>>> 73ff9feea0854e6fcd6eb876815746b8bd02922b
+    elementActive: null | ICreateSucursal; 
   }
 
-  const initialState: IInitialState = {
+  const initialState: IInitialStateSucursal = {
     dataTable: [], // Inicialmente la tabla está vacía
     elementActive: null, // No hay ningún elemento activo seleccionado inicialmente
   };
   
   // Interfaz para la acción del payload personalizado
   interface PayloadSetElement {
-<<<<<<< HEAD
-    element: ISucursal; // Elemento de tipo ISucursal
-=======
-    element: ICreateEmpresaDto; // Elemento de tipo ISucursal
->>>>>>> 73ff9feea0854e6fcd6eb876815746b8bd02922b
+    element: ICreateSucursal; // Elemento de tipo ISucursal
   }
   
   // Creamos un slice con Redux Toolkit para manejar la tabla
-  const TableReducer = createSlice({
+  const TableReducerSucursal = createSlice({
     name: "TableReducer", // Nombre del slice
     initialState, // Estado inicial del slice
     reducers: {
@@ -53,7 +40,7 @@ interface IInitialState {
   
   // Exportamos los actions generados por el slice
   export const { setDataTable, setElementActive, removeElementActive } =
-    TableReducer.actions;
+    TableReducerSucursal.actions;
   
   // Exportamos el reducer generado por el slice
-  export default TableReducer.reducer;
+  export default TableReducerSucursal.reducer;
