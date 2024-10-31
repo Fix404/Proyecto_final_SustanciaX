@@ -4,7 +4,7 @@ import { Button, Container, Form, Nav, Navbar} from "react-bootstrap"
 import { SucursalService } from "../../services/ParticularServices/SucursalService";
 import { useAppDispatch } from "../../hooks/redux";
 import { setDataTable } from "../../redux/slices/TableReducer";
-import { CrearSucursal } from "../../modals/SucursalModals/VerSucursal";
+import { CrearSucursal } from "../../modals/SucursalModals/CrearSucursal";
 
 
 
@@ -58,7 +58,7 @@ export const Header = () => {
         setOpenModal={setOpenModal} />}
         <Form className="d-flex">
   
-          <Button variant="outline-success">AGREGAR SUCURSAL</Button>
+          <Button variant="outline-success" onClick={toggleModal}>AGREGAR SUCURSAL</Button>
         </Form>
       </Navbar.Collapse>
     </Container>

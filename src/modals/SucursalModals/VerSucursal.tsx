@@ -7,7 +7,7 @@ interface SucursalModalProps {
     sucursal: ISucursal;
 }
 
-export const CrearSucursal: React.FC<SucursalModalProps> = ({ sucursal }) => {
+export const VerSucursal: React.FC<SucursalModalProps> = ({ sucursal }) => {
 
     const { nombre, empresa, domicilio, esCasaMatriz, horarioApertura, horarioCierre, logo } = sucursal;
 
