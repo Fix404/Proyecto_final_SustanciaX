@@ -4,7 +4,7 @@ import { Button, Container, Form, Nav, Navbar} from "react-bootstrap"
 import { SucursalService } from "../../services/ParticularServices/SucursalService";
 import { useAppDispatch } from "../../hooks/redux";
 import { setDataTable } from "../../redux/slices/TableReducer";
-import { CrearSucursal } from "../../modals/SucursalModals/CrearSucursal";
+import { CrearSucursal } from "../../modals/SucursalModals/VerSucursal";
 
 
 
