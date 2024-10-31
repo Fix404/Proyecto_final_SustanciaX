@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
-import { ICreateSucursal } from "../../types/dtos/sucursal/ICreateSucursal";
 
 
 interface IInitialState {
     dataTable: ISucursal[]; 
-    elementActive: null | ICreateSucursal; 
+    elementActive: null | ISucursal; 
   }
 
   const initialState: IInitialState = {
@@ -15,7 +14,7 @@ interface IInitialState {
   
   // Interfaz para la acción del payload personalizado
   interface PayloadSetElement {
-    element: ICreateSucursal; // Elemento de tipo ISucursal
+    element: ISucursal; // Elemento de tipo ISucursal
   }
   
   // Creamos un slice con Redux Toolkit para manejar la tabla
