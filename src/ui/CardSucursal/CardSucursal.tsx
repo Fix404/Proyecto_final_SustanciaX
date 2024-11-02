@@ -10,13 +10,16 @@ interface ICardSucursal{
 
 
 export const CardSucursal:FC<ICardSucursal> = ({sucursal}) => {
+
     const navigate=useNavigate();
-    const handleNavigateSucursal= () => {
-        navigate(`/sucursales/${sucursal.id}`);
+
+    const handleNavigateAdmin= () => {
+        navigate("/admin/");
     }
+
   return (
     <div>
-          <Card className={styles.card} onClick={handleNavigateSucursal}>
+          <Card className={styles.card} >
             <Card.Img variant="top" src="holder.js/100px160" />
             <Card.Body>
               <Card.Title>{sucursal.nombre}</Card.Title>
@@ -26,9 +29,10 @@ export const CardSucursal:FC<ICardSucursal> = ({sucursal}) => {
               </Card.Text>
             </Card.Body>
             <Card.Footer>
+                <Button variant="warning" onClick={handleNavigateAdmin}>Admin</Button>
                 <Button variant="primary">Ver</Button>
                 <Button variant="secondary">Editar</Button>
-                <Button variant="danger">Eliminar</Button>
+               
             </Card.Footer>
           </Card>
     </div>

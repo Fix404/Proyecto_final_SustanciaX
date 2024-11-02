@@ -1,9 +1,9 @@
 import { useState } from "react";
-
 import { CrearEmpresa } from "../../modals/EmpresaModals/CrearEmpresa";
-import { Sidebar } from "../../components/Sidebar/Sidebar";
-import { Header } from "../../components/Header/Header";
-import { Body } from "../../components/Body/Body";
+import { Header } from "../../components/HomeComponents/Header/Header";
+import { Body } from "../../components/HomeComponents/Body/Body";
+import { SidebarHome } from "../../components/HomeComponents/SidebarHome/SidebarHome";
+
 
 /**---------------------------------------------------------------- */
 
@@ -35,7 +35,7 @@ export const Home = () => {
         height: "100vh",
       }}
     >
-      <Sidebar onAddEmpresaClick={handleOpenModal}/>
+      <SidebarHome onAddEmpresaClick={handleOpenModal}/>
     </div>
 
     {/* Header y Body */}

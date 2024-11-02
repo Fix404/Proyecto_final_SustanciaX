@@ -1,0 +1,13 @@
+.containerTitle{
+    font-size: 30px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .containerDivButtonEmpresa{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2vh;
+  margin: 0rem 3rem;
+  }

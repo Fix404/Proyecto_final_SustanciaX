@@ -1,13 +1,13 @@
 
 import { Button} from 'react-bootstrap';
-import styles from './Sidebar.module.css'
+import styles from './SidebarHome.module.css'
 
-interface SidebarProps {
+interface SidebarHomeProps {
   onAddEmpresaClick: () => void; // Especifica que onAddEmpresaClick es una función sin argumentos que no retorna nada
 }
 
 
-export const Sidebar: React.FC<SidebarProps> = ({ onAddEmpresaClick }) => {
+export const SidebarHome: React.FC<SidebarHomeProps> = ({ onAddEmpresaClick }) => {
 
 
 
