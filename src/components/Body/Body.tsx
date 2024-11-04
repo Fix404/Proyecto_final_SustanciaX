@@ -1,34 +1,32 @@
 import { ListSucursales } from "../../ui/ListSucursales/ListSucursales"
 import styles from "./Body.module.css"
-import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { SucursalService } from "../../services/ParticularServices/SucursalService";
-import { useAppDispatch } from "../../hooks/redux";
-import { setDataTable } from "../../redux/slices/TableReducerSucursal";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { setDataSucursalList} from "../../redux/slices/TableReducerSucursal";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = "http://190.221.207.224:8090/";
 
 export const Body = () => {
-  const [sucursales, setSucursales] = useState<ISucursal[]>([]);
-  const sucursalService = new SucursalService(API_URL + "/sucursales");
+  const sucursalService = new SucursalService(API_URL + "sucursales/porEmpresa/1");
   const dispatch = useAppDispatch();
 
   const getSucursales = async () => {
     await sucursalService.getAll().then((sucursalData) => {
-      setSucursales(sucursalData);
-      dispatch(setDataTable(sucursalData));
+      dispatch(setDataSucursalList(sucursalData));
     });
   };
+
+  const dataList=useAppSelector((state) => state.tablaReducerSucursal.dataList);
+  console.log(dataList);
 
   useEffect(() => {
     getSucursales();
   }, []);
 
-  
-
   return (
     <div className={styles.containerGeneralBody}>
-        <ListSucursales sucursales={sucursales} />
+        <ListSucursales sucursales={dataList} />
     </div>
   )
 }
