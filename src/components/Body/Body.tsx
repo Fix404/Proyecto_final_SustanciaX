@@ -18,7 +18,6 @@ export const Body = () => {
   };
 
   const dataList=useAppSelector((state) => state.tablaReducerSucursal.dataList);
-  console.log(dataList);
 
   useEffect(() => {
     getSucursales();

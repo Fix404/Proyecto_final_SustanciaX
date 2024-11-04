@@ -12,7 +12,7 @@ interface IInitialStateSucursal {
   };
   
   // Interfaz para la acción del payload personalizado
-  interface PayloadSetElement {
+  interface PayloadSetSucursalElement {
     element: ISucursal; // Elemento de tipo ISucursal
   }
   
@@ -26,7 +26,7 @@ interface IInitialStateSucursal {
         state.dataList = action.payload; // Actualizamos los datos de la lista con los datos proporcionados
       },
       // Reducer para establecer el elemento activo
-      setElementActive(state, action: PayloadAction<PayloadSetElement>) {
+      setElementActive(state, action: PayloadAction<PayloadSetSucursalElement>) {
         state.elementActive = action.payload.element; // Establecemos el elemento activo con el elemento proporcionado en el payload
       },
       // Reducer para eliminar el elemento activo
