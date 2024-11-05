@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Button, Container, Form, Nav, Navbar} from "react-bootstrap"
 import { CrearSucursal } from "../../modals/SucursalModals/CrearSucursal";
+import { useAppSelector } from "../../hooks/redux";
 
 
 export const Header = () => {
@@ -11,20 +12,14 @@ export const Header = () => {
     setOpenModal(!openModal);
   };
 
+  const empresaActiva=useAppSelector((state)=> state.empresaReducer.elementActive);
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
     <Container fluid>
-      <Navbar.Brand href="#">Sucursales de: </Navbar.Brand>
+      <Navbar.Brand href="#">Sucursales de: {empresaActiva?.nombre}</Navbar.Brand>
       <Navbar.Toggle aria-controls="navbarScroll" />
       <Navbar.Collapse id="navbarScroll">
-        <Nav
-          className="me-auto my-2 my-lg-0"
-          style={{ maxHeight: '100px' }}
-          navbarScroll
-        >
-          <Nav.Link href="#action1">Home</Nav.Link>
-        </Nav>
-
              {/* Modal */}
       {openModal && <CrearSucursal
         openModal={openModal}

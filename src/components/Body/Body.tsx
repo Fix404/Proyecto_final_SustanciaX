@@ -18,14 +18,19 @@ export const Body = () => {
   };
 
   const dataList=useAppSelector((state) => state.tablaReducerSucursal.dataList);
+  const empresaActiva=useAppSelector((state) => state.empresaReducer.elementActive);
 
   useEffect(() => {
     getSucursales();
   }, []);
 
   return (
-    <div className={styles.containerGeneralBody}>
-        <ListSucursales sucursales={dataList} />
-    </div>
+    <>
+    {empresaActiva ?  <div className={styles.containerGeneralBody}>
+    <ListSucursales sucursales={dataList} />
+</div> : <div>
+  <h1>No se ha seleccionado una empresa</h1>
+  </div>}
+</>
   )
 }
