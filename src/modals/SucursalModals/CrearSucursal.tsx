@@ -9,6 +9,7 @@ import { removeElementActive } from "../../redux/slices/TableReducerSucursal";
 const API_URL=import.meta.env.VITE_API_URL;
 
 interface IPropsCreateSucursal{
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   getSucursales:Function
   openModal: boolean
   setOpenModal: (state:boolean) => void

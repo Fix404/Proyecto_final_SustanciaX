@@ -1,11 +1,17 @@
+import { useState } from "react";
 import { BodyAdmin } from "../../components/AdminComponents/BodyAdmin/BodyAdmin"
 import { HeaderAdmin } from "../../components/AdminComponents/HeaderAdmin/HeaderAdmin"
 import { SidebarAdmin } from "../../components/AdminComponents/SidebarAdmin/SidebarAdmin"
 
-export const Admin = () => {
+export const Admin: React.FC = () => {
+
+    const [activeButton, setActiveButton] = useState("CATEGORIAS");
+
+    const handleButtonClick = (buttonName: string) => {
+        setActiveButton(buttonName); 
+    };
+
     return (
-
-
         <div >
             {/* Header */}
 
@@ -22,18 +28,15 @@ export const Admin = () => {
                         height: "100vh",
                     }}
                 >
-                    <SidebarAdmin />
+                    <SidebarAdmin onButtonClick={handleButtonClick} />
 
                 </div>
 
                 <div className="flex-grow-1">
-                    <BodyAdmin />
+                <BodyAdmin activeSection={activeButton} />
                 </div>
 
             </div>
-
-
-
 
         </div>
 

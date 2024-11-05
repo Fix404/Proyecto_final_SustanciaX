@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import TableReducer from "./slices/TableReducer"
 import TableReducerSucursal from "./slices/TableReducerSucursal"
 
-
 export const store = configureStore({
     reducer: {
       tablaReducer: TableReducer,

@@ -1,13 +1,11 @@
 import { Button } from "react-bootstrap"
 import styles from './SidebarAdmin.module.css'
 
-// interface SidebarAdminProps {
-//     onClickProductos: () => void; 
-//     onClickAlergenos: () => void;
-//     onClickCategorias: () => void;
-//   }
+interface SidebarAdminProps {
+  onButtonClick: (buttonName: string) => void; 
+}
 
-export const SidebarAdmin = () => {
+export const SidebarAdmin: React.FC<SidebarAdminProps> = ({onButtonClick}) => {
   return (
     <div >
 
@@ -16,9 +14,9 @@ export const SidebarAdmin = () => {
     </div>
 
     <div className={styles.containerDivButtonEmpresa} >
-        <Button variant="outline-success" >CATEGORIAS</Button>
-        <Button variant="outline-success" >PRODUCTOS</Button>
-        <Button variant="outline-success" >ALERGENOS</Button>
+        <Button variant="outline-success" onClick={() => onButtonClick("CATEGORIAS")}>CATEGORIAS</Button>
+        <Button variant="outline-success" onClick={() => onButtonClick("PRODUCTOS")}>PRODUCTOS</Button>
+        <Button variant="outline-success" onClick={() => onButtonClick("ALERGENOS")}>ALERGENOS</Button>
     </div>
 
   </div>
