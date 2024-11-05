@@ -1,8 +1,9 @@
 
 import { useState } from "react";
-import { Button, Container, Form, Nav, Navbar} from "react-bootstrap"
+import { Button, Container, Form, Navbar} from "react-bootstrap"
 import { CrearSucursal } from "../../../modals/SucursalModals/CrearSucursal";
 import { useAppSelector } from "../../../hooks/redux";
+import styles from "./Header.module.css"
 
 
 export const Header = () => {
@@ -15,7 +16,8 @@ export const Header = () => {
   const empresaActiva=useAppSelector((state)=> state.empresaReducer.elementActive);
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <div className={styles.principalHeaderContainer}>
+      <Navbar expand="lg" className="bg-body-tertiary">
     <Container fluid>
       <Navbar.Brand href="#">Sucursales de: {empresaActiva?.nombre}</Navbar.Brand>
       <Navbar.Toggle aria-controls="navbarScroll" />
@@ -31,5 +33,6 @@ export const Header = () => {
       </Navbar.Collapse>
     </Container>
   </Navbar>
+    </div>
   )
 }

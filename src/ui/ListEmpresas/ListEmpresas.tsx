@@ -16,7 +16,6 @@ export const ListEmpresas:FC<IListEmpresas> = ({empresas}) => {
                 <CardEmpresa empresa={empresa} key={empresa.id}/>
             ))}
         </div>
-
     </div>
   )
 }

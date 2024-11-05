@@ -7,20 +7,15 @@ import { setDataEmpresaList } from '../../../redux/slices/EmpresasReducer';
 import { useEffect } from 'react';
 import { useAppSelector } from '../../../hooks/redux';
 
-
-//const API_URL = "http://190.221.207.224:8090/";
-
 const API_URL=import.meta.env.VITE_API_URL;
 
-
-
-export interface SidebarHome {
+export interface IPropsSidebarHome {
   onAddEmpresaClick: () => void; // Especifica que onAddEmpresaClick es una función sin argumentos que no retorna nada
 }
 
 
-export const Sidebar: React.FC<SidebarHome> = ({ onAddEmpresaClick }) => {
-  const empresaService=new EmpresaService(API_URL+`empresas`);
+export const SidebarHome: React.FC<IPropsSidebarHome> = ({ onAddEmpresaClick }) => {
+  const empresaService=new EmpresaService("/api/empresas");
   const dispatch=useDispatch();
 
   const getEmpresas=async () => {
@@ -33,11 +28,11 @@ export const Sidebar: React.FC<SidebarHome> = ({ onAddEmpresaClick }) => {
 
   useEffect(()=>{
     getEmpresas();
-  })
+  }, [])
 
 
   return (
-    <div >
+    <div className={styles.principalContainerSidebar}>
       <div>
         <h1>Empresas</h1>
       </div>

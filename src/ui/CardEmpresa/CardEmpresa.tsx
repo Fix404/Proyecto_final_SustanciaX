@@ -18,7 +18,7 @@ export const CardEmpresa:FC<ICardEmpresa> = ({empresa}) => {
   return (
     <>
     {empresa && <div>
-      <Card style={{ width: '18rem' }} onClick={handleEmpresaActiva}>
+      <Card style={{ width: '12rem' }} onClick={handleEmpresaActiva}>
     <Card.Img variant="top" src="holder.js/100px180" />
     <Card.Body>
       <Card.Title>{empresa.nombre}</Card.Title>

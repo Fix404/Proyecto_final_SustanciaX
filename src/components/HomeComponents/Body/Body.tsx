@@ -5,7 +5,7 @@ import { SucursalService } from "../../../services/ParticularServices/SucursalSe
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { setDataSucursalList } from "../../../redux/slices/TableReducerSucursal";
 
-const API_URL = "http://190.221.207.224:8090/";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const Body = () => {
   const sucursalService = new SucursalService(API_URL + "sucursales/porEmpresa/1");

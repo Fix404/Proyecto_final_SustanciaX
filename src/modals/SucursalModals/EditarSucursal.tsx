@@ -2,7 +2,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { IUpdateSucursal } from "../../types/dtos/sucursal/IUpdateSucursal";
 import { SucursalService } from "../../services/ParticularServices/SucursalService";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { removeElementActive } from "../../redux/slices/TableReducer";
+import { removeElementActive } from "../../redux/slices/CrearEmpresaReducer";
 import { Formik } from "formik";
 import * as Yup from "yup";
 

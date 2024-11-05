@@ -1,17 +1,10 @@
-
-.containerTitle{
-  font-size: 30px;
-  padding: 20px;
-  display: flex;
+.principalContainerSidebar{
+  width: fit-content;
   justify-content: center;
 }
-.containerDivButtonEmpresa{
-display: flex;
-justify-content: center;
-}
+
 
 .containerGeneralBody{
   height: 100%;
-  padding: 20px;
   background-color: rgb(213, 212, 210);
 }
