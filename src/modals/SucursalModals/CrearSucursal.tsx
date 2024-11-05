@@ -2,43 +2,70 @@ import { Button, Form, Modal} from "react-bootstrap"
 import { Formik } from "formik";
 
 import * as Yup from "yup";
-import { ICreateSucursal } from "../../types/dtos/sucursal/ICreateSucursal";
-import { SucursalService } from "../../services/ParticularServices/SucursalService";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { removeElementActive } from "../../redux/slices/TableReducerSucursal";
+import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
+import { SucursalService } from "../../services/ParticularServices/SucursalService";
+
 const API_URL=import.meta.env.VITE_API_URL;
 
 interface IPropsCreateSucursal{
-  getSucursales:Function
   openModal: boolean
   setOpenModal: (state:boolean) => void
 }
 
 export const CrearSucursal = ({
-  getSucursales,
   openModal,
   setOpenModal,
 }: IPropsCreateSucursal) => {
-  const initialValues: ICreateSucursal = {
+  const apiSucursal = new SucursalService(API_URL + "/sucursale/create");
+
+
+  const initialValues: ISucursal = {
+    id:0,
+    empresa:{
+      id: 0,
+  nombre: "",
+  razonSocial: "",
+  cuit: 0,
+  logo: "",
+  sucursales: [],
+  pais: {
+    nombre:"",
+    id:0
+  },
+    },
     nombre: "",
+    calle:"",
+    categorias:[],
+    eliminado: false,
   horarioApertura: "",
   horarioCierre: "",
   esCasaMatriz: false,
   latitud: 0,
   longitud: 0,
   domicilio: {
+    id:0,
     calle: "",
     numero: 0,
     cp: 0,
     piso: 0,
     nroDpto: 0,
-    idLocalidad: 0,
+    localidad: {
+      id:0,
+      nombre:"",
+      provincia:{
+        nombre:"",
+        pais:{
+          nombre:"",
+          id:0
+        },
+        id:0
+      }
+    },
   },
-  idEmpresa: 0,
-  logo: null,
+  logo: "",
   }
-
-  const apiSucursal = new SucursalService(API_URL + "/sucursales");
 
   const elementActive=useAppSelector(
     (state) => state.tablaReducerSucursal.elementActive);
@@ -73,11 +100,10 @@ export const CrearSucursal = ({
               idEmpresa: Yup.number()})}
             initialValues={elementActive ? elementActive: initialValues}
               enableReinitialize={true}
-              onSubmit={async (values:ICreateSucursal) => {
+              onSubmit={async (values:ISucursal) => {
                 if(elementActive){
                   await apiSucursal.post(values);
                 }
-                getSucursales();
                 handleClose();
               }}>
                 {() => (

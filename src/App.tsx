@@ -1,7 +1,5 @@
 
-
-import { AppRouter } from "./routes/AppRouter";
-
+import { Home } from "./screens/Home/Home";
 
 
 
@@ -10,8 +8,7 @@ function App() {
 
   return (
     <>
-    <AppRouter/>
-     
+     <Home></Home>
     </>
   );
 }
