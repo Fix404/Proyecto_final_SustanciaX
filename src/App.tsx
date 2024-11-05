@@ -1,6 +1,6 @@
 
 import { NavBar } from "./components/NavBar/NavBar";
-import { Home } from "./screens/Home/Home";
+import AppRouter from "./routes/AppRouter";
 
 
 
@@ -12,7 +12,7 @@ function App() {
   return (
     <>
     <NavBar />
-    <Home />
+    <AppRouter />
     </>
   );
 }

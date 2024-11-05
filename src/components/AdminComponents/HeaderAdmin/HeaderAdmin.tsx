@@ -14,8 +14,6 @@ export const HeaderAdmin = () => {
       <Nav.Item>
       <p className={styles.containerSucursal}>EMPRESA - SUCURSAL TAL</p>
       </Nav.Item>
-
-
     </Nav>
   )
 }

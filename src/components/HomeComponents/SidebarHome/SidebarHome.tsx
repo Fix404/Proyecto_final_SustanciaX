@@ -39,11 +39,9 @@ export const Sidebar: React.FC<SidebarHome> = ({ onAddEmpresaClick }) => {
 
   return (
     <div >
-
-      <div className={styles.containerTitle}>
-      <ListEmpresas empresas={empresaData}/>
+      <div>
+        <h1>Empresas</h1>
       </div>
-
       <div className={styles.containerDivButtonEmpresa} >
           <Button variant="outline-success" onClick={onAddEmpresaClick}>AGREGAR EMPRESA</Button>
       </div>

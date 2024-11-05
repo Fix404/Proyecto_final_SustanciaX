@@ -14,7 +14,7 @@ export const CardSucursal:FC<ICardSucursal> = ({sucursal}) => {
   const navigate=useNavigate();
 
     const handleNavigateAdmin= () => {
-        navigate("/admin/");
+        navigate("/admin");
     }
 
   return (
