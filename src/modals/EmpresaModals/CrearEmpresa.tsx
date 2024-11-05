@@ -4,7 +4,7 @@ import { removeElementActive } from "../../redux/slices/TableReducer";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { ICreateEmpresaDto } from "../../types/dtos/empresa/ICreateEmpresaDto";
-import { EmpresaService } from "../../services/ParticularScreens/EmpresaService";
+import { EmpresaService } from "../../services/ParticularServices/EmpresaService";
 
 
 const API_URL=import.meta.env.VITE_API_URL;

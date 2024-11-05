@@ -1,6 +1,6 @@
 import { Button, Form, Modal } from "react-bootstrap";
 import { IUpdateEmpresaDto } from "../../types/dtos/empresa/IUpdateEmpresaDto";
-import { EmpresaService } from "../../services/ParticularScreens/EmpresaService";
+import { EmpresaService } from "../../services/ParticularServices/EmpresaService";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { removeElementActive } from "../../redux/slices/TableReducer";
 import { Formik } from "formik";

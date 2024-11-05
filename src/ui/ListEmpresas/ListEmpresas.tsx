@@ -11,7 +11,7 @@ interface IListEmpresas{
 export const ListEmpresas:FC<IListEmpresas> = ({empresas}) => {
   return (
     <div className={styles.contenedorPrincipalListaEmpresas}>
-        <div className={styles.contenedorListaEmpresa}>
+        <div className={styles.contenedorLista}>
             {empresas.map((empresa) => (
                 <CardEmpresa empresa={empresa} key={empresa.id}/>
             ))}
