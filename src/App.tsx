@@ -1,4 +1,5 @@
 
+import { NavBar } from "./components/NavBar/NavBar";
 import { Home } from "./screens/Home/Home";
 
 
@@ -8,7 +9,8 @@ function App() {
 
   return (
     <>
-     <Home></Home>
+    <NavBar />
+    <Home />
     </>
   );
 }
