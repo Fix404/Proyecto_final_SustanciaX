@@ -1,7 +1,7 @@
 import { Button, Card } from "react-bootstrap"
 import { FC } from "react"
 import { useNavigate } from "react-router-dom"
-import styles from "./CardSucursal.module.css"
+import styles from "./CardEmpresa.module.css"
 import { IEmpresa } from "../../types/dtos/empresa/IEmpresa"
 
 interface ICardEmpresa{

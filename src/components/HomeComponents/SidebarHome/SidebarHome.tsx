@@ -1,4 +1,5 @@
-
+import { empresaData } from '../../../data/empresasEjemplo';
+import { ListEmpresas } from '../../../ui/ListEmpresas/ListEmpresas';
 import { Button} from 'react-bootstrap';
 import styles from './SidebarHome.module.css'
 
@@ -15,7 +16,7 @@ export const SidebarHome: React.FC<SidebarHomeProps> = ({ onAddEmpresaClick }) =
     <div >
 
       <div className={styles.containerTitle}>
-        <p>Empresas</p>
+      <ListEmpresas empresas={empresaData}/>
       </div>
 
       <div className={styles.containerDivButtonEmpresa} >

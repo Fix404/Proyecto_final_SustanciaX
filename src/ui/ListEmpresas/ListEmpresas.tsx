@@ -1,6 +1,6 @@
 
 import { FC } from "react"
-import styles from "./ListSucursales.module.css"
+import styles from "./ListEmpresas.module.css"
 import { CardEmpresa } from "../CardEmpresa/CardEmpresa"
 import { IEmpresa } from "../../types/dtos/empresa/IEmpresa"
 
