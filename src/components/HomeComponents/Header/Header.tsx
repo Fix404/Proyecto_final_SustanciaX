@@ -1,8 +1,8 @@
 
 import { useState } from "react";
 import { Button, Container, Form, Nav, Navbar} from "react-bootstrap"
-import { CrearSucursal } from "../../modals/SucursalModals/CrearSucursal";
-import { useAppSelector } from "../../hooks/redux";
+import { CrearSucursal } from "../../../modals/SucursalModals/CrearSucursal";
+import { useAppSelector } from "../../../hooks/redux";
 
 
 export const Header = () => {

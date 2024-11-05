@@ -1,9 +1,9 @@
-import { ListSucursales } from "../../ui/ListSucursales/ListSucursales"
+import { ListSucursales } from "../../../ui/ListSucursales/ListSucursales"
 import styles from "./Body.module.css"
 import { useEffect} from "react";
-import { SucursalService } from "../../services/ParticularServices/SucursalService";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { setDataSucursalList} from "../../redux/slices/TableReducerSucursal";
+import { SucursalService } from "../../../services/ParticularServices/SucursalService";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { setDataSucursalList } from "../../../redux/slices/TableReducerSucursal";
 
 const API_URL = "http://190.221.207.224:8090/";
 
