@@ -1,11 +1,11 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import styles from "./CrearAlergeno.module.css";
 import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
 import { Button } from "react-bootstrap";
 import { ServiceAlergeno } from "../../services/ParticularServices/AlergenoService";
 
 interface IProps {
-  onClose: () => void | null;
+  onClose: () => void;
   alergeno: IAlergenos | null;
   editar?: boolean;
   onAddAlergeno: (alergeno: IAlergenos) => void;
@@ -17,22 +17,25 @@ export const CrearAlergeno: FC<IProps> = ({
   alergeno,
   editar,
 }) => {
-  const { values, handleChange, resetForm } = useForm({
-    denominacion: editar && alergeno ? alergeno.denominacion : "",
-    imagen: {
-      url: editar && alergeno?.imagen.url ? alergeno.imagen.url : "",
-      name: editar && alergeno?.imagen.name ? alergeno.imagen.name : "",
-    },
-  });
+  const [denominacion, setDenominacion] = useState(
+    editar && alergeno ? alergeno.denominacion : ""
+  );
+  const [imagenUrl, setImagenUrl] = useState(
+    editar && alergeno?.imagen.url ? alergeno.imagen.url : ""
+  );
+  const [imagenName, setImagenName] = useState(
+    editar && alergeno?.imagen.name ? alergeno.imagen.name : ""
+  );
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     const nuevoAlergeno: IAlergenos = {
       id: editar && alergeno ? alergeno.id : Date.now(),
-      denominacion: values.denominacion,
+      denominacion,
       imagen: {
-        url: values.imagen.url,
-        name: values.imagen.name,
+        url: imagenUrl,
+        name: imagenName,
       },
     };
 
@@ -40,34 +43,28 @@ export const CrearAlergeno: FC<IProps> = ({
     try {
       if (editar && alergeno) {
         await serviceAlergeno.editAlergeno(alergeno.id, nuevoAlergeno);
-        okAlergeno2();
+        alert("Alergeno editado con éxito");
+        onAddAlergeno(nuevoAlergeno); // Pasa el alergeno editado
       } else {
         await serviceAlergeno.createAlergeno(nuevoAlergeno);
-        okAlergeno();
+        alert("Alergeno creado con éxito");
+        onAddAlergeno(nuevoAlergeno); // Pasa el nuevo alergeno creado
       }
 
-      const alergenosActualizados = await serviceAlergeno.getAllAlergenos();
-      onAddAlergeno(alergenosActualizados.data); 
-      onClose();
+      onClose(); // Cierra el modal después de crear o editar
     } catch (error) {
-      badContest();
+      alert("Hubo un error al guardar el alergeno");
       console.error("Error al guardar el alergeno", error);
     }
-  
-    resetForm();
   };
 
   return (
     <div className={styles.mainDiv}>
       <div className={styles.modalAlergeno}>
         <div className={styles.contentTittle}>
-          {editar && alergeno ? (
-            <h2>Editar Alergeno</h2>
-          ) : (
-            <h2>Crear Alergeno</h2>
-          )}
+          {editar && alergeno ? <h2>Editar Alergeno</h2> : <h2>Crear Alergeno</h2>}
           <div className={styles.contentbutton}>
-            <CancelButton onClick={onClose} />
+            <Button variant="outline-secondary" onClick={onClose}>Cancelar</Button>
           </div>
         </div>
         <form className={styles.formCrearAlergeno} onSubmit={handleSubmit}>
@@ -75,20 +72,20 @@ export const CrearAlergeno: FC<IProps> = ({
             <input
               type="text"
               name="denominacion"
-              placeholder="Ingresa una denominacion"
-              value={values.denominacion}
-              onChange={handleChange}
+              placeholder="Ingresa una denominación"
+              value={denominacion}
+              onChange={(e) => setDenominacion(e.target.value)}
               required
             />
           </div>
           <div className={styles.imgContainer}>
-          <input
-            type="text"
-            name="imagen"
-            placeholder="Agrega una Imagen"
-            value={values.imagen.url}
-            onChange={handleChange}
-          />
+            <input
+              type="text"
+              name="imagen"
+              placeholder="Agrega una Imagen"
+              value={imagenUrl}
+              onChange={(e) => setImagenUrl(e.target.value)}
+            />
           </div>
 
           <Button type="submit" variant="outline-success">

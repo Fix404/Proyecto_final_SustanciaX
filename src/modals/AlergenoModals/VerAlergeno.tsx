@@ -1,8 +1,8 @@
-import {  FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { IPais } from "../../types/IPais";
 import { IProvincia } from "../../types/IProvincia";
-import { ILocalidad } from "../../types/ILocalidad"
-import styles from "./CrearSucursal.module.css"
+import { ILocalidad } from "../../types/ILocalidad";
+import styles from "./CrearSucursal.module.css";
 
 interface Props {
   onLocalidadChange: (localidad: string) => void;
@@ -21,8 +21,10 @@ export const Selectors: FC<Props> = ({ onLocalidadChange }) => {
   useEffect(() => {
     const fetchPaises = async () => {
       try {
-        const response = await axios.get('http://190.221.207.224:8090/paises');
-        setPaises(response.data);
+        const response = await fetch('http://190.221.207.224:8090/paises');
+        if (!response.ok) throw new Error('Error al obtener países');
+        const data = await response.json();
+        setPaises(data);
       } catch (error) {
         console.error('Error al obtener países:', error);
       }
@@ -37,8 +39,10 @@ export const Selectors: FC<Props> = ({ onLocalidadChange }) => {
 
       setLoadingProvincias(true);
       try {
-        const response = await axios.get(`http://190.221.207.224:8090/provincias/findByPais/${selectedPais}`);
-        setProvincias(response.data);
+        const response = await fetch(`http://190.221.207.224:8090/provincias/findByPais/${selectedPais}`);
+        if (!response.ok) throw new Error('Error al obtener provincias');
+        const data = await response.json();
+        setProvincias(data);
       } catch (error) {
         console.error('Error al obtener provincias:', error);
       } finally {
@@ -55,8 +59,10 @@ export const Selectors: FC<Props> = ({ onLocalidadChange }) => {
 
       setLoadingLocalidades(true);
       try {
-        const response = await axios.get(`http://190.221.207.224:8090/localidades/findByProvincia/${selectedProvincia}`);
-        setLocalidades(response.data);
+        const response = await fetch(`http://190.221.207.224:8090/localidades/findByProvincia/${selectedProvincia}`);
+        if (!response.ok) throw new Error('Error al obtener localidades');
+        const data = await response.json();
+        setLocalidades(data);
       } catch (error) {
         console.error('Error al obtener localidades:', error);
       } finally {
@@ -77,7 +83,7 @@ export const Selectors: FC<Props> = ({ onLocalidadChange }) => {
     } else if (name === 'provincia') {
       setSelectedProvincia(value);
     } else if (name === 'localidad') {
-      setSelectedLocalidad(value)
+      setSelectedLocalidad(value);
       onLocalidadChange(value);
     }
   };
@@ -121,7 +127,7 @@ export const Selectors: FC<Props> = ({ onLocalidadChange }) => {
         className={styles.largeInput}
         onChange={handleChange}
         disabled={!selectedProvincia || loadingLocalidades}
-        value={selectedLocalidad }
+        value={selectedLocalidad}
       >
         <option value="" disabled>Seleccione una Localidad</option>
         {loadingLocalidades ? (
