@@ -11,7 +11,7 @@ interface ICardSucursal{
 
 export const CardSucursal:FC<ICardSucursal> = ({sucursal}) => {
 
-    const navigate=useNavigate();
+  const navigate=useNavigate();
 
     const handleNavigateAdmin= () => {
         navigate("/admin/");
@@ -24,15 +24,15 @@ export const CardSucursal:FC<ICardSucursal> = ({sucursal}) => {
             <Card.Body>
               <Card.Title>{sucursal.nombre}</Card.Title>
               <Card.Text>
-                <p>Horario de apertura: {sucursal.horarioApertura}</p>
-                <p>Horario de cierre: {sucursal.horarioCierre}</p>
+                Horario de apertura: {sucursal.horarioApertura}
+                <br></br>
+                Horario de cierre: {sucursal.horarioCierre}
               </Card.Text>
             </Card.Body>
             <Card.Footer>
                 <Button variant="warning" onClick={handleNavigateAdmin}>Admin</Button>
                 <Button variant="primary">Ver</Button>
                 <Button variant="secondary">Editar</Button>
-               
             </Card.Footer>
           </Card>
     </div>
