@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
-import { IPais } from "../../types/IPais";
-import { IProvincia } from "../../types/IProvincia";
-import { ILocalidad } from "../../types/ILocalidad";
+import { IPais } from "../../../types/IPais";
+import { IProvincia } from "../../../types/IProvincia";
+import { ILocalidad } from "../../../types/ILocalidad";
 import styles from "./CrearSucursal.module.css";
 
 interface Props {

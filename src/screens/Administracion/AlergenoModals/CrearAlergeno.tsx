@@ -1,8 +1,8 @@
 import React, { FC, useState } from "react";
 import styles from "./CrearAlergeno.module.css";
-import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
+import { IAlergenos } from "../../../types/dtos/alergenos/IAlergenos";
 import { Button } from "react-bootstrap";
-import { ServiceAlergeno } from "../../services/ParticularServices/AlergenoService";
+import { ServiceAlergeno } from "../../../services/ParticularServices/AlergenoService";
 
 interface IProps {
   onClose: () => void;
