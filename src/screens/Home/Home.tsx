@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { CrearEmpresa } from "../../modals/EmpresaModals/CrearEmpresa";
-import { SidebarHome } from "../../components/HomeComponents/SidebarHome/SidebarHome";
 import { Header } from "../../components/HomeComponents/Header/Header";
 import { Body } from "../../components/HomeComponents/Body/Body";
 import { Sidebar, SidebarHome } from "../../components/HomeComponents/SidebarHome/SidebarHome";

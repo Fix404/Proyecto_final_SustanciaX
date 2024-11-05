@@ -10,11 +10,6 @@ import { SucursalService } from "../../services/ParticularServices/SucursalServi
 const API_URL=import.meta.env.VITE_API_URL;
 
 interface IPropsCreateSucursal{
-<<<<<<< HEAD
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-  getSucursales:Function
-=======
->>>>>>> ramanegra
   openModal: boolean
   setOpenModal: (state:boolean) => void
 }

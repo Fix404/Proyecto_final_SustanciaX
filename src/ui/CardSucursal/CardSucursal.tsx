@@ -33,10 +33,7 @@ export const CardSucursal:FC<ICardSucursal> = ({sucursal}) => {
                 <Button variant="warning" onClick={handleNavigateAdmin}>Admin</Button>
                 <Button variant="primary">Ver</Button>
                 <Button variant="secondary">Editar</Button>
-<<<<<<< HEAD
                 
-=======
->>>>>>> ramanegra
             </Card.Footer>
           </Card>
     </div>
