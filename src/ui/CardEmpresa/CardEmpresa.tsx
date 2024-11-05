@@ -1,8 +1,8 @@
-import { Button, Card } from "react-bootstrap"
-import { FC } from "react"
-import { useNavigate } from "react-router-dom"
-import styles from "./CardSucursal.module.css"
+import { Card } from "react-bootstrap"
 import { IEmpresa } from "../../types/dtos/empresa/IEmpresa"
+import { FC } from "react"
+import { useAppDispatch} from "../../hooks/redux"
+import { removeEmpresaElementActive, setEmpresaElementActive } from "../../redux/slices/EmpresasReducer"
 
 interface ICardEmpresa{
     empresa:IEmpresa
@@ -10,35 +10,25 @@ interface ICardEmpresa{
 
 
 export const CardEmpresa:FC<ICardEmpresa> = ({empresa}) => {
-
-    const navigate=useNavigate();
-
-    const handleNavigateEmpresaSucursales= () => {
-        navigate("/empresa-sucursales/");
-    }
-
-    const handleNavigateVerEmpresa= () => {
-        navigate("/ver-empresa/");
-    }
-
-    const handleNavigateEditarEmpresa= () => {
-        navigate("/editar-empresa/");
-    }
-
+  const dispatch=useAppDispatch();
+  const handleEmpresaActiva=()=>{
+    dispatch(removeEmpresaElementActive())
+    dispatch(setEmpresaElementActive({element:empresa}))
+  }
   return (
-    <div>
-          <Card className={styles.cardEmpresa} onClick={handleNavigateEmpresaSucursales}>
-            <Card.Img variant="top" src="holder.js/100px160" />
-            <Card.Body>
-              <Card.Title>{empresa.nombre}</Card.Title>
-              <Card.Text>
-              <Button variant="primary" onClick={handleNavigateVerEmpresa}>Ver</Button>
-              <Button variant="secondary" onClick={handleNavigateEditarEmpresa}>Editar</Button>
-              </Card.Text>
-            </Card.Body>
-          </Card>
-    </div>
+    <>
+    {empresa && <div>
+      <Card style={{ width: '18rem' }} onClick={handleEmpresaActiva}>
+    <Card.Img variant="top" src="holder.js/100px180" />
+    <Card.Body>
+      <Card.Title>{empresa.nombre}</Card.Title>
+      <Card.Text>
+        {empresa.cuit}
+        {empresa.razonSocial}
+      </Card.Text>
+    </Card.Body>
+  </Card>
+  </div>}
+    </>
   )
 }
-
-

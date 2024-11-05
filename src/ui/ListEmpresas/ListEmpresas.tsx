@@ -1,6 +1,6 @@
 
 import { FC } from "react"
-import styles from "./ListSucursales.module.css"
+import styles from "./ListEmpresas.module.css"
 import { CardEmpresa } from "../CardEmpresa/CardEmpresa"
 import { IEmpresa } from "../../types/dtos/empresa/IEmpresa"
 
@@ -11,7 +11,7 @@ interface IListEmpresas{
 export const ListEmpresas:FC<IListEmpresas> = ({empresas}) => {
   return (
     <div className={styles.contenedorPrincipalListaEmpresas}>
-        <div className={styles.contenedorListaEmpresa}>
+        <div className={styles.contenedorLista}>
             {empresas.map((empresa) => (
                 <CardEmpresa empresa={empresa} key={empresa.id}/>
             ))}

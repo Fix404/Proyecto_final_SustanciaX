@@ -1,34 +1,32 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ICreateSucursal } from "../../types/dtos/sucursal/ICreateSucursal";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 
-
 interface IInitialStateSucursal {
-    dataTable: ISucursal[]; 
-    elementActive: null | ICreateSucursal; 
+    dataList: ISucursal[]; 
+    elementActive: ISucursal | null; 
   }
 
   const initialState: IInitialStateSucursal = {
-    dataTable: [], // Inicialmente la tabla está vacía
+    dataList: [], // Inicialmente la lista está vacía
     elementActive: null, // No hay ningún elemento activo seleccionado inicialmente
   };
   
   // Interfaz para la acción del payload personalizado
-  interface PayloadSetElement {
-    element: ICreateSucursal; // Elemento de tipo ISucursal
+  interface PayloadSetSucursalElement {
+    element: ISucursal; // Elemento de tipo ISucursal
   }
   
   // Creamos un slice con Redux Toolkit para manejar la tabla
   const TableReducerSucursal = createSlice({
-    name: "TableReducer", // Nombre del slice
+    name: "TableReducerSucursal", // Nombre del slice
     initialState, // Estado inicial del slice
     reducers: {
       // Reducer para establecer los datos de la tabla
-      setDataTable(state, action: PayloadAction<any[]>) {
-        state.dataTable = action.payload; // Actualizamos los datos de la tabla con los datos proporcionados
+      setDataSucursalList(state, action: PayloadAction<any[]>) {
+        state.dataList = action.payload; // Actualizamos los datos de la lista con los datos proporcionados
       },
       // Reducer para establecer el elemento activo
-      setElementActive(state, action: PayloadAction<PayloadSetElement>) {
+      setElementActive(state, action: PayloadAction<PayloadSetSucursalElement>) {
         state.elementActive = action.payload.element; // Establecemos el elemento activo con el elemento proporcionado en el payload
       },
       // Reducer para eliminar el elemento activo
@@ -39,7 +37,7 @@ interface IInitialStateSucursal {
   });
   
   // Exportamos los actions generados por el slice
-  export const { setDataTable, setElementActive, removeElementActive } =
+  export const { setDataSucursalList, setElementActive, removeElementActive } =
     TableReducerSucursal.actions;
   
   // Exportamos el reducer generado por el slice
