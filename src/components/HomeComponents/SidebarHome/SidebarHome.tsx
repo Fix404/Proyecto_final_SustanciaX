@@ -1,4 +1,3 @@
-import { empresaData } from '../../../data/empresasEjemplo';
 import { ListEmpresas } from '../../../ui/ListEmpresas/ListEmpresas';
 import { Button} from 'react-bootstrap';
 import styles from './SidebarHome.module.css'
@@ -9,9 +8,9 @@ import { useEffect } from 'react';
 import { useAppSelector } from '../../../hooks/redux';
 
 
-const API_URL = "http://190.221.207.224:8090/";
+//const API_URL = "http://190.221.207.224:8090/";
 
-// const API_URL=import.meta.env.VITE_API_URL;
+const API_URL=import.meta.env.VITE_API_URL;
 
 
 
