@@ -7,7 +7,7 @@ import { EmpresaService } from "../../services/ParticularServices/EmpresaService
 import { removeEmpresaElementActive } from "../../redux/slices/EmpresasReducer";
 
 
-const API_URL = import.meta.env.VITE_API_URL;
+// const API_URL = import.meta.env.VITE_API_URL;
 
 interface IPropsCreateEmpresa {
   getEmpresas: Function
@@ -42,9 +42,9 @@ export const CrearEmpresa = ({
       <Modal show={openModal} onHide={handleClose} backdrop="static" keyboard={false} data-bs-theme="dark" size="lg" id={"modal"}>
         <Modal.Header style={{ display: "flex", alignContent: "center", justifyContent: "center" }} closeButton>
           {elementActive ?
-            (<Modal.Title style={{ color: "white" }}>Crear Empresa</Modal.Title>)
-            :
             (<Modal.Title style={{ color: "white" }}>Editar Empresa</Modal.Title>)
+            :
+            (<Modal.Title style={{ color: "white" }}>Crear Empresa</Modal.Title>)
           }
         </Modal.Header>
         <Modal.Body>
