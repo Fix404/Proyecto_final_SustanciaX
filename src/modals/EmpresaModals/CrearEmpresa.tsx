@@ -1,4 +1,4 @@
-import { Button, Form, Modal } from "react-bootstrap"
+import { Button, Form, Modal } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -6,13 +6,12 @@ import { ICreateEmpresaDto } from "../../types/dtos/empresa/ICreateEmpresaDto";
 import { EmpresaService } from "../../services/ParticularServices/EmpresaService";
 import { removeEmpresaElementActive } from "../../redux/slices/EmpresasReducer";
 
-
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface IPropsCreateEmpresa {
-  getEmpresas: Function
-  openModal: boolean
-  setOpenModal: (state: boolean) => void
+  getEmpresas: Function;
+  openModal: boolean;
+  setOpenModal: (state: boolean) => void;
 }
 
 export const CrearEmpresa = ({
@@ -25,34 +24,51 @@ export const CrearEmpresa = ({
     razonSocial: "",
     cuit: 0,
     logo: null,
-  }
+  };
 
-  const apiEmpresa = new EmpresaService(API_URL+"empresas");
+  const apiEmpresa = new EmpresaService(API_URL + "empresas");
 
   const elementActive = useAppSelector(
-    (state) => state.empresaReducer.elementActive);
+    (state) => state.empresaReducer.elementActive
+  );
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
     setOpenModal(false);
-    dispatch(removeEmpresaElementActive())
-  }
+    dispatch(removeEmpresaElementActive());
+  };
   return (
     <div>
-      <Modal show={openModal} onHide={handleClose} backdrop="static" keyboard={false} data-bs-theme="dark" size="lg" id={"modal"}>
-        <Modal.Header style={{ display: "flex", alignContent: "center", justifyContent: "center" }} closeButton>
-          {elementActive ?
-            (<Modal.Title style={{ color: "white" }}>Editar Empresa</Modal.Title>)
-            :
-            (<Modal.Title style={{ color: "white" }}>Crear Empresa</Modal.Title>)
-          }
+      <Modal
+        show={openModal}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        data-bs-theme="dark"
+        size="lg"
+        id={"modal"}
+      >
+        <Modal.Header
+          style={{
+            display: "flex",
+            alignContent: "center",
+            justifyContent: "center",
+          }}
+          closeButton
+        >
+          {elementActive ? (
+            <Modal.Title style={{ color: "white" }}>Editar Empresa</Modal.Title>
+          ) : (
+            <Modal.Title style={{ color: "white" }}>Crear Empresa</Modal.Title>
+          )}
         </Modal.Header>
         <Modal.Body>
-          <Formik validationSchema={Yup.object({
-            nombre: Yup.string().required("Campo requerido"),
-            razonSocial: Yup.string().required("Campo requerido"),
-            cuit: Yup.string().required("Campo requerido"),
-          })}
+          <Formik
+            validationSchema={Yup.object({
+              nombre: Yup.string().required("Campo requerido"),
+              razonSocial: Yup.string().required("Campo requerido"),
+              cuit: Yup.string().required("Campo requerido"),
+            })}
             initialValues={elementActive ? elementActive : initialValues}
             enableReinitialize={true}
             onSubmit={async (values: ICreateEmpresaDto) => {
@@ -63,10 +79,17 @@ export const CrearEmpresa = ({
               }
               getEmpresas();
               handleClose();
-            }}>
-            {({values, handleChange, handleSubmit}) => (
+            }}
+          >
+            {({ values, handleChange, handleSubmit }) => (
               <>
-                <Form style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }} onSubmit={handleSubmit}>
+                <Form
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, 1fr)",
+                  }}
+                  onSubmit={handleSubmit}
+                >
                   <div>
                     <Form.Group className="mb-3" controlId="nombre">
                       <Form.Control
@@ -106,9 +129,13 @@ export const CrearEmpresa = ({
                     </Form.Group>
                   </div>
                   <div>
-                    <Button variant="danger" onClick={handleClose}>Cancelar</Button>
-                    <Button variant="primary" type="submit">Aceptar</Button>
-                    </div>
+                    <Button variant="danger" onClick={handleClose}>
+                      Cancelar
+                    </Button>
+                    <Button variant="primary" type="submit">
+                      Aceptar
+                    </Button>
+                  </div>
                 </Form>
               </>
             )}
@@ -116,7 +143,5 @@ export const CrearEmpresa = ({
         </Modal.Body>
       </Modal>
     </div>
-  )
-
-}
-
+  );
+};

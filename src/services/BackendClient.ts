@@ -45,6 +45,7 @@ export abstract class BackendClient<T> extends AbstractBackendClient<T> {
     }
   
     async post(data: T): Promise<T> {
+      console.log(data);
       const response = await fetch(`${this.baseUrl}`, {
         method: "POST",
         headers: {
@@ -52,6 +53,13 @@ export abstract class BackendClient<T> extends AbstractBackendClient<T> {
         },
         body: JSON.stringify(data),
       });
+
+      if (!response.ok) {
+        const errorDetails = await response.text(); // Obtenemos los detalles del error
+        console.error("Error en el POST:", response.status, errorDetails);
+        throw new Error(`Error en POST: ${response.status} ${errorDetails}`);
+      }
+      
       const newData = await response.json();
       return newData as T;
     }
