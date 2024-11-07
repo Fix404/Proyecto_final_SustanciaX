@@ -7,7 +7,7 @@ import { EmpresaService } from "../../services/ParticularServices/EmpresaService
 import { removeEmpresaElementActive } from "../../redux/slices/EmpresasReducer";
 
 
-// const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface IPropsCreateEmpresa {
   getEmpresas: Function
@@ -27,7 +27,7 @@ export const CrearEmpresa = ({
     logo: null,
   }
 
-  const apiEmpresa = new EmpresaService("/api/empresas");
+  const apiEmpresa = new EmpresaService(API_URL+"empresas");
 
   const elementActive = useAppSelector(
     (state) => state.empresaReducer.elementActive);

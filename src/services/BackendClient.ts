@@ -5,6 +5,30 @@ export abstract class BackendClient<T> extends AbstractBackendClient<T> {
     constructor(baseUrl: string) {
       super(baseUrl);
     }
+    
+    async get(endpoint:string):Promise<T[]>{
+      try{
+        const response= await fetch(`${this.baseUrl}${endpoint}`,
+          {
+            method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+          }
+        );
+        if(!response.ok){
+          throw new Error("Error en la solicitud");
+        }
+
+        const data= await response.json();
+
+        return data as T[];
+      }catch(error){
+        console.error("Error en la request GET: ", error);
+        throw error;
+      }
+    }
+
     async getAll(): Promise<T[]> {
       const response = await fetch(`${this.baseUrl}`);
       const data = await response.json();

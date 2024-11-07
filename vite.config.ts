@@ -6,11 +6,12 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': {
-        target: 'http://190.221.207.224:8090',
+      // Redirige las solicitudes al backend
+      '/sucursales': {
+        target: 'http://localhost:8090',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')  // Remueve '/api' del path al enviar la solicitud
-      }
-    }
-  }
+        rewrite: (path) => path.replace(/^\/sucursales/, '/sucursales')
+      },
+    },
+  },
 })

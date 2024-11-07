@@ -15,7 +15,7 @@ export interface IPropsSidebarHome {
 
 
 export const SidebarHome: React.FC<IPropsSidebarHome> = ({ onAddEmpresaClick }) => {
-  const empresaService=new EmpresaService("/api/empresas");
+  const empresaService=new EmpresaService(API_URL+`empresas`);
   const dispatch=useDispatch();
 
   const getEmpresas=async () => {

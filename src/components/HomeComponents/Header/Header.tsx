@@ -17,22 +17,28 @@ export const Header = () => {
 
   return (
     <div className={styles.principalHeaderContainer}>
-      <Navbar expand="lg" className="bg-body-tertiary">
-    <Container fluid>
-      <Navbar.Brand href="#">Sucursales de: {empresaActiva?.nombre}</Navbar.Brand>
-      <Navbar.Toggle aria-controls="navbarScroll" />
-      <Navbar.Collapse id="navbarScroll">
-             {/* Modal */}
-      {openModal && <CrearSucursal
-        openModal={openModal}
-        setOpenModal={setOpenModal} />}
-        <Form className="d-flex">
-  
-          <Button variant="outline-success" onClick={toggleModal}>AGREGAR SUCURSAL</Button>
-        </Form>
-      </Navbar.Collapse>
-    </Container>
-  </Navbar>
+      {
+        empresaActiva ? (<Navbar expand="lg" className="bg-body-tertiary">
+          <Container fluid>
+            <Navbar.Brand href="#">Sucursales de: {empresaActiva?.nombre}</Navbar.Brand>
+            <Navbar.Toggle aria-controls="navbarScroll" />
+            <Navbar.Collapse id="navbarScroll">
+                   {/* Modal */}
+            {openModal && <CrearSucursal
+              openModal={openModal}
+              setOpenModal={setOpenModal} />}
+              <Form className="d-flex">
+        
+                <Button variant="outline-success" onClick={toggleModal}>AGREGAR SUCURSAL</Button>
+              </Form>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>)
+        : (<div>
+          <h1>No se ha seleccionado una empresa</h1>
+          </div>)
+      }
+      
     </div>
   )
 }
