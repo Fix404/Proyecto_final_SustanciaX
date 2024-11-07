@@ -30,7 +30,8 @@ export abstract class BackendClient<T> extends AbstractBackendClient<T> {
     }
 
     async getAll(): Promise<T[]> {
-      const response = await fetch(`${this.baseUrl}`);
+      const response = await fetch(`${this.baseUrl}`
+      );
       const data = await response.json();
       return data as T[];
     }
@@ -65,6 +66,7 @@ export abstract class BackendClient<T> extends AbstractBackendClient<T> {
     }
   
     async put(id: number, data: T): Promise<T> {
+      console.log(data);
       const response = await fetch(`${this.baseUrl}/${id}`, {
         method: "PUT",
         headers: {
@@ -72,6 +74,13 @@ export abstract class BackendClient<T> extends AbstractBackendClient<T> {
         },
         body: JSON.stringify(data),
       });
+
+      if (!response.ok) {
+        const errorDetails = await response.text(); // Obtenemos los detalles del error
+        console.error("Error en el PUT:", response.status, errorDetails);
+        throw new Error(`Error en PUT: ${response.status} ${errorDetails}`);
+      }
+      
       const newData = await response.json();
       return newData as T;
     }

@@ -1,14 +1,14 @@
 import { Button, Form, Modal } from "react-bootstrap";
 import { Formik } from "formik";
-
 import * as Yup from "yup";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { removeElementActive } from "../../redux/slices/TableReducerSucursal";
 import { ICreateSucursal } from "../../types/dtos/sucursal/ICreateSucursal";
 import { SucursalService } from "../../services/ParticularServices/SucursalService";
 import { useEffect } from "react";
+import { IUpdateSucursal } from "../../types/dtos/sucursal/IUpdateSucursal";
 
-const API_URL = import.meta.env.VITE_API_URL;
+//const API_URL = import.meta.env.VITE_API_URL;
 
 interface IPropsCreateSucursal {
   openModal: boolean;
@@ -20,7 +20,7 @@ export const CrearSucursal = ({
   setOpenModal,
 }: IPropsCreateSucursal) => {
   const empresaActiva=useAppSelector((state)=> state.empresaReducer.elementActive);
-  const apiSucursal = new SucursalService(API_URL + "sucursales/create");
+  const apiSucursalCreate = new SucursalService("/api/sucursales/create");
 
   const initialValues: ICreateSucursal = {
     nombre: "",
@@ -100,21 +100,19 @@ export const CrearSucursal = ({
             })}
             initialValues={elementActive ? elementActive : initialValues}
             enableReinitialize={true}
-            onSubmit={async (values: ICreateSucursal) => {
-              if(!empresaActiva?.id && empresaActiva===0){
-                console.error("Error: El ID de la empresa no es válido.", empresaActiva);
-                return; 
-              }
-              values.idEmpresa = empresaActiva.id;
-              if (elementActive) {
-                await apiSucursal.put(elementActive?.id, values);
-              } else {
+            onSubmit={(!elementActive ? (async (values: ICreateSucursal) => {
                 values.idEmpresa=empresaActiva.id;
-                await apiSucursal.post(values);
-              }
-              
-              handleClose();
-            }}
+                await apiSucursalCreate.post(values);
+            }): (async (values: IUpdateSucursal)=> {
+              values.idEmpresa=empresaActiva.id;
+                const apiSucursalUpdate= new SucursalService("/api/sucursales/update");
+                console.log(elementActive);
+                console.log(elementActive.id)
+                
+                await apiSucursalUpdate.put(elementActive.id, values);})
+            )
+}
+          
           >
             {({ values, handleChange, handleSubmit }) => (
               <>

@@ -1,19 +1,31 @@
 import { Button, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./CardSucursal.module.css";
+import { useAppDispatch } from "../../hooks/redux";
+import { removeElementActive, setElementActive } from "../../redux/slices/TableReducerSucursal";
+import { CrearSucursal } from "../../modals/SucursalModals/CrearSucursal";
 
 interface ICardSucursal {
   sucursal: ISucursal;
 }
 
 export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
+  const [openModal, setOpenModal] = useState(false);
+
+  const dispatch=useAppDispatch();
   const navigate = useNavigate();
 
   const handleNavigateAdmin = () => {
     navigate("/admin");
   };
+
+  const handleEditarSucursal = () => {
+    dispatch(removeElementActive());
+    dispatch(setElementActive({element:sucursal}));
+    setOpenModal(!openModal)
+  }
 
   return (
     <div>
@@ -53,12 +65,14 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
             overlay={
               <Tooltip id="button-tooltip-eliminar">Editar Sucursal</Tooltip>
             }>
-          <Button variant="secondary">
+          <Button variant="secondary" onClick={handleEditarSucursal}>
             <span className="material-symbols-outlined">edit</span>
           </Button>
           </OverlayTrigger>
         </Card.Footer>
       </Card>
+
+      {openModal && <CrearSucursal openModal={openModal} setOpenModal={setOpenModal}/>}
     </div>
   );
 };
