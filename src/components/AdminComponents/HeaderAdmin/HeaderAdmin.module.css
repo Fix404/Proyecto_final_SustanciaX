@@ -1,0 +1,25 @@
+.containerNav {
+  height: 8vh;
+  display: flex;
+  align-items: center; 
+  background-color: #198754;
+  gap: 2vw; 
+}
+
+.containerSucursal {
+  color: #fff;
+  font-size: 18px;
+  margin: 0; 
+}
+
+.containerIcon {
+  font-size: 50px;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.containerIcon:hover {
+  transform: scale(1.4);
+  opacity: 0.5;
+}

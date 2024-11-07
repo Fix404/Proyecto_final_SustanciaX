@@ -1,0 +1,29 @@
+.containerGeneralBody{
+    height: 100%;
+    padding: 20px;
+    background-color: rgb(213, 212, 210);
+}
+
+.headerContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 4px;
+}
+
+.filtrarProductos{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1vh;
+}
+
+.filtrarProductos p{
+    font-weight: bolder;
+    margin-right: 8px;
+    margin-top: 1%;
+}
+
+.headerContainer Button{
+    width: 26vh;
+    height: min-content;
+}

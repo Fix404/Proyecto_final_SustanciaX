@@ -1,0 +1,22 @@
+.itemContainer{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(226, 228, 230);
+}
+.menuContainer{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+}
+.clasificacionesContainer{
+    width: 76%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 2vh 4px 0 4px;
+}
+.textoAcciones{
+    margin-top: 2vh;
+    margin-left: 5rem;
+}
