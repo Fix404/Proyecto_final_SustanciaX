@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IEmpresa } from "../../types/dtos/empresa/IEmpresa";
 import { ICreateEmpresaDto } from "../../types/dtos/empresa/ICreateEmpresaDto";
+import { IUpdateSucursal } from "../../types/dtos/sucursal/IUpdateSucursal";
 
 
 interface IInitialState {
     dataTable: IEmpresa[]; 
-    elementActive: null | ICreateEmpresaDto; 
+    elementActive: null | ICreateEmpresaDto | IUpdateSucursal; 
   }
 
   const initialState: IInitialState = {

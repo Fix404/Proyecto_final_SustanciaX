@@ -8,7 +8,7 @@ export interface IProductos {
   denominacion: string;
   precioVenta: number;
   descripcion: string;
-  categoria: ICategorias;
+  categoria: ICategorias | null; 
   eliminado: boolean;
   habilitado: boolean;
   codigo: string;

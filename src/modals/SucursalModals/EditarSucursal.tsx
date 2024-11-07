@@ -15,7 +15,7 @@ interface IPropsUpdateSucursal {
   setOpenModal: (state: boolean) => void;
 }
 
-export const ModificarSucursal = ({
+export const EditarSucursal = ({
   getSucursales,
   openModal,
   setOpenModal,
@@ -44,8 +44,7 @@ export const ModificarSucursal = ({
   };
 
   const apiSucursal = new SucursalService(API_URL + "/sucursales");
-
-  const elementActive = useAppSelector((state) => state.tablaReducer.elementActive) as IUpdateSucursal | undefined;
+  const elementActive = useAppSelector((state) => state.tablaReducer.elementActive);
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
@@ -67,10 +66,12 @@ export const ModificarSucursal = ({
         <Modal.Header
           style={{ display: "flex", alignContent: "center", justifyContent: "center" }}
         >
-          <Modal.Title style={{ color: "white" }}>Modificar Sucursal</Modal.Title>
+          <Modal.Title style={{ color: "white" }}>Editar Sucursal</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Formik
+            initialValues={elementActive ? (elementActive as IUpdateSucursal) : initialValues}
+            enableReinitialize={true}
             validationSchema={Yup.object({
               nombre: Yup.string().required("Campo requerido"),
               horarioApertura: Yup.string().required("Campo requerido"),
@@ -88,8 +89,6 @@ export const ModificarSucursal = ({
               }),
               idEmpresa: Yup.number(),
             })}
-            initialValues={elementActive ? elementActive : initialValues}
-            enableReinitialize={true}
             onSubmit={async (values: IUpdateSucursal) => {
               if (elementActive) {
                 await apiSucursal.put(values.id, values); 
@@ -98,69 +97,61 @@ export const ModificarSucursal = ({
               handleClose();
             }}
           >
-            {() => (
+            {({ handleSubmit }) => (
               <>
-                <Form style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
-                  <div>
-                    <Form.Group className="mb-3" controlId="nombre">
-                      <Form.Control type="text" placeholder="Ingrese un nombre aquí" autoFocus />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="horarioApertura">
-                      <Form.Control type="text" placeholder="Ingrese horario de apertura" />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="horarioCierre">
-                      <Form.Control type="text" placeholder="Ingrese horario de cierre" />
-                    </Form.Group>
-                  </div>
-                  <div>
-                    <Form.Select aria-label="Default select example" id="pais">
-                      <option>País</option>
-                      <option value="1">Argentina</option>
-                      <option value="2">Burkina Faso</option>
-                      <option value="3">Tonga</option>
-                    </Form.Select>
-                    <Form.Select aria-label="Default select example" id="provincia">
-                      <option>Provincia</option>
-                      <option value="1">Mendoza</option>
-                      <option value="2">Córdoba</option>
-                      <option value="3">La Pampa</option>
-                    </Form.Select>
-                    <Form.Select aria-label="Default select example" id="localidad">
-                      <option>Localidad</option>
-                      <option value="1">Maipú</option>
-                      <option value="2">Las Heras</option>
-                      <option value="3">Godoy Cruz</option>
-                    </Form.Select>
-                    <Form.Group className="mb-3" controlId="latitud">
-                      <Form.Control type="text" placeholder="Ingrese latitud" />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="longitud">
-                      <Form.Control type="text" placeholder="Ingrese longitud" />
-                    </Form.Group>
-                  </div>
-                  <div>
-                    <Form.Group className="mb-3" controlId="nombreCalle">
-                      <Form.Control type="text" placeholder="Nombre de la calle" />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="numeroDeCalle">
-                      <Form.Control type="text" placeholder="Número de la calle" />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="codigoPostal">
-                      <Form.Control type="text" placeholder="Código Postal" />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="numeroDePiso">
-                      <Form.Control type="text" placeholder="Número de piso" />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="numeroDeDepartamento">
-                      <Form.Control type="text" placeholder="Número de departamento" />
-                    </Form.Group>
-                  </div>
-                  <div>
-                    <Form.Group controlId="imagenSucursal" className="mb-3">
-                      <Form.Label>Suba una imagen</Form.Label>
-                      <Form.Control type="file" />
-                    </Form.Group>
-                  </div>
+                <Form onSubmit={handleSubmit} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
+                  <Form.Group className="mb-3" controlId="nombre">
+                    <Form.Control type="text" placeholder="Ingrese un nombre aquí" autoFocus name="nombre" />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="horarioApertura">
+                    <Form.Control type="text" placeholder="Ingrese horario de apertura" name="horarioApertura" />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="horarioCierre">
+                    <Form.Control type="text" placeholder="Ingrese horario de cierre" name="horarioCierre" />
+                  </Form.Group>
+                  <Form.Select aria-label="Default select example" id="pais" name="pais">
+                    <option>País</option>
+                    <option value="1">Argentina</option>
+                    <option value="2">Burkina Faso</option>
+                    <option value="3">Tonga</option>
+                  </Form.Select>
+                  <Form.Select aria-label="Default select example" id="provincia" name="provincia">
+                    <option>Provincia</option>
+                    <option value="1">Mendoza</option>
+                    <option value="2">Córdoba</option>
+                    <option value="3">La Pampa</option>
+                  </Form.Select>
+                  <Form.Select aria-label="Default select example" id="localidad" name="domicilio.idLocalidad">
+                    <option>Localidad</option>
+                    <option value="1">Maipú</option>
+                    <option value="2">Las Heras</option>
+                    <option value="3">Godoy Cruz</option>
+                  </Form.Select>
+                  <Form.Group className="mb-3" controlId="latitud">
+                    <Form.Control type="text" placeholder="Ingrese latitud" name="latitud" />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="longitud">
+                    <Form.Control type="text" placeholder="Ingrese longitud" name="longitud" />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="nombreCalle">
+                    <Form.Control type="text" placeholder="Nombre de la calle" name="domicilio.calle" />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="numeroDeCalle">
+                    <Form.Control type="text" placeholder="Número de la calle" name="domicilio.numero" />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="codigoPostal">
+                    <Form.Control type="text" placeholder="Código Postal" name="domicilio.cp" />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="numeroDePiso">
+                    <Form.Control type="text" placeholder="Número de piso" name="domicilio.piso" />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="numeroDeDepartamento">
+                    <Form.Control type="text" placeholder="Número de departamento" name="domicilio.nroDpto" />
+                  </Form.Group>
+                  <Form.Group controlId="imagenSucursal" className="mb-3">
+                    <Form.Label>Suba una imagen</Form.Label>
+                    <Form.Control type="file" name="logo" />
+                  </Form.Group>
                 </Form>
               </>
             )}
@@ -168,7 +159,7 @@ export const ModificarSucursal = ({
         </Modal.Body>
         <Modal.Footer style={{ display: "flex", alignContent: "center", justifyContent: "space-evenly" }}>
           <Button variant="danger" onClick={handleClose}>Cancelar</Button>
-          <Button variant="primary" type="submit">Guardar cambios</Button>
+          <Button variant="primary" type="submit" form="modal">Guardar cambios</Button>
         </Modal.Footer>
       </Modal>
     </>

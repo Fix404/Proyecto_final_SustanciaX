@@ -46,7 +46,7 @@ export const productosData: IProductos[] = [
         precioVenta: 3000,
         descripcion: "Descripción de otroProducto",
         categoria: {
-            id: 1,
+            id: 2,
             denominacion: "otraCategoría",
             eliminado: false,
             sucursales: [],
@@ -85,8 +85,8 @@ export const productosData: IProductos[] = [
         precioVenta: 3000,
         descripcion: "Descripción de unProducto",
         categoria: {
-            id: 1,
-            denominacion: "unaCategoría",
+            id: 3,
+            denominacion: "otraNuevaCategoría",
             eliminado: false,
             sucursales: [],
             subCategorias: [],
@@ -124,7 +124,7 @@ export const productosData: IProductos[] = [
         precioVenta: 3000,
         descripcion: "Descripción de otroProducto",
         categoria: {
-            id: 1,
+            id: 2,
             denominacion: "otraCategoría",
             eliminado: false,
             sucursales: [],

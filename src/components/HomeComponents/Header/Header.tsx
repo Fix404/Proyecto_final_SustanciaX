@@ -46,7 +46,6 @@ export const Header = () => {
         >
           <Nav.Link href="#action1">Home</Nav.Link>
           
-       
         </Nav>
 
              {/* Modal */}
