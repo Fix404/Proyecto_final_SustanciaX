@@ -32,7 +32,7 @@ export const Home = () => {
       style={{
         width: "20%",
         backgroundColor: " #e9f0ec",
-        height: "100vh",
+        height: "calc(100vh - 55px)",
       }}
     >
       <SidebarHome onAddEmpresaClick={handleOpenModal}/>

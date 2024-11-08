@@ -35,7 +35,7 @@ export const Header = () => {
           </Container>
         </Navbar>)
         : (<div>
-          <h1>No se ha seleccionado una empresa</h1>
+         
           </div>)
       }
       

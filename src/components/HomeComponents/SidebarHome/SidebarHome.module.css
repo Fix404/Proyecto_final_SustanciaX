@@ -1,10 +1,15 @@
 .principalContainerSidebar{
-  width: fit-content;
-  justify-content: center;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;     
 }
 
-
-.containerGeneralBody{
-  height: 100%;
-  background-color: rgb(213, 212, 210);
+.principalContainerSidebar h1{
+  font-size: 30px;
+  margin: 20px;
 }
+
+.containerDivButtonEmpresa{
+margin: 20px;
+}
+

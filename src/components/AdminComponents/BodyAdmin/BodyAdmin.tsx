@@ -62,7 +62,7 @@ export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
 
             {activeSection === "CATEGORIAS" && (
                 <div>
-                    <h1>Categorías</h1>
+                   
                 </div>
             )}
 

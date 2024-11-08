@@ -30,10 +30,13 @@ export const Body = () => {
 
   return (
     <>
-    {empresaActiva ?  <div className={styles.containerGeneralBody}>
-    <ListSucursales sucursales={dataList} />
-</div> : <div>
-  </div>}
+    <div className={styles.containerGeneralBody}>
+      {empresaActiva ?  <div>
+      <ListSucursales sucursales={dataList} />
+      </div> : <div className={styles.containerNoSelection}>
+      <p>No se ha seleccionado ninguna empresa</p>
+        </div>}
+    </div>
 </>
   )
 }

@@ -1,9 +1,15 @@
 .containerTitle{
-    font-size: 30px;
+    
     padding: 20px;
     display: flex;
     justify-content: center;
   }
+
+.containerTitle h1{
+  font-size: 30px;
+  margin: 20px;
+}
+
   .containerDivButtonEmpresa{
   display: flex;
   justify-content: center;

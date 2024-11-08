@@ -10,7 +10,7 @@ export const SidebarAdmin: React.FC<SidebarAdminProps> = ({onButtonClick}) => {
     <div >
 
     <div className={styles.containerTitle}>
-      <p>Administración</p>
+      <h1>Administración</h1>
     </div>
 
     <div className={styles.containerDivButtonEmpresa} >

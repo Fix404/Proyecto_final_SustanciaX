@@ -1,5 +1,25 @@
 .containerGeneralBody{
-    height: 100%;
+    height: calc(100vh - 55px);
     padding: 20px;
     background-color: rgb(213, 212, 210);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+}
+
+.containerNoSelection{
+    color: #18231a; 
+    border: 1px solid #18231a;
+    background-color: transparent;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.25rem;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerNoSelection p{
+    font-size: 20px;
 }
