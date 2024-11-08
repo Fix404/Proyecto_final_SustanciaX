@@ -7,9 +7,9 @@ interface SidebarAdminProps {
 
 export const SidebarAdmin: React.FC<SidebarAdminProps> = ({onButtonClick}) => {
   return (
-    <div >
+    <div className={styles.principalContainerSideBarAdmin}>
 
-    <div className={styles.containerTitle}>
+    <div>
       <h1>Administración</h1>
     </div>
 

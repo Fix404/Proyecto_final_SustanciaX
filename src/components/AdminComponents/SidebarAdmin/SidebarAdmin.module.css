@@ -1,19 +1,46 @@
-.containerTitle{
-    
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-  }
-
-.containerTitle h1{
-  font-size: 30px;
-  margin: 20px;
+.principalContainerSideBarAdmin {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
-  .containerDivButtonEmpresa{
+
+@media (max-width: 768px) {
+  .principalContainerSideBarAdmin {
+    height: auto;
+    flex-direction: column;
+    gap: 1vw;
+    
+  }
+}
+
+
+.principalContainerSideBarAdmin h1 {
+  font-size: 30px;
+  margin: 30px;
+  word-wrap: break-word;
+}
+
+.containerDivButtonEmpresa {
   display: flex;
   justify-content: center;
   flex-direction: column;
   gap: 2vh;
-  margin: 0rem 3rem;
+  margin: 1rem 3rem;
+
+}
+
+.containerDivButtonEmpresa button {
+  width: 100%;
+  word-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .containerDivButtonEmpresa {
+    height: auto;
+    flex-direction: column;
+    gap: 1vw;
+    margin: 0 1rem;
+    
   }
+}

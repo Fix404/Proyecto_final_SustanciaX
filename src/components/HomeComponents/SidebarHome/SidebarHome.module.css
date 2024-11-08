@@ -4,12 +4,23 @@
   align-items: center;     
 }
 
+@media (max-width: 768px) {
+  .principalContainerSidebar{
+    height: auto; 
+    flex-direction: column; 
+    gap: 1vw; 
+  }
+}
+
 .principalContainerSidebar h1{
   font-size: 30px;
   margin: 20px;
+  word-wrap: break-word;
 }
 
 .containerDivButtonEmpresa{
 margin: 20px;
 }
+
+
 
