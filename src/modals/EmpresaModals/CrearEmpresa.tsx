@@ -1,5 +1,5 @@
 import { Button, Form, Modal } from "react-bootstrap";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useAppDispatch } from "../../hooks/redux";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { ICreateEmpresaDto } from "../../types/dtos/empresa/ICreateEmpresaDto";
@@ -28,9 +28,6 @@ export const CrearEmpresa = ({
 
   const apiEmpresa = new EmpresaService("/api/empresas");
 
-  const elementActive = useAppSelector(
-    (state) => state.empresaReducer.elementActive
-  );
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
@@ -56,11 +53,7 @@ export const CrearEmpresa = ({
           }}
           closeButton
         >
-          {elementActive ? (
-            <Modal.Title style={{ color: "white" }}>Editar Empresa</Modal.Title>
-          ) : (
-            <Modal.Title style={{ color: "white" }}>Crear Empresa</Modal.Title>
-          )}
+          <Modal.Title style={{ color: "white" }}>Crear Empresa</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Formik
@@ -69,14 +62,10 @@ export const CrearEmpresa = ({
               razonSocial: Yup.string().required("Campo requerido"),
               cuit: Yup.string().required("Campo requerido"),
             })}
-            initialValues={elementActive ? elementActive : initialValues}
+            initialValues={initialValues}
             enableReinitialize={true}
             onSubmit={async (values: ICreateEmpresaDto) => {
-              if (elementActive) {
-                await apiEmpresa.put(elementActive?.id, values);
-              } else {
                 await apiEmpresa.post(values);
-              }
               getEmpresas();
               handleClose();
             }}

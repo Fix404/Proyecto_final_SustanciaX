@@ -2,10 +2,11 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { removeElementActive } from "../../redux/slices/TableReducerSucursal";
+import { removeElementActive, setDataSucursalList } from "../../redux/slices/TableReducerSucursal";
 import { SucursalService } from "../../services/ParticularServices/SucursalService";
 import { useEffect } from "react";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
+import { IUpdateSucursal } from "../../types/dtos/sucursal/IUpdateSucursal";
 
 //const API_URL = import.meta.env.VITE_API_URL;
 
@@ -20,11 +21,41 @@ export const EditarSucursal = ({
   setOpenModal,
   sucursalActiva
 }: IPropsCreateSucursal) => {
-  const empresaActiva=useAppSelector((state)=> state.empresaReducer.elementActive);
+  const empresaActiva=useAppSelector((state)=> state.empresaReducer.elementActive!);
   const apiSucursalUpdate= new SucursalService(`/api/sucursales/update`);
+  const apiSucursalGet=new SucursalService(`/api`)
+
+  const initialValues:IUpdateSucursal = {
+    id:sucursalActiva.id,
+    nombre: sucursalActiva.nombre,
+  idEmpresa: sucursalActiva.empresa.id,
+  eliminado: sucursalActiva.eliminado,
+  latitud: sucursalActiva.latitud,
+  longitud: sucursalActiva.longitud,
+  domicilio: {
+    id: sucursalActiva.domicilio.id,
+    calle: sucursalActiva.domicilio.calle,
+    numero: sucursalActiva.domicilio.numero,
+    cp: sucursalActiva.domicilio.cp,
+    piso: sucursalActiva.domicilio.piso,
+    nroDpto: sucursalActiva.domicilio.nroDpto,
+    idLocalidad: 1,
+  },
+  logo: "",
+  categorias: [],
+  esCasaMatriz: sucursalActiva.esCasaMatriz,
+  horarioApertura: sucursalActiva.horarioApertura,
+  horarioCierre: sucursalActiva.horarioCierre
+  }
 
 
   const dispatch = useAppDispatch();
+
+  const getSucursalesPorEmpresaId = async (id:number) => {
+    await apiSucursalGet.getSucursalesPorEmpresaId(id).then((sucursalData) => {
+      dispatch(setDataSucursalList(sucursalData));
+    });
+  };
 
   const handleClose = () => {
     setOpenModal(false);
@@ -72,14 +103,12 @@ export const EditarSucursal = ({
               logo: Yup.string(),
               idEmpresa: Yup.number()
             })}
-            initialValues={sucursalActiva}
+            initialValues={initialValues}
             enableReinitialize={true}
-            onSubmit={async (values: ISucursal)=> {
-              // values.idEmpresa=empresaActiva.id;
-                console.log(sucursalActiva);
-                console.log(sucursalActiva!.id)
-                await apiSucursalUpdate.put(sucursalActiva!.id, values);}}
-          
+            onSubmit={async (values: IUpdateSucursal)=> {
+                await apiSucursalUpdate.put(sucursalActiva!.id, values);
+                getSucursalesPorEmpresaId(empresaActiva.id);
+                handleClose();}}
           >
             {({ values, handleChange, handleSubmit }) => (
               <>
