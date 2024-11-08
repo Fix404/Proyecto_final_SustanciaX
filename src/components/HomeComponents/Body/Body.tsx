@@ -11,7 +11,7 @@ export const Body = () => {
   const dispatch = useAppDispatch();
   const empresaActiva=useAppSelector((state) => state.empresaReducer.elementActive);
 
-  const sucursalService = new SucursalService("/api/");
+  const sucursalService = new SucursalService(`/api/`);
 
   const getSucursalesPorEmpresaId = async (id:number) => {
     await sucursalService.getSucursalesPorEmpresaId(id).then((sucursalData) => {

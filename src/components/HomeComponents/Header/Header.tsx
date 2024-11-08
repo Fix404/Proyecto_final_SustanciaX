@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button, Container, Form, Navbar} from "react-bootstrap"
 import { CrearSucursal } from "../../../modals/SucursalModals/CrearSucursal";
@@ -26,7 +25,8 @@ export const Header = () => {
                    {/* Modal */}
             {openModal && <CrearSucursal
               openModal={openModal}
-              setOpenModal={setOpenModal} />}
+              setOpenModal={setOpenModal} 
+              empresaActiva={empresaActiva}/>}
               <Form className="d-flex">
         
                 <Button variant="outline-success" onClick={toggleModal}>AGREGAR SUCURSAL</Button>

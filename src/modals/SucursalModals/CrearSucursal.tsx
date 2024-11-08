@@ -1,28 +1,31 @@
 import { Button, Form, Modal } from "react-bootstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { removeElementActive } from "../../redux/slices/TableReducerSucursal";
+import { useAppDispatch} from "../../hooks/redux";
 import { ICreateSucursal } from "../../types/dtos/sucursal/ICreateSucursal";
 import { SucursalService } from "../../services/ParticularServices/SucursalService";
 import { useEffect } from "react";
-import { IUpdateSucursal } from "../../types/dtos/sucursal/IUpdateSucursal";
+import { setDataSucursalList } from "../../redux/slices/TableReducerSucursal";
+import { IEmpresa } from "../../types/dtos/empresa/IEmpresa";
 
 //const API_URL = import.meta.env.VITE_API_URL;
 
 interface IPropsCreateSucursal {
   openModal: boolean;
   setOpenModal: (state: boolean) => void;
+  empresaActiva: IEmpresa
 }
 
 export const CrearSucursal = ({
   openModal,
   setOpenModal,
+  empresaActiva
 }: IPropsCreateSucursal) => {
-  const empresaActiva=useAppSelector((state)=> state.empresaReducer.elementActive);
-  const apiSucursalCreate = new SucursalService("/api/sucursales/create");
+  const apiSucursalCreate = new SucursalService(`/api/sucursales/create`);
+  const apiSucursalGet=new SucursalService(`api/`);
+  const dispatch=useAppDispatch()
 
-  const initialValues: ICreateSucursal = {
+  const initialValuesCreate: ICreateSucursal = {
     nombre: "",
     horarioApertura: "",
     horarioCierre: "",
@@ -38,24 +41,24 @@ export const CrearSucursal = ({
       nroDpto: 0,
     },
     logo: "",
-    idEmpresa: 1
+    idEmpresa: empresaActiva.id
   };
 
-  const elementActive = useAppSelector(
-    (state) => state.tablaReducerSucursal.elementActive
-  );
-  const dispatch = useAppDispatch();
+  const getSucursalesPorEmpresaId = async (id:number) => {
+    await apiSucursalGet.getSucursalesPorEmpresaId(id).then((sucursalData) => {
+      dispatch(setDataSucursalList(sucursalData));
+    });
+  };
 
   const handleClose = () => {
     setOpenModal(false);
-    dispatch(removeElementActive());
   };
 
   useEffect(()=>{
-    if (empresaActiva?.id) {
-      initialValues.idEmpresa = empresaActiva.id;
+    if(empresaActiva){
+      getSucursalesPorEmpresaId(empresaActiva.id);
     }
-  }, [empresaActiva]);
+  }, [openModal]);
 
   return (
     <div>
@@ -75,10 +78,7 @@ export const CrearSucursal = ({
             justifyContent: "center",
           }}
         >
-          {
-            elementActive ? <Modal.Title style={{ color: "white" }}>Editar Sucursal</Modal.Title>
-            : <Modal.Title style={{ color: "white" }}>Crear Sucursal</Modal.Title>
-          }
+        <Modal.Title style={{ color: "white" }}>Crear Sucursal</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Formik
@@ -98,20 +98,12 @@ export const CrearSucursal = ({
               logo: Yup.string(),
               idEmpresa: Yup.number()
             })}
-            initialValues={elementActive ? elementActive : initialValues}
+            initialValues={initialValuesCreate}
             enableReinitialize={true}
-            onSubmit={(!elementActive ? (async (values: ICreateSucursal) => {
-                values.idEmpresa=empresaActiva.id;
+            onSubmit={(async (values: ICreateSucursal) => {
                 await apiSucursalCreate.post(values);
-            }): (async (values: IUpdateSucursal)=> {
-              values.idEmpresa=empresaActiva.id;
-                const apiSucursalUpdate= new SucursalService("/api/sucursales/update");
-                console.log(elementActive);
-                console.log(elementActive.id)
-                
-                await apiSucursalUpdate.put(elementActive.id, values);})
-            )
-}
+                handleClose();
+            })}
           
           >
             {({ values, handleChange, handleSubmit }) => (

@@ -1,11 +1,11 @@
 import { Button, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./CardSucursal.module.css";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { removeElementActive, setElementActive } from "../../redux/slices/TableReducerSucursal";
-import { CrearSucursal } from "../../modals/SucursalModals/CrearSucursal";
+import { EditarSucursal } from "../../modals/SucursalModals/EditarSucursal";
 
 interface ICardSucursal {
   sucursal: ISucursal;
@@ -21,11 +21,15 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
     navigate("/admin");
   };
 
+  const sucursalActiva=useAppSelector(state => state.tablaReducerSucursal.elementActive);
   const handleEditarSucursal = () => {
     dispatch(removeElementActive());
     dispatch(setElementActive({element:sucursal}));
     setOpenModal(!openModal)
   }
+
+  useEffect(() =>{
+  }, [sucursalActiva])
 
   return (
     <div>
@@ -72,7 +76,7 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
         </Card.Footer>
       </Card>
 
-      {openModal && <CrearSucursal openModal={openModal} setOpenModal={setOpenModal}/>}
+      {openModal && sucursalActiva && <EditarSucursal openModal={openModal} setOpenModal={setOpenModal} sucursalActiva={sucursalActiva}/>}
     </div>
   );
 };

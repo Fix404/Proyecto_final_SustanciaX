@@ -3,7 +3,7 @@ import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 
 interface IInitialStateSucursal {
     dataList: ISucursal[]; 
-    elementActive: ISucursal | null; 
+    elementActive: ISucursal | null ; 
   }
 
   const initialState: IInitialStateSucursal = {
