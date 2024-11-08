@@ -46,7 +46,7 @@ export const sucrsalesData:ISucursal[]=[
     },
 
     {
-      id: 1,
+      id: 2,
 nombre: "Las Marianas",
 empresa: {
   id: 1,
@@ -89,7 +89,7 @@ horarioCierre: "rr",
 logo: "aa",
   },
   {
-    id: 1,
+    id: 3,
 nombre: "Los pollos",
 empresa: {
 id: 1,
@@ -133,7 +133,7 @@ logo: "aa",
 },
 
 {
-  id: 1,
+  id: 4,
 nombre: "Las Marianas",
 empresa: {
 id: 1,

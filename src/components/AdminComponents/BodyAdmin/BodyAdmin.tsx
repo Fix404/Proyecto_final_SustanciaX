@@ -25,18 +25,15 @@ export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
         setOpenModalCrearProducto(!openModalCrearProducto);
     }
 
-    const [loading, setLoading] = useState(false);
     const productoService = new ProductoService(API_URL + "/productos");
     const dispatch = useAppDispatch();
     const getProductos = async () => {
         await productoService.getAll().then((productosData) => {
             dispatch(setDataTable(productosData));
-            setLoading(false);
         });
     };
 
     useEffect(() => {
-        setLoading(true);
         getProductos();
     }, []);
 

@@ -106,7 +106,7 @@ export const productosData: IProductos[] = [
                     articulos: {} as IProductos,
                 },
                 eliminado: false,
-                habilitado: false,
+                habilitado: true,
                 codigo: "d4e5f6",
                 alergenos: [],
                 imagenes: []
@@ -145,14 +145,14 @@ export const productosData: IProductos[] = [
                     articulos: {} as IProductos,
                 },
                 eliminado: false,
-                habilitado: true,
+                habilitado: false,
                 codigo: "d2e5f6",
                 alergenos: [],
                 imagenes: []
             },
         },
         eliminado: false,
-        habilitado: true,
+        habilitado: false,
         codigo: "a3b2c3",
         alergenos: [],
         imagenes: []

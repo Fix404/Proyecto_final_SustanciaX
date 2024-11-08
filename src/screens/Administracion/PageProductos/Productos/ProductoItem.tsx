@@ -17,12 +17,21 @@ export const ProductoItem: FC<IProductosItem> = ({ producto }) => {
                     <span className={styles.tooltip}>{`${producto.descripcion}`}</span>
                 </p>
                 <p>{`${producto.categoria.denominacion}`}</p>
-                {producto.habilitado? <p>Si</p> : <p>No</p>}
+                {producto.habilitado ? (<span className="material-symbols-outlined" style={{ color: "green" }}>check_circle</span>)
+                    :
+                    (<span className="material-symbols-outlined" style={{ color: "red" }}>
+                        cancel</span>)}
             </div>
             <div className={styles.accionesContainer}>
-                <button>Ver</button>
-                <button>Editar</button>
-                <button>Eliminar</button>
+                <button>
+                    <span className="material-symbols-outlined" style={{ color: "#ffb600" }}>visibility</span>
+                </button>
+                <button>
+                    <span className="material-symbols-outlined" style={{ color: "#3e6d88" }}>edit</span>
+                </button>
+                <button>
+                    <span className="material-symbols-outlined" style={{ color: "#933631" }}>delete</span>
+                </button>
             </div>
         </div>
     );

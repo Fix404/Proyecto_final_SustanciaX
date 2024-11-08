@@ -12,7 +12,6 @@ export const AppRouter = () => {
       <Route path="/" element={<Home/>} />
          {/* Ruta para abrir administracion */}
       <Route path="/admin/" element={<Admin/>}/>
-        
       </Routes>
   )
 }
