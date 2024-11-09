@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Admin from '../screens/Administracion/Admin';
 import { Home } from '../screens/Home/Home';
 
@@ -7,7 +7,7 @@ const AppRouter = () => {
         <>
             <Routes>
                 <Route path="/" element={<Home />} /> {/* Página de inicio */}
-                <Route path="admin/" element={<Admin />} /> {/* Página de administración */}
+                <Route path="admin" element={<Admin />} /> {/* Página de administración */}
                 {/* Otras rutas pueden ser añadidas aquí */}
             </Routes>
         </>

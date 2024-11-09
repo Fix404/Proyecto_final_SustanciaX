@@ -1,38 +1,46 @@
-import { Button, Dropdown } from "react-bootstrap";
+import { Button, Dropdown, Form } from "react-bootstrap";
 import { productosData } from "../../../data/productosEjemplo";
 import { ListProductos } from "../../../screens/Administracion/PageProductos/Productos/ListProductos";
 import styles from "./BodyAdmin.module.css";
 import { useEffect, useState } from "react";
-import { ServiceAlergeno } from "../../../services/ParticularServices/AlergenoService";
 import { IAlergenos } from "../../../types/dtos/alergenos/IAlergenos";
 import { CrearAlergeno } from "../../../screens/Administracion/PageAlergeno/CrearAlergeno";
-import { alergenosData } from "../../../data/alergenoEjemplo";
+import { ListAlergeno } from "../../../screens/Administracion/PageAlergeno/ListAlergeno";
+import { AlergenoService } from "../../../services/ParticularServices/AlergenoService";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { setAlergenoList } from "../../../redux/slices/AlergenoReducer";
 
 interface BodyAdminProps {
     activeSection: string;
 }
 
 export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
-    const [alergenos, setAlergenos] = useState<IAlergenos[]>([]);
-    const [modalCrearAlergeno, setModalCrearAlergeno] = useState<boolean>(false);
+    const [openModal, setOpenModal] = useState(false);
+    const dispatch=useAppDispatch();
+    const apiAlergeno=new AlergenoService("/api/alergenos");
 
-    const serviceAlergeno = new ServiceAlergeno();
-    useEffect(() => {
-        const fetchAlergenos = async () => {
-            try {
-                const response = await serviceAlergeno.getAllAlergenos();
-                setAlergenos(response.data);
-            } catch (error) {
-                console.error("Error al obtener los alergenos", error);
-            }
-        };
-        fetchAlergenos();
-    }, []);
+    const getAlergenos= async ()=>{
+        await apiAlergeno.getAll().then((alergenosData) => 
+        dispatch(setAlergenoList(alergenosData)));
+    }
+
+    const alergenosData=useAppSelector(state => state.alergenoReducer.alergenosList);
+    
+    const toggleModal= (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        setOpenModal(!openModal);
+    }
 
     // Función para manejar la adición de un nuevo alérgeno
     const handleAddAlergeno = (nuevoAlergeno: IAlergenos) => {
-        setAlergenos((prev) => [...prev, nuevoAlergeno]);
+        
     };
+
+
+
+    useEffect(() => {
+        getAlergenos();
+    }, [activeSection]);
 
     return (
         <div className={styles.containerGeneralBody}>
@@ -43,7 +51,7 @@ export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
                             <p>Filtrar por categoría:</p>
                             <Dropdown>
                                 <Dropdown.Toggle variant="success" id="dropdown-basic" style={{ width: "35vh" }}>
-                                    Seleccione una categoría
+                                    Seleccione una categoría:
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu style={{ width: "35vh" }}>
                                     <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
@@ -69,29 +77,24 @@ export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
             {activeSection === "ALERGENOS" && (
                 <div>
                     {/* Botón para agregar alérgeno */}
-                    <button className="btn btn-primary my-3" onClick={() => setModalCrearAlergeno(true)}>
-                        Agregar Alergeno
+                    <Form className="d-flex">
+                    <button className="btn btn-primary my-3" onClick={toggleModal}>
+                        Agregar Alérgeno
                     </button>
+                    </Form>
 
                     {/* Modal para crear alérgeno */}
-                    {modalCrearAlergeno && (
+                    {openModal && (
                         <CrearAlergeno
-                            onClose={() => setModalCrearAlergeno(false)}
-                            onAddAlergeno={handleAddAlergeno}
-                            alergeno={null}
-                            editar={false}
-                        />
+                            openModal={openModal}
+              setOpenModal={setOpenModal} getAlergenos={getAlergenos}/>
                     )}
 
                     {/* Lista de alérgenos */}
                     <div>
-                        <h3>Alergenos</h3>
+                        <h3>Alérgenos</h3>
                         {alergenosData ? (
-                            <ul>
-                                {alergenosData.map((alergeno) => (
-                                    <li key={alergeno.id}>{alergeno.denominacion}</li>
-                                ))}
-                            </ul>
+                            <ListAlergeno alergenos={alergenosData}/>
                         ) : (
                             <p>No hay alergenos disponibles.</p>
                         )}

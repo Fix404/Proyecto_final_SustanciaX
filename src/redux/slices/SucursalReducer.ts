@@ -18,7 +18,7 @@ interface IInitialStateSucursal {
   
   // Creamos un slice con Redux Toolkit para manejar la tabla
   const SucursalReducer = createSlice({
-    name: "TableReducerSucursal", // Nombre del slice
+    name: "SucursalReducer", // Nombre del slice
     initialState, // Estado inicial del slice
     reducers: {
       // Reducer para establecer los datos de la tabla

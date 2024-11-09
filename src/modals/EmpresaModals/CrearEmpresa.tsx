@@ -6,8 +6,6 @@ import { ICreateEmpresaDto } from "../../types/dtos/empresa/ICreateEmpresaDto";
 import { EmpresaService } from "../../services/ParticularServices/EmpresaService";
 import { removeEmpresaActiva } from "../../redux/slices/EmpresasReducer";
 
-//const API_URL = import.meta.env.VITE_API_URL;
-
 interface IPropsCreateEmpresa {
   getEmpresas: Function;
   openModal: boolean;

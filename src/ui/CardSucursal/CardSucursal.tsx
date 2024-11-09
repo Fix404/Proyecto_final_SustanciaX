@@ -18,7 +18,9 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
   const navigate = useNavigate();
 
   const handleNavigateAdmin = () => {
-    navigate("/admin");
+    dispatch(removeSucursalActiva());
+    dispatch(setSucursalActiva({element:sucursal}));
+    navigate("admin");
   };
 
   const sucursalActiva=useAppSelector(state => state.sucursalReducer.sucursalActiva);
