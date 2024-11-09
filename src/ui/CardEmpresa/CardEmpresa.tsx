@@ -1,23 +1,41 @@
 import { Button, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { IEmpresa } from "../../types/dtos/empresa/IEmpresa";
-import { FC } from "react";
-import { useAppDispatch } from "../../hooks/redux";
+import { FC, useState } from "react";
+import { useAppDispatch} from "../../hooks/redux";
 import {
   removeEmpresaElementActive,
+  setDataEmpresaList,
   setEmpresaElementActive,
 } from "../../redux/slices/EmpresasReducer";
 import styles from "./CardEmpresa.module.css";
+import { EditarEmpresa } from "../../modals/EmpresaModals/EditarEmpresa";
+import { EmpresaService } from "../../services/ParticularServices/EmpresaService";
 
 interface ICardEmpresa {
   empresa: IEmpresa;
 }
 
 export const CardEmpresa: FC<ICardEmpresa> = ({ empresa }) => {
+  const [openModal, setOpenModal] = useState(false);
   const dispatch = useAppDispatch();
+  const empresaService=new EmpresaService(`api/empresas`);
   const handleEmpresaActiva = () => {
     dispatch(removeEmpresaElementActive());
     dispatch(setEmpresaElementActive({ element: empresa }));
   };
+
+  const getEmpresas =async () => {
+    await empresaService.getAll().then((empresasData)=>{
+      dispatch(setDataEmpresaList(empresasData))
+    })
+  }
+
+
+  const toggleModal = () => {
+    setOpenModal(!openModal);
+    getEmpresas();
+  };
+
   return (
     <>
       {empresa && (
@@ -41,7 +59,7 @@ export const CardEmpresa: FC<ICardEmpresa> = ({ empresa }) => {
                     </Tooltip>
                   }
                 >
-                  <Button variant="primary">
+                  <Button variant="primary" onClick={toggleModal}>
                     <span className="material-symbols-outlined">edit</span>
                   </Button>
                 </OverlayTrigger>
@@ -62,6 +80,7 @@ export const CardEmpresa: FC<ICardEmpresa> = ({ empresa }) => {
               </Card.Footer>
             </Card.Body>
           </Card>
+          {openModal && <EditarEmpresa openModal={openModal} setOpenModal={setOpenModal} getEmpresas={getEmpresas}/>}
         </div>
       )}
     </>

@@ -7,10 +7,10 @@ export default defineConfig({
   server: {
     proxy: {
       // Redirige las solicitudes al backend
-      '/sucursales': {
-        target: 'http://localhost:8090',
+      '/api': {
+        target: 'http://190.221.207.224:8090/', // Reemplaza con tu URL del backend
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/sucursales/, '/sucursales')
+        rewrite: (path) => path.replace(/^\/api/, '') // Opcional: elimina el prefijo /api
       },
     },
   },

@@ -5,13 +5,13 @@ import { SucursalService } from "../../../services/ParticularServices/SucursalSe
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { setDataSucursalList } from "../../../redux/slices/TableReducerSucursal";
 
-const API_URL = import.meta.env.VITE_API_URL;
+
 
 export const Body = () => {
   const dispatch = useAppDispatch();
   const empresaActiva=useAppSelector((state) => state.empresaReducer.elementActive);
 
-  const sucursalService = new SucursalService(API_URL + `sucursales/`);
+  const sucursalService = new SucursalService(`/api/`);
 
   const getSucursalesPorEmpresaId = async (id:number) => {
     await sucursalService.getSucursalesPorEmpresaId(id).then((sucursalData) => {
