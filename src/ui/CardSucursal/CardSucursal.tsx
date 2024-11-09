@@ -4,7 +4,7 @@ import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./CardSucursal.module.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { removeElementActive, setElementActive } from "../../redux/slices/TableReducerSucursal";
+import { removeSucursalActiva, setSucursalActiva } from "../../redux/slices/SucursalReducer";
 import { EditarSucursal } from "../../modals/SucursalModals/EditarSucursal";
 
 interface ICardSucursal {
@@ -21,10 +21,10 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
     navigate("/admin");
   };
 
-  const sucursalActiva=useAppSelector(state => state.tablaReducerSucursal.elementActive);
+  const sucursalActiva=useAppSelector(state => state.sucursalReducer.sucursalActiva);
   const handleEditarSucursal = () => {
-    dispatch(removeElementActive());
-    dispatch(setElementActive({element:sucursal}));
+    dispatch(removeSucursalActiva());
+    dispatch(setSucursalActiva({element:sucursal}));
     setOpenModal(!openModal)
   }
 

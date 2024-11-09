@@ -2,7 +2,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { removeElementActive, setDataSucursalList } from "../../redux/slices/TableReducerSucursal";
+import { removeSucursalActiva, setDataSucursalList } from "../../redux/slices/SucursalReducer";
 import { SucursalService } from "../../services/ParticularServices/SucursalService";
 import { useEffect } from "react";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
@@ -21,7 +21,7 @@ export const EditarSucursal = ({
   setOpenModal,
   sucursalActiva
 }: IPropsCreateSucursal) => {
-  const empresaActiva=useAppSelector((state)=> state.empresaReducer.elementActive!);
+  const empresaActiva=useAppSelector((state)=> state.empresaReducer.empresaActiva!);
   const apiSucursalUpdate= new SucursalService(`/api/sucursales/update`);
   const apiSucursalGet=new SucursalService(`/api`)
 
@@ -59,7 +59,7 @@ export const EditarSucursal = ({
 
   const handleClose = () => {
     setOpenModal(false);
-    dispatch(removeElementActive());
+    dispatch(removeSucursalActiva());
   };
 
   useEffect(()=>{

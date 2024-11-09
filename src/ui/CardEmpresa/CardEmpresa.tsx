@@ -3,9 +3,9 @@ import { IEmpresa } from "../../types/dtos/empresa/IEmpresa";
 import { FC, useState } from "react";
 import { useAppDispatch} from "../../hooks/redux";
 import {
-  removeEmpresaElementActive,
+  removeEmpresaActiva,
   setDataEmpresaList,
-  setEmpresaElementActive,
+  setEmpresaActiva,
 } from "../../redux/slices/EmpresasReducer";
 import styles from "./CardEmpresa.module.css";
 import { EditarEmpresa } from "../../modals/EmpresaModals/EditarEmpresa";
@@ -20,8 +20,8 @@ export const CardEmpresa: FC<ICardEmpresa> = ({ empresa }) => {
   const dispatch = useAppDispatch();
   const empresaService=new EmpresaService(`api/empresas`);
   const handleEmpresaActiva = () => {
-    dispatch(removeEmpresaElementActive());
-    dispatch(setEmpresaElementActive({ element: empresa }));
+    dispatch(removeEmpresaActiva());
+    dispatch(setEmpresaActiva({ element: empresa }));
   };
 
   const getEmpresas =async () => {

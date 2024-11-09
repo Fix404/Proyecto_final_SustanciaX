@@ -2,13 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 
 interface IInitialStateSucursal {
-    dataList: ISucursal[]; 
-    elementActive: ISucursal | null ; 
+    sucursalList: ISucursal[]; 
+    sucursalActiva: ISucursal | null ; 
   }
 
   const initialState: IInitialStateSucursal = {
-    dataList: [], // Inicialmente la lista está vacía
-    elementActive: null, // No hay ningún elemento activo seleccionado inicialmente
+    sucursalList: [], // Inicialmente la lista está vacía
+    sucursalActiva: null, // No hay ningún elemento activo seleccionado inicialmente
   };
   
   // Interfaz para la acción del payload personalizado
@@ -17,28 +17,28 @@ interface IInitialStateSucursal {
   }
   
   // Creamos un slice con Redux Toolkit para manejar la tabla
-  const TableReducerSucursal = createSlice({
+  const SucursalReducer = createSlice({
     name: "TableReducerSucursal", // Nombre del slice
     initialState, // Estado inicial del slice
     reducers: {
       // Reducer para establecer los datos de la tabla
       setDataSucursalList(state, action: PayloadAction<any[]>) {
-        state.dataList = action.payload; // Actualizamos los datos de la lista con los datos proporcionados
+        state.sucursalList = action.payload; // Actualizamos los datos de la lista con los datos proporcionados
       },
       // Reducer para establecer el elemento activo
-      setElementActive(state, action: PayloadAction<PayloadSetSucursalElement>) {
-        state.elementActive = action.payload.element; // Establecemos el elemento activo con el elemento proporcionado en el payload
+      setSucursalActiva(state, action: PayloadAction<PayloadSetSucursalElement>) {
+        state.sucursalActiva = action.payload.element; // Establecemos el elemento activo con el elemento proporcionado en el payload
       },
       // Reducer para eliminar el elemento activo
-      removeElementActive(state) {
-        state.elementActive = null; // Eliminamos el elemento activo estableciéndolo como null
+      removeSucursalActiva(state) {
+        state.sucursalActiva = null; // Eliminamos el elemento activo estableciéndolo como null
       },
     },
   });
   
   // Exportamos los actions generados por el slice
-  export const { setDataSucursalList, setElementActive, removeElementActive } =
-    TableReducerSucursal.actions;
+  export const { setDataSucursalList, setSucursalActiva, removeSucursalActiva } =
+    SucursalReducer.actions;
   
   // Exportamos el reducer generado por el slice
-  export default TableReducerSucursal.reducer;
+  export default SucursalReducer.reducer;
