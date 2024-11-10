@@ -1,5 +1,4 @@
 import { Button, Dropdown, Form } from "react-bootstrap";
-import { productosData } from "../../../data/productosEjemplo";
 import { ListProductos } from "../../../ui/PageProductos/Productos/ListProductos";
 import styles from "./BodyAdmin.module.css";
 import { FC, useEffect, useState } from "react";
@@ -36,9 +35,6 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
         event.preventDefault();
         setOpenModal(!openModal);
     }
-    const productosFiltrados = categoriaSeleccionada
-        ? productosData.filter(producto => producto.categoria && producto.categoria.id === categoriaSeleccionada)
-        : productosData;
 
     const handleOpenCrearProducto = () => {
         setOpenModalCrearProducto(!openModalCrearProducto);
@@ -50,6 +46,13 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
             dispatch(setDataProductoList(productosData));
         });
     };
+
+    const productosData=useAppSelector((state) => state.productosReducer.dataList);
+
+
+    const productosFiltrados = categoriaSeleccionada
+        ? productosData.filter(producto => producto.categoria && producto.categoria.id === categoriaSeleccionada)
+        : productosData;
 
     useEffect(() => {
         getProductos();
