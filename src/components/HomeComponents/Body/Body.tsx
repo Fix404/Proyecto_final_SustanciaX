@@ -3,13 +3,13 @@ import styles from "./Body.module.css"
 import { useEffect } from "react";
 import { SucursalService } from "../../../services/ParticularServices/SucursalService";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import { setDataSucursalList } from "../../../redux/slices/TableReducerSucursal";
+import { setDataSucursalList } from "../../../redux/slices/SucursalReducer";
 
 
 
 export const Body = () => {
   const dispatch = useAppDispatch();
-  const empresaActiva=useAppSelector((state) => state.empresaReducer.elementActive);
+  const empresaActiva=useAppSelector((state) => state.empresaReducer.empresaActiva);
 
   const sucursalService = new SucursalService(`/api/`);
 
@@ -19,7 +19,7 @@ export const Body = () => {
     });
   };
 
-  const dataList=useAppSelector((state) => state.tablaReducerSucursal.dataList);
+  const dataList=useAppSelector((state) => state.sucursalReducer.sucursalList);
   
 
   useEffect(() => {

@@ -1,15 +1,15 @@
 .containerNav {
-  height: 8vh;
+  height: 10vh;
   display: flex;
-  align-items: center; 
+  
+  justify-items: left;
+  justify-content: left;
   background-color: #198754;
-  gap: 2vw; 
 }
 
 .containerSucursal {
   color: #fff;
   font-size: 18px;
-  margin: 0; 
 }
 
 .containerIcon {

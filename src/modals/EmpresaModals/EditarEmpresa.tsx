@@ -4,7 +4,7 @@ import { EmpresaService } from "../../services/ParticularServices/EmpresaService
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { removeElementActive } from "../../redux/slices/TableReducerSucursal";
+import { removeSucursalActiva } from "../../redux/slices/SucursalReducer";
 
 interface IPropsUpdateEmpresaDto {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
@@ -19,7 +19,7 @@ export const EditarEmpresa = ({
   setOpenModal,
 }: IPropsUpdateEmpresaDto) => {
   const elementActive = useAppSelector(
-    (state) => state.empresaReducer.elementActive
+    (state) => state.empresaReducer.empresaActiva
   )!;
   const initialValues: IUpdateEmpresaDto = {
     id: elementActive.id,
@@ -35,7 +35,7 @@ export const EditarEmpresa = ({
 
   const handleClose = () => {
     setOpenModal(false);
-    dispatch(removeElementActive());
+    dispatch(removeSucursalActiva());
   };
 
   return (

@@ -7,8 +7,6 @@ import { setDataEmpresaList } from '../../../redux/slices/EmpresasReducer';
 import { useEffect } from 'react';
 import { useAppSelector } from '../../../hooks/redux';
 
-const API_URL=import.meta.env.VITE_API_URL;
-
 export interface IPropsSidebarHome {
   onAddEmpresaClick: () => void; // Especifica que onAddEmpresaClick es una función sin argumentos que no retorna nada
 }
@@ -24,7 +22,7 @@ export const SidebarHome: React.FC<IPropsSidebarHome> = ({ onAddEmpresaClick }) 
     });
   }
 
-  const empresas=useAppSelector((state)=> state.empresaReducer.dataList);
+  const empresas=useAppSelector((state)=> state.empresaReducer.empresaList);
 
   useEffect(()=>{
     getEmpresas();

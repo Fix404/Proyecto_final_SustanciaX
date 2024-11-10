@@ -1,0 +1,56 @@
+.itemContainer {
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid #5f5e5e;
+    text-align: center;
+    background-color: rgb(226, 228, 230);
+}
+
+.productoContainer {
+    display: flex;
+    flex-direction: row;
+    width: 75%;
+    justify-content: space-around;
+    position: relative;
+    margin-top: 1rem;
+}
+
+.descripcion {
+    max-width: 150px;
+    overflow: hidden; 
+    white-space: nowrap; 
+    text-overflow: ellipsis; 
+    cursor: pointer; 
+}
+
+.descripcion:hover .tooltip {
+    visibility: visible; 
+    opacity: 1; 
+}
+
+.tooltip {
+    visibility: hidden; 
+    opacity: 0; 
+    position: absolute; 
+    right: 16rem;
+    background-color: #fff;
+    border: 1px solid #ccc; 
+    padding: 5px; 
+    z-index: 10; 
+    transition: opacity 0.2s; 
+    white-space: normal; 
+}
+
+.accionesContainer{
+    display: flex;
+    flex-direction: row;
+    width: 25%;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.accionesContainer button{
+    width: min-content;
+    height: min-content;
+    margin-right: 3%;
+}

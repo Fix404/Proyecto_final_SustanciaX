@@ -5,10 +5,8 @@ import { useAppDispatch} from "../../hooks/redux";
 import { ICreateSucursal } from "../../types/dtos/sucursal/ICreateSucursal";
 import { SucursalService } from "../../services/ParticularServices/SucursalService";
 import { useEffect } from "react";
-import { setDataSucursalList } from "../../redux/slices/TableReducerSucursal";
+import { setDataSucursalList } from "../../redux/slices/SucursalReducer";
 import { IEmpresa } from "../../types/dtos/empresa/IEmpresa";
-
-//const API_URL = import.meta.env.VITE_API_URL;
 
 interface IPropsCreateSucursal {
   openModal: boolean;

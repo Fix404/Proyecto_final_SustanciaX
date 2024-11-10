@@ -2,13 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IEmpresa } from "../../types/dtos/empresa/IEmpresa";
 
 interface IInitialStateEmpresa{
-    dataList: IEmpresa[],
-    elementActive: null | IEmpresa
+    empresaList: IEmpresa[],
+    empresaActiva: null | IEmpresa
 }
 
 const initialState:IInitialStateEmpresa ={
-    dataList:[],
-    elementActive: null
+    empresaList:[],
+    empresaActiva: null
 }
 
 interface PayLoadSetEmpresaElement{
@@ -20,16 +20,16 @@ const EmpresasReducer = createSlice({
     initialState,
     reducers: {
         setDataEmpresaList(state, action:PayloadAction<any[]>){
-            state.dataList=action.payload;
+            state.empresaList=action.payload;
         },
-        setEmpresaElementActive(state, action:PayloadAction<PayLoadSetEmpresaElement>){
-            state.elementActive=action.payload.element;
+        setEmpresaActiva(state, action:PayloadAction<PayLoadSetEmpresaElement>){
+            state.empresaActiva=action.payload.element;
         },
-        removeEmpresaElementActive(state){
-            state.elementActive=null;
+        removeEmpresaActiva(state){
+            state.empresaActiva=null;
         }
     },
 });
 
-export const {setDataEmpresaList, setEmpresaElementActive, removeEmpresaElementActive}=EmpresasReducer.actions
+export const {setDataEmpresaList, setEmpresaActiva, removeEmpresaActiva}=EmpresasReducer.actions
 export default EmpresasReducer.reducer;

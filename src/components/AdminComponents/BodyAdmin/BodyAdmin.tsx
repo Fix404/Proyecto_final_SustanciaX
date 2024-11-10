@@ -1,37 +1,50 @@
-import { Button, Dropdown } from "react-bootstrap";
+import { Button, Dropdown, Form } from "react-bootstrap";
 import { productosData } from "../../../data/productosEjemplo";
-import { ListProductos } from "../../../screens/Administracion/PageProductos/Productos/ListProductos";
+import { ListProductos } from "../../../ui/PageProductos/Productos/ListProductos";
 import styles from "./BodyAdmin.module.css";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
+import { ListAlergeno } from "../../../ui/PageAlergeno/ListAlergeno";
+import { useAppSelector } from "../../../hooks/redux";
+import { setAlergenoList } from "../../../redux/slices/AlergenoReducer";
 import categoriasEjemplo from "../../../data/categoriasEjemplo";
 import { CrearProducto } from "../../../modals/ProductosModals/CrearProducto";
 import { ProductoService } from "../../../services/ParticularServices/ProductoService";
 import { useAppDispatch } from "../../../hooks/redux";
-import { ServiceAlergeno } from "../../../services/ParticularServices/AlergenoService";
-import { IAlergenos } from "../../../types/dtos/alergenos/IAlergenos";
-import { CrearAlergeno } from "../../../screens/Administracion/PageAlergeno/CrearAlergeno";
-import { alergenosData } from "../../../data/alergenoEjemplo";
+import { AlergenoService } from "../../../services/ParticularServices/AlergenoService";
 import { setDataProductoList } from "../../../redux/slices/ProductosReducer";
+import { CrearAlergeno } from "../../../modals/AlergenoModals/CrearAlergeno/CrearAlergeno";
 
-const API_URL=import.meta.env.VITE_API_URL;
 interface BodyAdminProps {
     activeSection: string;
 }
 
-export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
-
+export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
+    const [openModal, setOpenModal] = useState(false);
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<number | null>(null);
+    const [openModalCrearProducto, setOpenModalCrearProducto] = useState(false);
+    const dispatch=useAppDispatch();
+    const apiAlergeno=new AlergenoService("/api/alergenos");
+
+    const getAlergenos= async ()=>{
+        await apiAlergeno.getAll().then((alergenosData) => 
+        dispatch(setAlergenoList(alergenosData)));
+    }
+
+    const alergenosData=useAppSelector(state => state.alergenoReducer.alergenosList);
+    
+    const toggleModal= (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        setOpenModal(!openModal);
+    }
     const productosFiltrados = categoriaSeleccionada
         ? productosData.filter(producto => producto.categoria && producto.categoria.id === categoriaSeleccionada)
         : productosData;
 
-    const [openModalCrearProducto, setOpenModalCrearProducto] = useState(false);
     const handleOpenCrearProducto = () => {
         setOpenModalCrearProducto(!openModalCrearProducto);
     }
 
-    const productoService = new ProductoService(API_URL + "/productos");
-    const dispatch = useAppDispatch();
+    const productoService = new ProductoService("api/articulos");
     const getProductos = async () => {
         await productoService.getAll().then((productosData) => {
             dispatch(setDataProductoList(productosData));
@@ -42,26 +55,9 @@ export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
         getProductos();
     }, []);
 
-    const [alergenos, setAlergenos] = useState<IAlergenos[]>([]);
-    const [modalCrearAlergeno, setModalCrearAlergeno] = useState<boolean>(false);
-
-    const serviceAlergeno = new ServiceAlergeno();
     useEffect(() => {
-        const fetchAlergenos = async () => {
-            try {
-                const response = await serviceAlergeno.getAllAlergenos();
-                setAlergenos(response.data);
-            } catch (error) {
-                console.error("Error al obtener los alergenos", error);
-            }
-        };
-        fetchAlergenos();
-    }, []);
-
-    // Función para manejar la adición de un nuevo alérgeno
-    const handleAddAlergeno = (nuevoAlergeno: IAlergenos) => {
-        setAlergenos((prev) => [...prev, nuevoAlergeno]);
-    };
+        getAlergenos();
+    }, [activeSection]);
 
     return (
         <div className={styles.containerGeneralBody}>
@@ -109,29 +105,24 @@ export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
             {activeSection === "ALERGENOS" && (
                 <div>
                     {/* Botón para agregar alérgeno */}
-                    <button className="btn btn-primary my-3" onClick={() => setModalCrearAlergeno(true)}>
-                        Agregar Alergeno
+                    <Form className="d-flex">
+                    <button className="btn btn-primary my-3" onClick={toggleModal}>
+                        Agregar Alérgeno
                     </button>
+                    </Form>
 
                     {/* Modal para crear alérgeno */}
-                    {modalCrearAlergeno && (
+                    {openModal && (
                         <CrearAlergeno
-                            onClose={() => setModalCrearAlergeno(false)}
-                            onAddAlergeno={handleAddAlergeno}
-                            alergeno={null}
-                            editar={false}
-                        />
+                            openModal={openModal}
+              setOpenModal={setOpenModal} getAlergenos={getAlergenos}/>
                     )}
 
                     {/* Lista de alérgenos */}
                     <div>
-                        <h3>Alergenos</h3>
+                        <h3>Alérgenos</h3>
                         {alergenosData ? (
-                            <ul>
-                                {alergenosData.map((alergeno) => (
-                                    <li key={alergeno.id}>{alergeno.denominacion}</li>
-                                ))}
-                            </ul>
+                            <ListAlergeno alergenos={alergenosData}/>
                         ) : (
                             <p>No hay alergenos disponibles.</p>
                         )}

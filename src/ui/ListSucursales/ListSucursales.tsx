@@ -15,7 +15,6 @@ export const ListSucursales:FC<IListSucursales> = ({sucursales}) => {
                 <CardSucursal sucursal={sucursal} key={sucursal.id}/>
             ))}
         </div>
-
     </div>
   )
 }
