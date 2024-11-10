@@ -1,8 +1,4 @@
 import { Button, Dropdown, Form } from "react-bootstrap";
-<<<<<<< HEAD
-=======
-import { productosData } from "../../../data/productosEjemplo";
->>>>>>> a1c1b17b2368fa85abd662b4cd5a35fb4166c936
 import { ListProductos } from "../../../ui/PageProductos/Productos/ListProductos";
 import styles from "./BodyAdmin.module.css";
 import { FC, useEffect, useState } from "react";

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { FC, useEffect, useState } from "react";
 import { IProductos } from "../../../types/dtos/productos/IProductos";
 import styles from "./ProductoItem.module.css";
@@ -6,18 +5,12 @@ import { useAppDispatch } from "../../../hooks/redux";
 import { ProductoService } from "../../../services/ParticularServices/ProductoService";
 import { removeProductoElementActive, setProductoElementActive } from "../../../redux/slices/ProductosReducer";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
-=======
-import { FC } from "react";
-import { IProductos } from "../../../types/dtos/productos/IProductos";
-import styles from "./ProductoItem.module.css";
->>>>>>> a1c1b17b2368fa85abd662b4cd5a35fb4166c936
 
 interface IProductosItem {
     producto: IProductos;
 }
 
 export const ProductoItem: FC<IProductosItem> = ({ producto }) => {
-<<<<<<< HEAD
     const [openModalEdit, setOpenModalEdit] = useState(false);
     const [openModalVer, setOpenModalVer] = useState(false);
     const dispatch=useAppDispatch();
@@ -58,25 +51,11 @@ export const ProductoItem: FC<IProductosItem> = ({ producto }) => {
                 </p>
                 <p>{`${producto?.categoria?.denominacion}`}</p>
                 {producto?.habilitado ? (<span className="material-symbols-outlined" style={{ color: "green" }}>check_circle</span>)
-=======
-    return (
-        <div className={styles.itemContainer}>
-            <div className={styles.productoContainer}>
-                <p>{`${producto.denominacion}`}</p>
-                <p>{`${producto.precioVenta}`}</p>
-                <p className={styles.descripcion}>
-                    {`${producto.descripcion}`}
-                    <span className={styles.tooltip}>{`${producto.descripcion}`}</span>
-                </p>
-                <p>{`${producto.categoria.denominacion}`}</p>
-                {producto.habilitado ? (<span className="material-symbols-outlined" style={{ color: "green" }}>check_circle</span>)
->>>>>>> a1c1b17b2368fa85abd662b4cd5a35fb4166c936
                     :
                     (<span className="material-symbols-outlined" style={{ color: "red" }}>
                         cancel</span>)}
             </div>
             <div className={styles.accionesContainer}>
-<<<<<<< HEAD
             <OverlayTrigger  placement="bottom"
             delay={{ show: 250, hide: 400 }}
             overlay={
@@ -108,17 +87,6 @@ export const ProductoItem: FC<IProductosItem> = ({ producto }) => {
                     <span className="material-symbols-outlined" style={{ color: "#933631" }}>delete</span>
                   </Button>
                 </OverlayTrigger>
-=======
-                <button>
-                    <span className="material-symbols-outlined" style={{ color: "#ffb600" }}>visibility</span>
-                </button>
-                <button>
-                    <span className="material-symbols-outlined" style={{ color: "#3e6d88" }}>edit</span>
-                </button>
-                <button>
-                    <span className="material-symbols-outlined" style={{ color: "#933631" }}>delete</span>
-                </button>
->>>>>>> a1c1b17b2368fa85abd662b4cd5a35fb4166c936
             </div>
         </div>
     );
