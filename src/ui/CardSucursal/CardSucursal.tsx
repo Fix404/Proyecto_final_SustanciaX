@@ -6,6 +6,7 @@ import styles from "./CardSucursal.module.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { removeElementActive, setElementActive } from "../../redux/slices/TableReducerSucursal";
 import { EditarSucursal } from "../../modals/SucursalModals/EditarSucursal";
+import { VerSucursal } from "../../modals/SucursalModals/VerSucursal";
 
 interface ICardSucursal {
   sucursal: ISucursal;
@@ -13,6 +14,7 @@ interface ICardSucursal {
 
 export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
   const [openModal, setOpenModal] = useState(false);
+  const [openVerModal, setOpenVerModal] = useState(false);
 
   const dispatch=useAppDispatch();
   const navigate = useNavigate();
@@ -27,6 +29,10 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
     dispatch(setElementActive({element:sucursal}));
     setOpenModal(!openModal)
   }
+
+  const handleVerSucursal = () => {
+    setOpenVerModal(!openVerModal); 
+  };
 
   useEffect(() =>{
   }, [sucursalActiva])
@@ -60,7 +66,7 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
             overlay={
               <Tooltip id="button-tooltip-ver">Ver Sucursal</Tooltip>
             }>
-          <Button variant="primary">
+          <Button variant="primary" onClick={handleVerSucursal}>
             <span className="material-symbols-outlined">table_eye</span>
           </Button>
           </OverlayTrigger>
@@ -77,6 +83,7 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
       </Card>
 
       {openModal && sucursalActiva && <EditarSucursal openModal={openModal} setOpenModal={setOpenModal} sucursalActiva={sucursalActiva}/>}
+      {openVerModal && <VerSucursal sucursal={sucursal} />}
     </div>
   );
 };
