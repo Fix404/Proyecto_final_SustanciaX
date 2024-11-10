@@ -1,9 +1,9 @@
 import { Button, Dropdown, Form } from "react-bootstrap";
 import { productosData } from "../../../data/productosEjemplo";
-import { ListProductos } from "../../../screens/Administracion/PageProductos/Productos/ListProductos";
+import { ListProductos } from "../../../ui/PageProductos/Productos/ListProductos";
 import styles from "./BodyAdmin.module.css";
 import { FC, useEffect, useState } from "react";
-import { ListAlergeno } from "../../../screens/Administracion/PageAlergeno/ListAlergeno";
+import { ListAlergeno } from "../../../ui/PageAlergeno/ListAlergeno";
 import { useAppSelector } from "../../../hooks/redux";
 import { setAlergenoList } from "../../../redux/slices/AlergenoReducer";
 import categoriasEjemplo from "../../../data/categoriasEjemplo";
@@ -12,7 +12,7 @@ import { ProductoService } from "../../../services/ParticularServices/ProductoSe
 import { useAppDispatch } from "../../../hooks/redux";
 import { AlergenoService } from "../../../services/ParticularServices/AlergenoService";
 import { setDataProductoList } from "../../../redux/slices/ProductosReducer";
-import { CrearAlergeno } from "../../../screens/Administracion/PageAlergeno/AlergenoModals/CrearAlergeno/CrearAlergeno";
+import { CrearAlergeno } from "../../../modals/AlergenoModals/CrearAlergeno/CrearAlergeno";
 
 interface BodyAdminProps {
     activeSection: string;

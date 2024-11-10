@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from "react";
 import styles from "./AlergenoItem.module.css";
-import { IAlergenos } from "../../../types/dtos/alergenos/IAlergenos";
+import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { useAppDispatch } from "../../../hooks/redux";
-import { removeAlergenoActivo, setAlergenoActivo } from "../../../redux/slices/AlergenoReducer";
-import { EditarAlergeno } from "./AlergenoModals/EditarAlergeno/EditarAlergeno";
-import { AlergenoService } from "../../../services/ParticularServices/AlergenoService";
+import { useAppDispatch } from "../../hooks/redux";
+import { removeAlergenoActivo, setAlergenoActivo } from "../../redux/slices/AlergenoReducer";
+import { EditarAlergeno } from "../../modals/AlergenoModals/EditarAlergeno/EditarAlergeno";
+import { AlergenoService } from "../../services/ParticularServices/AlergenoService";
 
 interface IAlergenosItem {
     alergeno: IAlergenos;

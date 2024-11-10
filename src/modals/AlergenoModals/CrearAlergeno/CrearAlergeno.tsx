@@ -1,10 +1,10 @@
 import { Button, Form, Modal } from "react-bootstrap";
-import { AlergenoService } from "../../../../../services/ParticularServices/AlergenoService";
+import { AlergenoService } from "../../../services/ParticularServices/AlergenoService";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { ICreateAlergeno } from "../../../../../types/dtos/alergenos/ICreateAlergeno";
-import { useAppDispatch } from "../../../../../hooks/redux";
-import { removeAlergenoActivo } from "../../../../../redux/slices/AlergenoReducer";
+import { ICreateAlergeno } from "../../../types/dtos/alergenos/ICreateAlergeno";
+import { useAppDispatch } from "../../../hooks/redux";
+import { removeAlergenoActivo } from "../../../redux/slices/AlergenoReducer";
 
 interface IPropsCreateAlergeno {
   getAlergenos: Function,
