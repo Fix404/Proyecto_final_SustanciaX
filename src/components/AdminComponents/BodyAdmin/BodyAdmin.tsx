@@ -4,7 +4,7 @@ import { ListProductos } from "../../../screens/Administracion/PageProductos/Pro
 import styles from "./BodyAdmin.module.css";
 import { useEffect, useState } from "react";
 import { IAlergenos } from "../../../types/dtos/alergenos/IAlergenos";
-import { CrearAlergeno } from "../../../screens/Administracion/PageAlergeno/CrearAlergeno";
+import { CrearAlergeno } from "../../../screens/Administracion/PageAlergeno/AlergenoModals/CrearAlergeno/CrearAlergeno";
 import { ListAlergeno } from "../../../screens/Administracion/PageAlergeno/ListAlergeno";
 import { AlergenoService } from "../../../services/ParticularServices/AlergenoService";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
@@ -30,11 +30,6 @@ export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
         event.preventDefault();
         setOpenModal(!openModal);
     }
-
-    // Función para manejar la adición de un nuevo alérgeno
-    const handleAddAlergeno = (nuevoAlergeno: IAlergenos) => {
-        
-    };
 
 
 

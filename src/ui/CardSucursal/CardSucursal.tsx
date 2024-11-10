@@ -1,6 +1,6 @@
 import { Button, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./CardSucursal.module.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
@@ -29,9 +29,6 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
     dispatch(setSucursalActiva({element:sucursal}));
     setOpenModal(!openModal)
   }
-
-  useEffect(() =>{
-  }, [sucursalActiva])
 
   return (
     <div>
