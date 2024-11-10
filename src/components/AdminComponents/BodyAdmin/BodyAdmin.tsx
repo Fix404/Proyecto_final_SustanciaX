@@ -3,14 +3,12 @@ import { productosData } from "../../../data/productosEjemplo";
 import { ListProductos } from "../../../screens/Administracion/PageProductos/Productos/ListProductos";
 import styles from "./BodyAdmin.module.css";
 import { useEffect, useState } from "react";
-<<<<<<< HEAD
 import { IAlergenos } from "../../../types/dtos/alergenos/IAlergenos";
 import { CrearAlergeno } from "../../../screens/Administracion/PageAlergeno/AlergenoModals/CrearAlergeno/CrearAlergeno";
 import { ListAlergeno } from "../../../screens/Administracion/PageAlergeno/ListAlergeno";
 import { AlergenoService } from "../../../services/ParticularServices/AlergenoService";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { setAlergenoList } from "../../../redux/slices/AlergenoReducer";
-=======
 import categoriasEjemplo from "../../../data/categoriasEjemplo";
 import { CrearProducto } from "../../../modals/ProductosModals/CrearProducto";
 import { ProductoService } from "../../../services/ParticularServices/ProductoService";
@@ -20,7 +18,6 @@ import { IAlergenos } from "../../../types/dtos/alergenos/IAlergenos";
 import { CrearAlergeno } from "../../../screens/Administracion/PageAlergeno/CrearAlergeno";
 import { alergenosData } from "../../../data/alergenoEjemplo";
 import { setDataProductoList } from "../../../redux/slices/ProductosReducer";
->>>>>>> e7498a1098776f8c4ba247420723dcb08274e03e
 
 const API_URL=import.meta.env.VITE_API_URL;
 interface BodyAdminProps {
@@ -28,7 +25,6 @@ interface BodyAdminProps {
 }
 
 export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
-<<<<<<< HEAD
     const [openModal, setOpenModal] = useState(false);
     const dispatch=useAppDispatch();
     const apiAlergeno=new AlergenoService("/api/alergenos");
@@ -46,7 +42,6 @@ export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
     }
 
 
-=======
 
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<number | null>(null);
     const productosFiltrados = categoriaSeleccionada
@@ -59,7 +54,6 @@ export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
     }
 
     const productoService = new ProductoService(API_URL + "/productos");
-    const dispatch = useAppDispatch();
     const getProductos = async () => {
         await productoService.getAll().then((productosData) => {
             dispatch(setDataProductoList(productosData));
@@ -72,7 +66,6 @@ export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
 
     const [alergenos, setAlergenos] = useState<IAlergenos[]>([]);
     const [modalCrearAlergeno, setModalCrearAlergeno] = useState<boolean>(false);
->>>>>>> e7498a1098776f8c4ba247420723dcb08274e03e
 
     useEffect(() => {
         getAlergenos();
@@ -86,15 +79,10 @@ export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
                         <div className={styles.filtrarProductos}>
                             <p>Filtrar por categoría:</p>
                             <Dropdown>
-<<<<<<< HEAD
-                                <Dropdown.Toggle variant="success" id="dropdown-basic" style={{ width: "35vh" }}>
-                                    Seleccione una categoría:
-=======
                                 <Dropdown.Toggle variant="success" id="dropdown-basic" style={{ width: "28vh" }}>
                                     {categoriaSeleccionada !== null
                                         ? categoriasEjemplo.find(categoria => categoria.id === categoriaSeleccionada)?.denominacion
                                         : "Categorías"}
->>>>>>> e7498a1098776f8c4ba247420723dcb08274e03e
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu style={{ width: "28vh" }}>
                                     <Dropdown.Item onClick={() => setCategoriaSeleccionada(null)}>
