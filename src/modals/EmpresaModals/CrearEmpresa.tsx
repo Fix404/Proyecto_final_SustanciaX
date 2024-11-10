@@ -7,6 +7,7 @@ import { EmpresaService } from "../../services/ParticularServices/EmpresaService
 import { removeEmpresaActiva } from "../../redux/slices/EmpresasReducer";
 
 interface IPropsCreateEmpresa {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   getEmpresas: Function;
   openModal: boolean;
   setOpenModal: (state: boolean) => void;

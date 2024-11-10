@@ -48,7 +48,6 @@ export const EditarSucursal = ({
   horarioCierre: sucursalActiva.horarioCierre
   }
 
-
   const dispatch = useAppDispatch();
 
   const getSucursalesPorEmpresaId = async (id:number) => {

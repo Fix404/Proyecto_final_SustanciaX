@@ -1,4 +1,4 @@
-import { ListSucursales } from "../../../ui/ListSucursales/ListSucursales"
+import { ListSucursales } from "../../../ui/ListSucursales/ListSucursales";
 import styles from "./Body.module.css"
 import { useEffect } from "react";
 import { SucursalService } from "../../../services/ParticularServices/SucursalService";

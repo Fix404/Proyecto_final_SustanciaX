@@ -46,7 +46,7 @@ export const productosData: IProductos[] = [
         precioVenta: 3000,
         descripcion: "Descripción de otroProducto",
         categoria: {
-            id: 1,
+            id: 2,
             denominacion: "otraCategoría",
             eliminado: false,
             sucursales: [],
@@ -85,8 +85,8 @@ export const productosData: IProductos[] = [
         precioVenta: 3000,
         descripcion: "Descripción de unProducto",
         categoria: {
-            id: 1,
-            denominacion: "unaCategoría",
+            id: 3,
+            denominacion: "otraNuevaCategoría",
             eliminado: false,
             sucursales: [],
             subCategorias: [],
@@ -106,7 +106,7 @@ export const productosData: IProductos[] = [
                     articulos: {} as IProductos,
                 },
                 eliminado: false,
-                habilitado: false,
+                habilitado: true,
                 codigo: "d4e5f6",
                 alergenos: [],
                 imagenes: []
@@ -124,7 +124,7 @@ export const productosData: IProductos[] = [
         precioVenta: 3000,
         descripcion: "Descripción de otroProducto",
         categoria: {
-            id: 1,
+            id: 2,
             denominacion: "otraCategoría",
             eliminado: false,
             sucursales: [],
@@ -145,14 +145,14 @@ export const productosData: IProductos[] = [
                     articulos: {} as IProductos,
                 },
                 eliminado: false,
-                habilitado: true,
+                habilitado: false,
                 codigo: "d2e5f6",
                 alergenos: [],
                 imagenes: []
             },
         },
         eliminado: false,
-        habilitado: true,
+        habilitado: false,
         codigo: "a3b2c3",
         alergenos: [],
         imagenes: []

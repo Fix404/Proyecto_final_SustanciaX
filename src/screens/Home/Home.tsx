@@ -12,17 +12,10 @@ export const Home = () => {
 
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
-  const handleClose = () => setOpenModal(false);
 
   const getEmpresas = () => {
     // Lógica para actualizar la lista de empresas (agrega tu implementación aquí)
   };
-
-    const [modalVisible, setModalVisible] = useState(false);
-
-    const toggleModal = () => {
-      setModalVisible(!modalVisible);
-    };
 
   return (
     <div className="d-flex">
