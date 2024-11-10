@@ -54,23 +54,19 @@ export const AlergenoItem: FC<IAlergenosItem> = ({ alergeno }) => {
               <Tooltip id="button-tooltip-ver">Ver Alérgeno</Tooltip>
             }>
           <Button variant="primary" onClick={handleVerAlergeno}>
-            <span className="material-symbols-outlined">table_eye</span>
+            <span className="material-symbols-outlined" style={{ color: "#ffb600" }}>table_eye</span>
           </Button>
           </OverlayTrigger>
-                <OverlayTrigger
-                  placement="bottom"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={
-                    <Tooltip id="button-tooltip-edit-empresa">
-                      Editar Alérgeno
-                    </Tooltip>
-                  }
-                >
-                  <Button variant="primary" onClick={handleEditarAlergeno}>
-                    <span className="material-symbols-outlined">edit</span>
-                  </Button>
-                </OverlayTrigger>
-                <OverlayTrigger
+          <OverlayTrigger  placement="bottom"
+            delay={{ show: 250, hide: 400 }}
+            overlay={
+              <Tooltip id="button-tooltip-ver">Editar Alérgeno</Tooltip>
+            }>
+          <Button variant="primary" onClick={handleEditarAlergeno}>
+            <span className="material-symbols-outlined" style={{ color: "#3e6d88" }}>edit</span>
+          </Button>
+          </OverlayTrigger>
+          <OverlayTrigger
                   placement="bottom"
                   delay={{ show: 250, hide: 400 }}
                   overlay={
@@ -80,7 +76,7 @@ export const AlergenoItem: FC<IAlergenosItem> = ({ alergeno }) => {
                   }
                 >
                   <Button variant="danger">
-                    <span className="material-symbols-outlined">delete</span>
+                    <span className="material-symbols-outlined" style={{ color: "#933631" }}>delete</span>
                   </Button>
                 </OverlayTrigger>
             </div>

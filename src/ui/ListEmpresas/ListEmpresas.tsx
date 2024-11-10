@@ -5,7 +5,7 @@ import { CardEmpresa } from "../CardEmpresa/CardEmpresa"
 import { IEmpresa } from "../../types/dtos/empresa/IEmpresa"
 
 interface IListEmpresas{
-   empresas:IEmpresa[]
+  empresas:IEmpresa[]
 }
 
 export const ListEmpresas:FC<IListEmpresas> = ({empresas}) => {
