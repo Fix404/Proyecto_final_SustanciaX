@@ -49,7 +49,6 @@ export const ProductoItem: FC<IProductosItem> = ({ producto }) => {
                     {`${producto?.descripcion}`}
                     <span className={styles.tooltip}>{`${producto?.descripcion}`}</span>
                 </p>
-
                 <p>{`${producto?.categoria?.denominacion}`}</p>
                 {producto?.habilitado ? (<span className="material-symbols-outlined" style={{ color: "green" }}>check_circle</span>)
 
