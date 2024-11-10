@@ -1,11 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import TableReducer from "./slices/TableReducer"
 import TableReducerSucursal from "./slices/TableReducerSucursal"
+import EmpresasReducer from "./slices/EmpresasReducer"
+import CrearEmpresaReducer from "./slices/CrearEmpresaReducer"
+import ProductosReducer from "./slices/ProductosReducer";
 
 export const store = configureStore({
     reducer: {
-      tablaReducer: TableReducer,
-      tablaReducerSucursal: TableReducerSucursal // Agregamos el reducer del slice TablaReducer al estado global con la clave tablaReducer
+      crearEmpresaReducer: CrearEmpresaReducer,
+      tablaReducerSucursal: TableReducerSucursal,
+      empresaReducer: EmpresasReducer, // Agregamos el reducer del slice TablaReducer al estado global con la clave tablaReducer
+      productosReducer: ProductosReducer
     },
   });
   

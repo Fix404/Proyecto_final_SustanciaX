@@ -1,74 +1,82 @@
-import { Button, Card } from "react-bootstrap"
-import { ISucursal } from "../../types/dtos/sucursal/ISucursal"
-import { FC, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import styles from "./CardSucursal.module.css"
-import { EditarSucursal } from "../../modals/SucursalModals/EditarSucursal"
-import { SucursalService } from "../../services/ParticularServices/SucursalService"
-import { useAppDispatch } from "../../hooks/redux"
-import { setDataTable } from "../../redux/slices/TableReducer"
-import { VerSucursal } from "../../modals/SucursalModals/VerSucursal"
+import { Button, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
+import { FC, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "./CardSucursal.module.css";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { removeElementActive, setElementActive } from "../../redux/slices/TableReducerSucursal";
+import { EditarSucursal } from "../../modals/SucursalModals/EditarSucursal";
 
-const API_URL=import.meta.env.VITE_API_URL;
-interface ICardSucursal{
-    sucursal:ISucursal
+interface ICardSucursal {
+  sucursal: ISucursal;
 }
 
-export const CardSucursal:FC<ICardSucursal> = ({sucursal}) => {
+export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
+  const [openModal, setOpenModal] = useState(false);
 
-    const navigate=useNavigate();
+  const dispatch=useAppDispatch();
+  const navigate = useNavigate();
 
-    const handleNavigateAdmin= () => {
-        navigate("/admin/");
-    }
+  const handleNavigateAdmin = () => {
+    navigate("/admin");
+  };
 
-    const [loading, setLoading] = useState(false);
-    const [openModalEditar, setOpenModalEditar] = useState(false);
-    const [openModalVer, setOpenModalVer] = useState(false); 
+  const sucursalActiva=useAppSelector(state => state.tablaReducerSucursal.elementActive);
+  const handleEditarSucursal = () => {
+    dispatch(removeElementActive());
+    dispatch(setElementActive({element:sucursal}));
+    setOpenModal(!openModal)
+  }
 
-    const toggleModalEditar = () => {
-      setOpenModalEditar(!openModalEditar);
-    };
-    const toggleModalVer = () => { 
-      setOpenModalVer(!openModalVer);
-    }
-
-    const sucursalService = new SucursalService(API_URL + "/sucursales");
-    const dispatch = useAppDispatch();
-  
-    const getSucursales = async () => {
-      await sucursalService.getAll().then((sucursalData) => {
-        dispatch(setDataTable(sucursalData));
-        setLoading(false);
-      });
-    };
-  
-    useEffect(() => {
-      setLoading(true);
-      getSucursales();
-    }, []);
+  useEffect(() =>{
+  }, [sucursalActiva])
 
   return (
     <div>
-          <Card className={styles.card} >
-            <Card.Img variant="top" src="holder.js/100px160" />
-            <Card.Body>
-              <Card.Title>{sucursal.nombre}</Card.Title>
-              <Card.Text>
-                <p>Horario de apertura: {sucursal.horarioApertura}</p>
-                <p>Horario de cierre: {sucursal.horarioCierre}</p>
-              </Card.Text>
-            </Card.Body>
-            <Card.Footer>
-                <Button variant="warning" onClick={handleNavigateAdmin}>Admin</Button>
-                {openModalVer && <VerSucursal sucursal={sucursal} />}
-                <Button variant="primary" onClick={toggleModalVer}>Ver</Button>
-                {openModalEditar && <EditarSucursal getSucursales={getSucursales} openModal={openModalEditar} setOpenModal={setOpenModalEditar}/>}
-                <Button variant="secondary" onClick={toggleModalEditar}>Editar</Button>
-                
-            </Card.Footer>
-          </Card>
-    </div>
-  )
-}
+      <Card className={styles.card}>
+        <Card.Img variant="top" src="holder.js/100px160" />
+        <Card.Body>
+          <Card.Title>{sucursal.nombre}</Card.Title>
+          <Card.Text>
+            Horario de apertura: {sucursal.horarioApertura}
+            <br></br>
+            Horario de cierre: {sucursal.horarioCierre}
+          </Card.Text>
+        </Card.Body>
+        <Card.Footer className={styles.cardSucursalFooterContainer}>
+          <OverlayTrigger
+            placement="bottom"
+            delay={{ show: 250, hide: 400 }}
+            overlay={
+              <Tooltip id="button-tooltip-admin">Administrar Sucursal</Tooltip>
+            }
+          >
+            <Button variant="warning" onClick={handleNavigateAdmin}>
+              <span className="material-symbols-outlined">apartment</span>
+            </Button>
+          </OverlayTrigger>
+          <OverlayTrigger  placement="bottom"
+            delay={{ show: 250, hide: 400 }}
+            overlay={
+              <Tooltip id="button-tooltip-ver">Ver Sucursal</Tooltip>
+            }>
+          <Button variant="primary">
+            <span className="material-symbols-outlined">table_eye</span>
+          </Button>
+          </OverlayTrigger>
+          <OverlayTrigger  placement="bottom"
+            delay={{ show: 250, hide: 400 }}
+            overlay={
+              <Tooltip id="button-tooltip-eliminar">Editar Sucursal</Tooltip>
+            }>
+          <Button variant="secondary" onClick={handleEditarSucursal}>
+            <span className="material-symbols-outlined">edit</span>
+          </Button>
+          </OverlayTrigger>
+        </Card.Footer>
+      </Card>
 
+      {openModal && sucursalActiva && <EditarSucursal openModal={openModal} setOpenModal={setOpenModal} sucursalActiva={sucursalActiva}/>}
+    </div>
+  );
+};

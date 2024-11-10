@@ -5,9 +5,33 @@ export abstract class BackendClient<T> extends AbstractBackendClient<T> {
     constructor(baseUrl: string) {
       super(baseUrl);
     }
-  
+    
+    async get(endpoint:string):Promise<T[]>{
+      try{
+        const response= await fetch(`${this.baseUrl}${endpoint}`,
+          {
+            method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+          }
+        );
+        if(!response.ok){
+          throw new Error("Error en la solicitud");
+        }
+
+        const data= await response.json();
+
+        return data as T[];
+      }catch(error){
+        console.error("Error en la request GET: ", error);
+        throw error;
+      }
+    }
+
     async getAll(): Promise<T[]> {
-      const response = await fetch(`${this.baseUrl}/`);
+      const response = await fetch(`${this.baseUrl}`
+      );
       const data = await response.json();
       return data as T[];
     }
@@ -22,18 +46,27 @@ export abstract class BackendClient<T> extends AbstractBackendClient<T> {
     }
   
     async post(data: T): Promise<T> {
-      const response = await fetch(`${this.baseUrl}/`, {
+      console.log(data);
+      const response = await fetch(`${this.baseUrl}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
+
+      if (!response.ok) {
+        const errorDetails = await response.text(); // Obtenemos los detalles del error
+        console.error("Error en el POST:", response.status, errorDetails);
+        throw new Error(`Error en POST: ${response.status} ${errorDetails}`);
+      }
+      
       const newData = await response.json();
       return newData as T;
     }
   
     async put(id: number, data: T): Promise<T> {
+      console.log(data);
       const response = await fetch(`${this.baseUrl}/${id}`, {
         method: "PUT",
         headers: {
@@ -41,6 +74,13 @@ export abstract class BackendClient<T> extends AbstractBackendClient<T> {
         },
         body: JSON.stringify(data),
       });
+
+      if (!response.ok) {
+        const errorDetails = await response.text(); // Obtenemos los detalles del error
+        console.error("Error en el PUT:", response.status, errorDetails);
+        throw new Error(`Error en PUT: ${response.status} ${errorDetails}`);
+      }
+      
       const newData = await response.json();
       return newData as T;
     }

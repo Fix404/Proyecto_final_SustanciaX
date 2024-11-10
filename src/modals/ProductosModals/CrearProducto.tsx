@@ -1,6 +1,6 @@
 import { Button, Form, Modal } from "react-bootstrap"
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { removeElementActive } from "../../redux/slices/TableReducer";
+import { removeProductoElementActive } from "../../redux/slices/ProductosReducer";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { ICreateProducto } from "../../types/dtos/productos/ICreateProducto";
@@ -35,12 +35,12 @@ export const CrearProducto = ({
     const apiProducto = new ProductoService(API_URL + "/productos");
 
     const elementActive = useAppSelector(
-        (state) => state.tablaReducer.elementActive);
+        (state) => state.productosReducer.elementActive);
     const dispatch = useAppDispatch();
 
     const handleClose = () => {
         setOpenModal(false);
-        dispatch(removeElementActive())
+        dispatch(removeProductoElementActive())
     }
 
     return (

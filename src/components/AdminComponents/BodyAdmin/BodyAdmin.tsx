@@ -6,8 +6,13 @@ import { useEffect, useState } from "react";
 import categoriasEjemplo from "../../../data/categoriasEjemplo";
 import { CrearProducto } from "../../../modals/ProductosModals/CrearProducto";
 import { ProductoService } from "../../../services/ParticularServices/ProductoService";
-import { setDataTable } from "../../../redux/slices/TableReducer";
 import { useAppDispatch } from "../../../hooks/redux";
+import { ServiceAlergeno } from "../../../services/ParticularServices/AlergenoService";
+import { IAlergenos } from "../../../types/dtos/alergenos/IAlergenos";
+import { CrearAlergeno } from "../../../screens/Administracion/PageAlergeno/CrearAlergeno";
+import { alergenosData } from "../../../data/alergenoEjemplo";
+import { setDataProductoList } from "../../../redux/slices/ProductosReducer";
+
 const API_URL=import.meta.env.VITE_API_URL;
 interface BodyAdminProps {
     activeSection: string;
@@ -29,13 +34,34 @@ export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
     const dispatch = useAppDispatch();
     const getProductos = async () => {
         await productoService.getAll().then((productosData) => {
-            dispatch(setDataTable(productosData));
+            dispatch(setDataProductoList(productosData));
         });
     };
 
     useEffect(() => {
         getProductos();
     }, []);
+
+    const [alergenos, setAlergenos] = useState<IAlergenos[]>([]);
+    const [modalCrearAlergeno, setModalCrearAlergeno] = useState<boolean>(false);
+
+    const serviceAlergeno = new ServiceAlergeno();
+    useEffect(() => {
+        const fetchAlergenos = async () => {
+            try {
+                const response = await serviceAlergeno.getAllAlergenos();
+                setAlergenos(response.data);
+            } catch (error) {
+                console.error("Error al obtener los alergenos", error);
+            }
+        };
+        fetchAlergenos();
+    }, []);
+
+    // Función para manejar la adición de un nuevo alérgeno
+    const handleAddAlergeno = (nuevoAlergeno: IAlergenos) => {
+        setAlergenos((prev) => [...prev, nuevoAlergeno]);
+    };
 
     return (
         <div className={styles.containerGeneralBody}>
@@ -74,19 +100,45 @@ export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
                     </div>
                 </div>
             )}
+
             {activeSection === "CATEGORIAS" && (
                 <div>
-                    <h1>Categorías</h1>
                 </div>
             )}
+
             {activeSection === "ALERGENOS" && (
                 <div>
-                    <h1>Alergenos</h1>
+                    {/* Botón para agregar alérgeno */}
+                    <button className="btn btn-primary my-3" onClick={() => setModalCrearAlergeno(true)}>
+                        Agregar Alergeno
+                    </button>
+
+                    {/* Modal para crear alérgeno */}
+                    {modalCrearAlergeno && (
+                        <CrearAlergeno
+                            onClose={() => setModalCrearAlergeno(false)}
+                            onAddAlergeno={handleAddAlergeno}
+                            alergeno={null}
+                            editar={false}
+                        />
+                    )}
+
+                    {/* Lista de alérgenos */}
+                    <div>
+                        <h3>Alergenos</h3>
+                        {alergenosData ? (
+                            <ul>
+                                {alergenosData.map((alergeno) => (
+                                    <li key={alergeno.id}>{alergeno.denominacion}</li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>No hay alergenos disponibles.</p>
+                        )}
+                    </div>
                 </div>
             )}
         </div>
     );
 }
-
-
 

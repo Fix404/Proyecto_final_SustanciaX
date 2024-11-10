@@ -1,11 +1,26 @@
-
-.containerTitle{
-  font-size: 30px;
-  padding: 20px;
+.principalContainerSidebar{
   display: flex;
-  justify-content: center;
+  flex-direction: column; 
+  align-items: center;     
 }
+
+@media (max-width: 768px) {
+  .principalContainerSidebar{
+    height: auto; 
+    flex-direction: column; 
+    gap: 1vw; 
+  }
+}
+
+.principalContainerSidebar h1{
+  font-size: 30px;
+  margin: 20px;
+  word-wrap: break-word;
+}
+
 .containerDivButtonEmpresa{
-display: flex;
-justify-content: center;
+margin: 20px;
 }
+
+
+

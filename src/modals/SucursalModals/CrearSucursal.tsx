@@ -1,211 +1,268 @@
-import { Button, Form, Modal} from "react-bootstrap"
+import { Button, Form, Modal } from "react-bootstrap";
 import { Formik } from "formik";
-
 import * as Yup from "yup";
+import { useAppDispatch} from "../../hooks/redux";
 import { ICreateSucursal } from "../../types/dtos/sucursal/ICreateSucursal";
 import { SucursalService } from "../../services/ParticularServices/SucursalService";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { removeElementActive } from "../../redux/slices/TableReducerSucursal";
-const API_URL=import.meta.env.VITE_API_URL;
+import { useEffect } from "react";
+import { setDataSucursalList } from "../../redux/slices/TableReducerSucursal";
+import { IEmpresa } from "../../types/dtos/empresa/IEmpresa";
 
-interface IPropsCreateSucursal{
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-  getSucursales:Function
-  openModal: boolean
-  setOpenModal: (state:boolean) => void
+//const API_URL = import.meta.env.VITE_API_URL;
+
+interface IPropsCreateSucursal {
+  openModal: boolean;
+  setOpenModal: (state: boolean) => void;
+  empresaActiva: IEmpresa
 }
 
 export const CrearSucursal = ({
-  getSucursales,
   openModal,
   setOpenModal,
+  empresaActiva
 }: IPropsCreateSucursal) => {
-  const initialValues: ICreateSucursal = {
+  const apiSucursalCreate = new SucursalService(`/api/sucursales/create`);
+  const apiSucursalGet=new SucursalService(`api/`);
+  const dispatch=useAppDispatch()
+
+  const initialValuesCreate: ICreateSucursal = {
     nombre: "",
-  horarioApertura: "",
-  horarioCierre: "",
-  esCasaMatriz: false,
-  latitud: 0,
-  longitud: 0,
-  domicilio: {
-    calle: "",
-    numero: 0,
-    cp: 0,
-    piso: 0,
-    nroDpto: 0,
-    idLocalidad: 0,
-  },
-  idEmpresa: 0,
-  logo: null,
-  }
+    horarioApertura: "",
+    horarioCierre: "",
+    esCasaMatriz: false,
+    latitud: 0,
+    longitud: 0,
+    domicilio: {
+      idLocalidad:1,
+      calle: "",
+      numero: 0,
+      cp: 0,
+      piso: 0,
+      nroDpto: 0,
+    },
+    logo: "",
+    idEmpresa: empresaActiva.id
+  };
 
-  const apiSucursal = new SucursalService(API_URL + "/sucursales");
+  const getSucursalesPorEmpresaId = async (id:number) => {
+    await apiSucursalGet.getSucursalesPorEmpresaId(id).then((sucursalData) => {
+      dispatch(setDataSucursalList(sucursalData));
+    });
+  };
 
-  const elementActive=useAppSelector(
-    (state) => state.tablaReducerSucursal.elementActive);
-  const dispatch=useAppDispatch();
-
-  const handleClose=() => {
+  const handleClose = () => {
     setOpenModal(false);
-    dispatch(removeElementActive())
-  }
+  };
+
+  useEffect(()=>{
+    if(empresaActiva){
+      getSucursalesPorEmpresaId(empresaActiva.id);
+    }
+  }, [openModal]);
+
   return (
-    <>
-        <Modal show={openModal} onHide={handleClose} backdrop="static" keyboard={false} data-bs-theme="dark" size="lg" id={"modal"}>
-          <Modal.Header style={{display:"flex", alignContent:"center", justifyContent:"center"}}>
-            <Modal.Title style={{color:"white"}}>Crear Sucursal</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Formik validationSchema={Yup.object({
+    <div>
+      <Modal
+        show={openModal}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        data-bs-theme="dark"
+        size="lg"
+        id={"modal"}
+      >
+        <Modal.Header
+          style={{
+            display: "flex",
+            alignContent: "center",
+            justifyContent: "center",
+          }}
+        >
+        <Modal.Title style={{ color: "white" }}>Crear Sucursal</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Formik
+            validationSchema={Yup.object({
               nombre: Yup.string().required("Campo requerido"),
               horarioApertura: Yup.string().required("Campo requerido"),
               horarioCierre: Yup.string().required("Campo requerido"),
-              esCasaMatriz: Yup.boolean(),
               latitud: Yup.number(),
               longitud: Yup.number(),
-              domicilio:Yup.object({
-                calle: Yup.string().required("Campo requerido"),
+              domicilio: Yup.object({
+                calle: Yup.string(),
                 numero: Yup.number(),
-                cp: Yup.number().required("Campo requerido"),
+                cp: Yup.number(),
                 piso: Yup.number(),
                 nroDpto: Yup.number(),
-                idLocalidad: Yup.number(),
               }),
-              idEmpresa: Yup.number()})}
-            initialValues={elementActive ? elementActive: initialValues}
-              enableReinitialize={true}
-              onSubmit={async (values:ICreateSucursal) => {
-                if(elementActive){
-                  await apiSucursal.post(values);
-                }
-                getSucursales();
+              logo: Yup.string(),
+              idEmpresa: Yup.number()
+            })}
+            initialValues={initialValuesCreate}
+            enableReinitialize={true}
+            onSubmit={(async (values: ICreateSucursal) => {
+                await apiSucursalCreate.post(values);
                 handleClose();
-              }}>
-                {() => (
-                  <>
-                  <Form style={{display:"grid", gridTemplateColumns:"repeat(3, 1fr)"}} >
-                <div>
-                <Form.Group className="mb-3" controlId="nombre">
-                        <Form.Control
-                          type="text"
-                          placeholder="Ingrese un nombre aquí"
-                          autoFocus
-                        />
-                      </Form.Group>
-                      <Form.Group className="mb-3" controlId="horarioApertura">
-                        <Form.Control
-                          type="text"
-                          placeholder="Ingrese horario de apertura"
-                          autoFocus
-                        />
-                      </Form.Group>
-                      <Form.Group className="mb-3" controlId="horarioClausura">
-                        <Form.Control
-                          type="text"
-                          placeholder="Ingrese horario de clausura"
-                          autoFocus
-                        />
-                      </Form.Group>
-                </div>
-                <div>
-                <Form.Select
-                        aria-label="Default select example"
-                        id="pais"
-                      >
-                        <option>País</option>
-                        <option value="1">Argentina</option>
-                        <option value="2">Burkina Faso</option>
-                        <option value="3">Tonga</option>
-                      </Form.Select>
-                      <Form.Select
-                        aria-label="Default select example"
-                        id="provincia"
-                      >
-                        <option>Provincia</option>
-                        <option value="1">Mendoza</option>
-                        <option value="2">Córdoba</option>
-                        <option value="3">La Pampa</option>
-                      </Form.Select>
-                      <Form.Select
-                        aria-label="Default select example"
-                        id="localidad"
-                      >
-                        <option>Localidad</option>
-                        <option value="1">Maipú</option>
-                        <option value="2">Las Heras</option>
-                        <option value="3">Godoy Cruz</option>
-                      </Form.Select>
-                      <Form.Group className="mb-3" controlId="latitud">
-                        <Form.Control
-                          type="text"
-                          placeholder="Ingrese latitud"
-                          autoFocus
-                        />
-                      </Form.Group>
-                      <Form.Group className="mb-3" controlId="longitud">
-                        <Form.Control
-                          type="text"
-                          placeholder="Ingrese longitud"
-                          autoFocus
-                        />
-                      </Form.Group>
-                </div>
-                <div>
-                <Form.Group className="mb-3" controlId="nombreCalle">
-                        <Form.Control
-                          type="text"
-                          placeholder="Nombre de la calle"
-                          autoFocus
-                        />
-                      </Form.Group>
-                      <Form.Group className="mb-3" controlId="numeroDeCalle">
-                        <Form.Control
-                          type="text"
-                          placeholder="Número de la calle"
-                          autoFocus
-                        />
-                      </Form.Group>
-                      <Form.Group className="mb-3" controlId="codigoPostal">
-                        <Form.Control
-                          type="text"
-                          placeholder="Código Postal"
-                          autoFocus
-                        />
-                      </Form.Group>
-                      <Form.Group className="mb-3" controlId="numeroDePiso">
-                        <Form.Control
-                          type="text"
-                          placeholder="Número de piso"
-                          autoFocus
-                        />
-                      </Form.Group>
-                      <Form.Group
-                        className="mb-3"
-                        controlId="numeroDeDepartamento"
-                      >
-                        <Form.Control
-                          type="text"
-                          placeholder="Número de departamento"
-                          autoFocus
-                        />
-                      </Form.Group>
-                </div>
-                <div>
-                <Form.Group controlId="imagenSucursal" className="mb-3">
-                  <Form.Label>Suba una imagen</Form.Label>
-                  <Form.Control type="file" />
-                </Form.Group>
-                </div>
-              </Form>
-                  </>
-                )}
-            </Formik>
-          </Modal.Body>
-          <Modal.Footer style={{display:"flex", alignContent:"center", justifyContent:"space-evenly"}}>
-            <Button variant="danger" onClick={handleClose}>Cancelar</Button>
-            <Button variant="primary" type="submit">Aceptar</Button>
-          </Modal.Footer>
-        </Modal>
-    </>
-  )
-}
+            })}
+          
+          >
+            {({ values, handleChange, handleSubmit }) => (
+              <>
+                <Form
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, 1fr)",
+                  }}
+                  onSubmit={handleSubmit}
+                >
+                  <div>
+                    <Form.Group className="mb-3" controlId="nombre">
+                      <Form.Control
+                        type="text"
+                        placeholder="Ingrese un nombre aquí"
+                        name="nombre"
+                        onChange={handleChange}
+                        value={values.nombre}
+                        autoFocus
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="horarioApertura">
+                      <Form.Control
+                        type="text"
+                        placeholder="Ingrese horario de apertura"
+                        name="horarioApertura"
+                        onChange={handleChange}
+                        value={values.horarioApertura}
+                        autoFocus
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="horarioCierre">
+                      <Form.Control
+                        type="text"
+                        placeholder="Ingrese horario de clausura"
+                        name="horarioCierre"
+                        onChange={handleChange}
+                        value={values.horarioCierre}
+                        autoFocus
+                      />
+                    </Form.Group>
+                  </div>
+                  <div>
+                    <Form.Select aria-label="Default select example" id="pais">
+                      <option>País</option>
+                      <option value="1">Argentina</option>
+                      <option value="2">Burkina Faso</option>
+                      <option value="3">Tonga</option>
+                    </Form.Select>
+                    <Form.Select
+                      aria-label="Default select example"
+                      id="provincia"
+                    >
+                      <option>Provincia</option>
+                      <option value="1">Mendoza</option>
+                      <option value="2">Córdoba</option>
+                      <option value="3">La Pampa</option>
+                    </Form.Select>
+                    <Form.Select
+                      aria-label="Default select example"
+                      id="localidad"
+                    >
+                      <option>Localidad</option>
+                      <option value="1">Maipú</option>
+                      <option value="2">Las Heras</option>
+                      <option value="3">Godoy Cruz</option>
+                    </Form.Select>
+                    <Form.Group className="mb-3" controlId="latitud">
+                      <Form.Control
+                        type="text"
+                        placeholder="Ingrese latitud"
+                        name="latitud"
+                        onChange={handleChange}
+                        value={values.latitud}
+                        autoFocus
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="longitud">
+                      <Form.Control
+                        type="text"
+                        placeholder="Ingrese longitud"
+                        name="longitud"
+                        onChange={handleChange}
+                        value={values.longitud}
+                        autoFocus
+                      />
+                    </Form.Group>
+                  </div>
+                  <div>
+                    <Form.Group className="mb-3" controlId="nombreCalle">
+                      <Form.Control
+                        type="text"
+                        placeholder="Nombre de la calle"
+                        name="calle"
+                        onChange={handleChange}
+                        // value={values.}
+                        autoFocus
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="numeroDeCalle">
+                      <Form.Control
+                        type="text"
+                        placeholder="Número de la calle"
+                        name="horarioApertura"
+                        onChange={handleChange}
+                        // value={values.calle}
+                        autoFocus
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="codigoPostal">
+                      <Form.Control
+                        type="text"
+                        placeholder="Código Postal"
+                        autoFocus
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="numeroDePiso">
+                      <Form.Control
+                        type="text"
+                        placeholder="Número de piso"
+                        autoFocus
+                      />
+                    </Form.Group>
+                    <Form.Group
+                      className="mb-3"
+                      controlId="numeroDeDepartamento"
+                    >
+                      <Form.Control
+                        type="text"
+                        placeholder="Número de departamento"
+                        autoFocus
+                      />
+                    </Form.Group>
+                  </div>
+                  <div>
+                    <Form.Group controlId="imagenSucursal" className="mb-3">
+                      <Form.Label>Suba una imagen</Form.Label>
+                      <Form.Control
+                        type="file"
+                        name="logo"
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                  </div>
+                  <div>
+                    <Button variant="danger" onClick={handleClose}>
+                      Cancelar
+                    </Button>
+                    <Button variant="primary" type="submit">
+                      Aceptar
+                    </Button>
+                  </div>
+                </Form>
+              </>
+            )}
+          </Formik>
+        </Modal.Body>
+      </Modal>
+    </div>
+  );
+};

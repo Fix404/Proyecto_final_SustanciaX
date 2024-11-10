@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { CrearEmpresa } from "../../modals/EmpresaModals/CrearEmpresa";
-import { SidebarHome } from "../../components/HomeComponents/SidebarHome/SidebarHome";
 import { Header } from "../../components/HomeComponents/Header/Header";
 import { Body } from "../../components/HomeComponents/Body/Body";
+import { SidebarHome } from "../../components/HomeComponents/SidebarHome/SidebarHome";
+
+
 /**---------------------------------------------------------------- */
 
 
@@ -23,7 +25,7 @@ export const Home = () => {
       style={{
         width: "20%",
         backgroundColor: " #e9f0ec",
-        height: "100vh",
+        height: "calc(100vh - 55px)",
       }}
     >
       <SidebarHome onAddEmpresaClick={handleOpenModal}/>
