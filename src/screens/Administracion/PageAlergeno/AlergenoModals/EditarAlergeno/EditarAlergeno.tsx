@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from "../../../../../hooks/redux";
 import { IUpdateAlergeno } from "../../../../../types/dtos/alergenos/IUpdateAlergeno";
 import { AlergenoService } from "../../../../../services/ParticularServices/AlergenoService";
 import { removeAlergenoActivo } from "../../../../../redux/slices/AlergenoReducer";
-import { useEffect } from "react";
 
 interface IPropsUpdateAlergeno {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
@@ -24,14 +23,13 @@ export const EditarAlergeno = ({
     (state) => state.alergenoReducer.alergenoActivo
   )!
   const initialValues: IUpdateAlergeno = {
-    id:elementActive.id,
-    denominacion: elementActive.denominacion,
-    imagen:elementActive.imagen
+    id:elementActive?.id,
+    denominacion: elementActive?.denominacion,
+    imagen:elementActive?.imagen
   };
 
   const apiAlergeno = new AlergenoService("/api/alergenos");
   const dispatch = useAppDispatch();
-  console.log(elementActive);
 
   const handleClose = () => {
     setOpenModal(false);

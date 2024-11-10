@@ -8,8 +8,6 @@ import { useEffect } from "react";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 import { IUpdateSucursal } from "../../types/dtos/sucursal/IUpdateSucursal";
 
-//const API_URL = import.meta.env.VITE_API_URL;
-
 interface IPropsCreateSucursal {
   openModal: boolean;
   setOpenModal: (state: boolean) => void;

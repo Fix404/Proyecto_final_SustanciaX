@@ -2,30 +2,26 @@ import { Button, Dropdown, Form } from "react-bootstrap";
 import { productosData } from "../../../data/productosEjemplo";
 import { ListProductos } from "../../../screens/Administracion/PageProductos/Productos/ListProductos";
 import styles from "./BodyAdmin.module.css";
-import { useEffect, useState } from "react";
-import { IAlergenos } from "../../../types/dtos/alergenos/IAlergenos";
-import { CrearAlergeno } from "../../../screens/Administracion/PageAlergeno/AlergenoModals/CrearAlergeno/CrearAlergeno";
+import { FC, useEffect, useState } from "react";
 import { ListAlergeno } from "../../../screens/Administracion/PageAlergeno/ListAlergeno";
-import { AlergenoService } from "../../../services/ParticularServices/AlergenoService";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { useAppSelector } from "../../../hooks/redux";
 import { setAlergenoList } from "../../../redux/slices/AlergenoReducer";
 import categoriasEjemplo from "../../../data/categoriasEjemplo";
 import { CrearProducto } from "../../../modals/ProductosModals/CrearProducto";
 import { ProductoService } from "../../../services/ParticularServices/ProductoService";
 import { useAppDispatch } from "../../../hooks/redux";
-import { ServiceAlergeno } from "../../../services/ParticularServices/AlergenoService";
-import { IAlergenos } from "../../../types/dtos/alergenos/IAlergenos";
-import { CrearAlergeno } from "../../../screens/Administracion/PageAlergeno/CrearAlergeno";
-import { alergenosData } from "../../../data/alergenoEjemplo";
+import { AlergenoService } from "../../../services/ParticularServices/AlergenoService";
 import { setDataProductoList } from "../../../redux/slices/ProductosReducer";
+import { CrearAlergeno } from "../../../screens/Administracion/PageAlergeno/AlergenoModals/CrearAlergeno/CrearAlergeno";
 
-const API_URL=import.meta.env.VITE_API_URL;
 interface BodyAdminProps {
     activeSection: string;
 }
 
-export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
+export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
     const [openModal, setOpenModal] = useState(false);
+    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<number | null>(null);
+    const [openModalCrearProducto, setOpenModalCrearProducto] = useState(false);
     const dispatch=useAppDispatch();
     const apiAlergeno=new AlergenoService("/api/alergenos");
 
@@ -40,20 +36,15 @@ export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
         event.preventDefault();
         setOpenModal(!openModal);
     }
-
-
-
-    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<number | null>(null);
     const productosFiltrados = categoriaSeleccionada
         ? productosData.filter(producto => producto.categoria && producto.categoria.id === categoriaSeleccionada)
         : productosData;
 
-    const [openModalCrearProducto, setOpenModalCrearProducto] = useState(false);
     const handleOpenCrearProducto = () => {
         setOpenModalCrearProducto(!openModalCrearProducto);
     }
 
-    const productoService = new ProductoService(API_URL + "/productos");
+    const productoService = new ProductoService("api/articulos");
     const getProductos = async () => {
         await productoService.getAll().then((productosData) => {
             dispatch(setDataProductoList(productosData));
@@ -63,9 +54,6 @@ export const BodyAdmin: React.FC<BodyAdminProps> = ({ activeSection }) => {
     useEffect(() => {
         getProductos();
     }, []);
-
-    const [alergenos, setAlergenos] = useState<IAlergenos[]>([]);
-    const [modalCrearAlergeno, setModalCrearAlergeno] = useState<boolean>(false);
 
     useEffect(() => {
         getAlergenos();

@@ -7,10 +7,7 @@ import { ICreateProducto } from "../../types/dtos/productos/ICreateProducto";
 import { ProductoService } from "../../services/ParticularServices/ProductoService";
 import categoriasEjemplo from "../../data/categoriasEjemplo";
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 interface IPropsCrearProducto {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     getProductos: Function
     openModal: boolean
     setOpenModal: (state: boolean) => void
@@ -32,7 +29,7 @@ export const CrearProducto = ({
         imagenes: []
     }
 
-    const apiProducto = new ProductoService(API_URL + "/productos");
+    const apiProducto = new ProductoService("/api/articulos/create");
 
     const elementActive = useAppSelector(
         (state) => state.productosReducer.elementActive);
@@ -59,7 +56,7 @@ export const CrearProducto = ({
                         idCategoria: Yup.number(),
                         idAlergenos: Yup.number()
                     })}
-                        initialValues={elementActive ? elementActive : initialValues}
+                        initialValues={initialValues}
                         enableReinitialize={true}
                         onSubmit={async (values: ICreateProducto) => {
                             if (elementActive) {
@@ -68,15 +65,19 @@ export const CrearProducto = ({
                             getProductos();
                             handleClose();
                         }}>
-                        {() => (
+                        {({ values, handleChange, handleSubmit }) => (
                             <>
-                                <Form style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "30px" }} >
+                                <Form style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "30px" }} 
+                                onSubmit={handleSubmit}>
                                     <div>
                                         <Form.Group className="mb-3" controlId="denominacion">
                                             <Form.Control
                                                 type="text"
                                                 placeholder="Ingrese una denominación"
                                                 autoFocus
+                                                name="denominacion"
+                    onChange={handleChange}
+                    value={values.denominacion}
                                             />
                                         </Form.Group>
                                         <Form.Group className="mb-3" controlId="categoria">
@@ -108,6 +109,9 @@ export const CrearProducto = ({
                                                 type="text"
                                                 placeholder="Ingresa un precio de venta"
                                                 autoFocus
+                                                name="precioVenta"
+                    onChange={handleChange}
+                    value={values.precioVenta}
                                             />
                                         </Form.Group>
                                         <Form.Group className="mb-3" controlId="codigo">
@@ -115,6 +119,9 @@ export const CrearProducto = ({
                                                 type="text"
                                                 placeholder="Ingresa un código"
                                                 autoFocus
+                                                name="codigo"
+                    onChange={handleChange}
+                    value={values.codigo}
                                             />
                                         </Form.Group>
                                         <Form.Group>
@@ -122,6 +129,7 @@ export const CrearProducto = ({
                                                 label="Habilitado"
                                                 type="checkbox"
                                                 style={{ color: '#fff' }}
+                                                
                                             />
                                         </Form.Group>
                                     </div>
@@ -134,16 +142,16 @@ export const CrearProducto = ({
                                             <Form.Label style={{color: '#fff'}} >Suba una imagen</Form.Label>
                                             <Form.Control type="file" />
                                         </Form.Group>
+                                        <Modal.Footer style={{ display: "flex", alignContent: "center", justifyContent: "space-evenly" }}>
+                    <Button variant="danger" onClick={handleClose}>Cancelar</Button>
+                    <Button variant="primary" type="submit">Aceptar</Button>
+                </Modal.Footer>
                                     </div>
                                 </Form>
                             </>
                         )}
                     </Formik>
                 </Modal.Body>
-                <Modal.Footer style={{ display: "flex", alignContent: "center", justifyContent: "space-evenly" }}>
-                    <Button variant="danger" onClick={handleClose}>Cancelar</Button>
-                    <Button variant="primary" type="submit">Aceptar</Button>
-                </Modal.Footer>
             </Modal >
         </>
     )
