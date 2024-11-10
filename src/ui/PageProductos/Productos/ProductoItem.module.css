@@ -34,14 +34,14 @@
 .categoria:hover .tooltip{
     visibility: visible; 
     opacity: 1;
-    right: 14rem;
+    right: 4rem;
 }
 
 .tooltip {
     visibility: hidden; 
     opacity: 0; 
     position: absolute; 
-    right: 30rem;
+    right: 26rem;
     background-color: #fff;
     border: 1px solid #ccc; 
     padding: 5px; 
