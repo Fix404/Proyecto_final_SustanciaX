@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styles from "./ListAlergeno.module.css"
-import { IAlergenos } from "../../../types/dtos/alergenos/IAlergenos";
+import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
 import { AlergenoItem } from "./AlergenoItem";
 
 interface IListAlergeno {

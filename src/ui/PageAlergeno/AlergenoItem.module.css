@@ -50,7 +50,7 @@
 }
 
 .accionesContainer button{
-    width: min-content;
-    height: min-content;
-    margin-right: 3%;
+    background: none;
+    border: none;
+    cursor: pointer;
 }

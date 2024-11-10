@@ -2,10 +2,10 @@ import { Button, Form, Modal } from "react-bootstrap";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useAppDispatch, useAppSelector } from "../../../../../hooks/redux";
-import { IUpdateAlergeno } from "../../../../../types/dtos/alergenos/IUpdateAlergeno";
-import { AlergenoService } from "../../../../../services/ParticularServices/AlergenoService";
-import { removeAlergenoActivo } from "../../../../../redux/slices/AlergenoReducer";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { IUpdateAlergeno } from "../../../types/dtos/alergenos/IUpdateAlergeno";
+import { AlergenoService } from "../../../services/ParticularServices/AlergenoService";
+import { removeAlergenoActivo } from "../../../redux/slices/AlergenoReducer";
 
 interface IPropsUpdateAlergeno {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
