@@ -1,6 +1,42 @@
-.cardEmpresaFooterContainer{
+.containerCardEmpresa{
+    width: 100%;
     display: flex;
-    align-content: space-evenly;
     justify-content: center;
-    gap: 0.6rem;
+    align-items: center;
+    border: 1px solid #198754 !important; 
+    padding: 0.4rem;
+    transition: 0.2s ease-in;
+}
+
+.containerCardEmpresa:hover{
+    cursor: pointer;
+    transform: scale(1.02);
+    background-color: #cfe3f6;
+}
+
+.containerCardEmpresa .cardEmpresaFooterContainer{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    background-color: transparent;
+    border-top: none;
+    padding-bottom: 1rem;
+   
+}
+
+.cardEmpresaFooterContainer .botonEmpresaHome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #198754;
+    color: #f8f9fa;
+    height: 2rem;
+    width: 2rem;
+  
+}
+
+.cardEmpresaFooterContainer .botonEmpresaHome:hover {
+   
+    border: 1px solid #198754; 
+    color: #198754;
 }

@@ -1,5 +1,5 @@
 .containerGeneralBody{
-    height: calc(100vh - 55px);
+    height: 100vh;
     padding: 20px;
     background-color: rgb(213, 212, 210);
     display: flex;
