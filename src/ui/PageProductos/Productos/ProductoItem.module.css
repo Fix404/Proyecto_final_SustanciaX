@@ -31,6 +31,11 @@
     visibility: visible; 
     opacity: 1;
 }
+.categoria:hover .tooltip{
+    visibility: visible; 
+    opacity: 1;
+    right: 14rem;
+}
 
 .tooltip {
     visibility: hidden; 
