@@ -16,19 +16,19 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
   const [openModal, setOpenModal] = useState(false);
   const [openVerModal, setOpenVerModal] = useState(false);
 
-  const dispatch=useAppDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleNavigateAdmin = () => {
     dispatch(removeSucursalActiva());
-    dispatch(setSucursalActiva({element:sucursal}));
+    dispatch(setSucursalActiva({ element: sucursal }));
     navigate("admin");
   };
 
-  const sucursalActiva=useAppSelector(state => state.sucursalReducer.sucursalActiva);
+  const sucursalActiva = useAppSelector(state => state.sucursalReducer.sucursalActiva);
   const handleEditarSucursal = () => {
     dispatch(removeSucursalActiva());
-    dispatch(setSucursalActiva({element:sucursal}));
+    dispatch(setSucursalActiva({ element: sucursal }));
     setOpenModal(!openModal)
   }
 
@@ -37,52 +37,62 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
   };
 
   return (
-    <div>
-      <Card className={styles.card}>
-        <Card.Img variant="top" src="holder.js/100px160" />
-        <Card.Body>
+    <div className={styles.divPrincipal}>
+      <Card className={styles.containerCardSucursal} >
+
+        <Card.Header className={styles.containerCardHeader}>
           <Card.Title>{sucursal.nombre}</Card.Title>
           <Card.Text>
-            Horario de apertura: {sucursal.horarioApertura}
-            <br></br>
-            Horario de cierre: {sucursal.horarioCierre}
+            {sucursal.horarioApertura} - {sucursal.horarioCierre}
           </Card.Text>
+        </Card.Header>
+
+        <Card.Body className={styles.containerCardBody}>
+          <div ><Card.Img className={styles.containerImage} src="holder.js/100px160" /></div>
         </Card.Body>
+
+
         <Card.Footer className={styles.cardSucursalFooterContainer}>
           <OverlayTrigger
             placement="bottom"
             delay={{ show: 250, hide: 400 }}
             overlay={
-              <Tooltip id="button-tooltip-admin">Administrar Sucursal</Tooltip>
+              <Tooltip id="button-tooltip-admin">Admin</Tooltip>
             }
           >
-            <Button variant="warning" onClick={handleNavigateAdmin}>
+            <Button variant="custom" className={styles.botonSucursalHome} onClick={handleNavigateAdmin}>
               <span className="material-symbols-outlined">apartment</span>
             </Button>
           </OverlayTrigger>
-          <OverlayTrigger  placement="bottom"
+
+          <OverlayTrigger placement="bottom"
             delay={{ show: 250, hide: 400 }}
             overlay={
-              <Tooltip id="button-tooltip-ver">Ver Sucursal</Tooltip>
+              <Tooltip id="button-tooltip-ver">Ver</Tooltip>
             }>
-          <Button variant="primary" onClick={handleVerSucursal}>
+          <Button  variant="custom" className={styles.botonSucursalHome} onClick={handleVerSucursal}>
             <span className="material-symbols-outlined">table_eye</span>
           </Button>
           </OverlayTrigger>
-          <OverlayTrigger  placement="bottom"
+
+          <OverlayTrigger placement="bottom"
             delay={{ show: 250, hide: 400 }}
             overlay={
-              <Tooltip id="button-tooltip-eliminar">Editar Sucursal</Tooltip>
+              <Tooltip id="button-tooltip-eliminar">Editar</Tooltip>
             }>
-          <Button variant="secondary" onClick={handleEditarSucursal}>
-            <span className="material-symbols-outlined">edit</span>
-          </Button>
+            <Button variant="custom" className={styles.botonSucursalHome} onClick={handleEditarSucursal}>
+              <span className="material-symbols-outlined">edit</span>
+            </Button>
           </OverlayTrigger>
         </Card.Footer>
       </Card>
 
+
+      
+
       {openModal && sucursalActiva && <EditarSucursal openModal={openModal} setOpenModal={setOpenModal} sucursalActiva={sucursalActiva}/>}
       {openVerModal && <VerSucursal sucursal={sucursal} />}
+
     </div>
   );
 };

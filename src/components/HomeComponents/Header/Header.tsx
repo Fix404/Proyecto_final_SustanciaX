@@ -17,9 +17,10 @@ export const Header = () => {
   return (
     <div className={styles.principalHeaderContainer}>
       {
-        empresaActiva && (<Navbar expand="lg" className="bg-body-tertiary">
+        empresaActiva && (
+        <Navbar expand="lg" className="bg-body-tertiary">
           <Container fluid>
-            <Navbar.Brand href="#">Sucursales de: {empresaActiva?.nombre}</Navbar.Brand>
+            <h1 className={styles.headerTitle}>Sucursales de {empresaActiva?.nombre}</h1>
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll">
                    {/* Modal */}
@@ -27,7 +28,7 @@ export const Header = () => {
               openModal={openModal}
               setOpenModal={setOpenModal} 
               empresaActiva={empresaActiva}/>}
-                <Button variant="outline-success" onClick={toggleModal}>AGREGAR SUCURSAL</Button>
+                <Button variant="outline-success" onClick={toggleModal} className="ms-auto" style={{ marginRight: "40px" }}>AGREGAR SUCURSAL</Button>
             </Navbar.Collapse>
           </Container>
         </Navbar>)}

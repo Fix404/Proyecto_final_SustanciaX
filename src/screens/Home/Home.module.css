@@ -1,0 +1,47 @@
+/* Sidebar */
+.sidebar {
+    width: 20%;
+    background-color: #e9f0ec;
+    height: 100vh;
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+    padding: 10px; 
+  }
+
+  .sidebarAdmin{
+    width: 20%;
+    background-color: #e9f0ec;
+    height: calc(100vh - 10vh);
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+    padding: 10px; 
+  }
+  
+  /* Contenedor principal */
+  .mainContent {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 100vh; 
+    overflow: hidden; 
+  }
+  
+  .mainContentAdmin {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 90vh; 
+    overflow: hidden; 
+  }
+  
+  /* Contenedor para el Header y Body */
+  .bodyContainer {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+ 

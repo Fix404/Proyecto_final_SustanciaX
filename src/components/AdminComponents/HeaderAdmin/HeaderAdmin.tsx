@@ -18,18 +18,18 @@ export const HeaderAdmin = () => {
   }, [dispatch, empresaActiva, sucursalActiva]);
   return (
     <Nav className={styles.containerNav}>
-      <Container className={styles.containerNav}>
-      <Nav.Item className={styles.containerNav}>
+    
+      <div>
         <Nav.Link href="/" >
           <span className="material-symbols-rounded">
             <div className={styles.containerIcon}>keyboard_backspace</div>
           </span>
         </Nav.Link>
-      </Nav.Item>
-      <Nav.Item className={styles.containerNav}>
-      <p className={styles.containerSucursal}>{empresaActiva?.nombre} - Sucursal: {sucursalActiva?.nombre}</p>
-      </Nav.Item>
-      </Container>
+      </div>
+      <div>
+      <p className={styles.containerSucursal}>Volver a Empresas</p>
+      </div>
+ 
     </Nav>
   )
 }

@@ -2,6 +2,9 @@
   display: flex;
   flex-direction: column; 
   align-items: center;     
+  height: 100%;
+  overflow: hidden;
+
 }
 
 @media (max-width: 768px) {
@@ -24,3 +27,4 @@ margin: 20px;
 
 
 
+ 
