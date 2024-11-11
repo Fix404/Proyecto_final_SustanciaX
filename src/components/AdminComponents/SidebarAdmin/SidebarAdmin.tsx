@@ -25,8 +25,12 @@ export const SidebarAdmin: React.FC<SidebarAdminProps> = ({onButtonClick}) => {
   return (
     <div className={styles.principalContainerSideBarAdmin}>
 
-    <div>
-      <h1>{empresaActiva?.nombre} - Sucursal: {sucursalActiva?.nombre}</h1>
+    <div className={styles.headerSidebar}>
+      <h1>{empresaActiva?.nombre}</h1>
+      <div className={styles.sucursalSidebar}>
+        <h1>Sucursal</h1>
+        <p> {sucursalActiva?.nombre}</p>
+      </div>
     </div>
 
     <div className={styles.containerDivButtonEmpresa} >

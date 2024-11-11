@@ -2,7 +2,17 @@
 .sidebar {
     width: 20%;
     background-color: #e9f0ec;
-    height: 100vh; 
+    height: 100vh;
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+    padding: 10px; 
+  }
+
+  .sidebarAdmin{
+    width: 20%;
+    background-color: #e9f0ec;
+    height: calc(100vh - 10vh);
     overflow: hidden; 
     display: flex;
     flex-direction: column;
@@ -15,6 +25,14 @@
     flex-direction: column;
     width: 80%;
     height: 100vh; 
+    overflow: hidden; 
+  }
+  
+  .mainContentAdmin {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 90vh; 
     overflow: hidden; 
   }
   
