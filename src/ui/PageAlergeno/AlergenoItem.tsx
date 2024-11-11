@@ -2,10 +2,12 @@ import { FC, useEffect, useState } from "react";
 import styles from "./AlergenoItem.module.css";
 import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { removeAlergenoActivo, setAlergenoActivo } from "../../redux/slices/AlergenoReducer";
 import { EditarAlergeno } from "../../modals/AlergenoModals/EditarAlergeno/EditarAlergeno";
 import { AlergenoService } from "../../services/ParticularServices/AlergenoService";
+import { VerAlergeno } from "../../modals/AlergenoModals/VerAlergeno/VerAlergeno";
+import { DeleteAlergeno } from "../../alerts/DeleteAlergenoAlert/DeleteAlergeno";
 
 interface IAlergenosItem {
     alergeno: IAlergenos;
@@ -14,7 +16,10 @@ interface IAlergenosItem {
 export const AlergenoItem: FC<IAlergenosItem> = ({ alergeno }) => {
     const [openModalEdit, setOpenModalEdit] = useState(false);
     const [openModalVer, setOpenModalVer] = useState(false);
+    const [openModalDelete, setOpenModalDelete] = useState(false);
+
     const dispatch=useAppDispatch();
+
     const alergenoService= new AlergenoService("api/alergenos");
 
     const handleEditarAlergeno = () => {
@@ -29,17 +34,25 @@ export const AlergenoItem: FC<IAlergenosItem> = ({ alergeno }) => {
         setOpenModalVer(!openModalVer)
       }
 
+      const handleDeleteAlergeno = () => {
+        dispatch(removeAlergenoActivo());
+        dispatch(setAlergenoActivo({element:alergeno}));
+        setOpenModalDelete(!openModalDelete)
+      }
+
       const getAlergenos = async () => {
         await alergenoService.getAll().then(() => {
             dispatch(setAlergenoActivo({element:alergeno}))
         });
       }
 
-      useEffect(() => {
-        if(!openModalEdit || !openModalVer){
-            getAlergenos()
-        }
-      }, [openModalEdit, openModalVer])
+      const alergenoActivo=useAppSelector((state) => state.alergenoReducer.alergenoActivo);
+
+      // useEffect(() => {
+      //   if(!openModalEdit || !openModalVer){
+      //       getAlergenos()
+      //   }
+      // }, [openModalEdit, openModalVer])
 
     return (
         <div className={styles.itemContainer}>
@@ -75,13 +88,14 @@ export const AlergenoItem: FC<IAlergenosItem> = ({ alergeno }) => {
                     </Tooltip>
                   }
                 >
-                  <Button variant="danger">
+                  <Button variant="danger" onClick={handleDeleteAlergeno}>
                     <span className="material-symbols-outlined" style={{ color: "#933631" }}>delete</span>
                   </Button>
                 </OverlayTrigger>
             </div>
             {openModalEdit && <EditarAlergeno getAlergenos={getAlergenos} openModal={openModalEdit} setOpenModal={setOpenModalEdit} />}
-            {/* {openModalVer && <VerAlergeno getAlergenos={getAlergenos} openModal={openModalVer} setOpenModal={setOpenModalVer}/>} */}
+            {openModalVer && <VerAlergeno alergeno={alergenoActivo!}/>}
+            {openModalDelete && <DeleteAlergeno getAlergenos={getAlergenos} alergenoActivo={alergenoActivo!}/>}
         </div>
     );
 }

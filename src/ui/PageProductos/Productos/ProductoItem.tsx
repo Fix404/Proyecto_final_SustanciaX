@@ -1,10 +1,13 @@
 import { FC, useEffect, useState } from "react";
 import { IProductos } from "../../../types/dtos/productos/IProductos";
 import styles from "./ProductoItem.module.css";
-import { useAppDispatch } from "../../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { ProductoService } from "../../../services/ParticularServices/ProductoService";
 import { removeProductoElementActive, setProductoElementActive } from "../../../redux/slices/ProductosReducer";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { EditarProducto } from "../../../modals/ProductosModals/EditarProducto";
+import { VerProducto } from "../../../modals/ProductosModals/VerProducto/VerProducto";
+import { DeleteProducto } from "../../../alerts/DeleteProductoAlert/DeleteProducto";
 
 interface IProductosItem {
     producto: IProductos;
@@ -13,6 +16,7 @@ interface IProductosItem {
 export const ProductoItem: FC<IProductosItem> = ({ producto }) => {
     const [openModalEdit, setOpenModalEdit] = useState(false);
     const [openModalVer, setOpenModalVer] = useState(false);
+    const [openModalDelete, setOpenModalDelete] = useState(false);
     const dispatch=useAppDispatch();
     const productosService=new ProductoService("api/articulos");
 
@@ -28,17 +32,25 @@ export const ProductoItem: FC<IProductosItem> = ({ producto }) => {
         setOpenModalVer(!openModalVer)
       }
 
+    const handleDeleteProducto = () => {
+      dispatch(removeProductoElementActive());
+        dispatch(setProductoElementActive({element:producto}));
+        setOpenModalDelete(!openModalDelete)
+    }
+
     const getProductos = async () => {
         await productosService.getAll().then(()=> {
             dispatch(setProductoElementActive({element:producto}));
         })
     }
 
-    useEffect(() => {
-        if(!openModalEdit || !openModalVer){
-            getProductos();
-        }
-      }, [openModalEdit, openModalVer]);
+    const productoActivo=useAppSelector((state) => state.productosReducer.elementActive);
+
+    // useEffect(() => {
+    //     if(!openModalEdit || !openModalVer || !openModalDelete){
+    //         getProductos();
+    //     }
+    //   }, [openModalEdit, openModalVer, openModalDelete]);
     
     return (
         <div className={styles.itemContainer}>
@@ -87,11 +99,14 @@ export const ProductoItem: FC<IProductosItem> = ({ producto }) => {
                     </Tooltip>
                   }
                 >
-                  <Button variant="danger">
+                  <Button variant="danger" onClick={handleDeleteProducto}>
                     <span className="material-symbols-outlined" style={{ color: "#933631" }}>delete</span>
                   </Button>
                 </OverlayTrigger>
             </div>
+            {openModalEdit && <EditarProducto getProductos={getProductos} openModal={openModalEdit} setOpenModal={setOpenModalEdit}/>}
+            {openModalVer && <VerProducto producto={productoActivo!}/>}
+            {openModalDelete && <DeleteProducto getProductos={getProductos} productoActivo={productoActivo!}/>}
         </div>
     );
 } 
