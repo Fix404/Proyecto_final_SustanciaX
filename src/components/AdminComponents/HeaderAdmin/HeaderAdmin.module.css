@@ -1,15 +1,17 @@
 .containerNav {
   height: 10vh;
   display: flex;
-  
-  justify-items: left;
   justify-content: left;
+  align-items: center;
   background-color: #198754;
+  gap: 1rem;
+
 }
 
 .containerSucursal {
   color: #fff;
-  font-size: 18px;
+  font-size: 20px;
+  margin-bottom: 7px;
 }
 
 .containerIcon {
@@ -17,6 +19,7 @@
   color: #fff;
   cursor: pointer;
   transition: transform 0.3s ease;
+
 }
 
 .containerIcon:hover {

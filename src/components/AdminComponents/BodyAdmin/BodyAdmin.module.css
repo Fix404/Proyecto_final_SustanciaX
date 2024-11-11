@@ -1,5 +1,5 @@
 .containerGeneralBody{
-    height: 100%;
+    height: 90vh;
     padding: 20px;
     background-color: rgb(213, 212, 210);
 }
@@ -26,4 +26,9 @@
 .headerContainer Button{
     width: 26vh;
     height: min-content;
+}
+
+.divTablaAlergenos{
+    margin-top: 13px;
+
 }

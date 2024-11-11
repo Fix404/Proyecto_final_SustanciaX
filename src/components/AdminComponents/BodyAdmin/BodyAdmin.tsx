@@ -1,5 +1,4 @@
 import { Button, Dropdown, Form } from "react-bootstrap";
-import { productosData } from "../../../data/productosEjemplo";
 import { ListProductos } from "../../../ui/PageProductos/Productos/ListProductos";
 import styles from "./BodyAdmin.module.css";
 import { FC, useEffect, useState } from "react";
@@ -36,9 +35,6 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
         event.preventDefault();
         setOpenModal(!openModal);
     }
-    const productosFiltrados = categoriaSeleccionada
-        ? productosData.filter(producto => producto.categoria && producto.categoria.id === categoriaSeleccionada)
-        : productosData;
 
     const handleOpenCrearProducto = () => {
         setOpenModalCrearProducto(!openModalCrearProducto);
@@ -50,6 +46,13 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
             dispatch(setDataProductoList(productosData));
         });
     };
+
+    const productosData=useAppSelector((state) => state.productosReducer.dataList);
+
+
+    const productosFiltrados = categoriaSeleccionada
+        ? productosData.filter(producto => producto.categoria && producto.categoria.id === categoriaSeleccionada)
+        : productosData;
 
     useEffect(() => {
         getProductos();
@@ -65,12 +68,12 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                 <div>
                     <div className={styles.headerContainer}>
                         <div className={styles.filtrarProductos}>
-                            <p>Filtrar por categoría:</p>
+                            {/* <p>Filtrar por categoría:</p> */}
                             <Dropdown>
-                                <Dropdown.Toggle variant="success" id="dropdown-basic" style={{ width: "28vh" }}>
+                                <Dropdown.Toggle variant="outline-success" id="dropdown-basic" style={{ width: "28vh", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                                     {categoriaSeleccionada !== null
                                         ? categoriasEjemplo.find(categoria => categoria.id === categoriaSeleccionada)?.denominacion
-                                        : "Categorías"}
+                                        : "Filtrar por categoría"}
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu style={{ width: "28vh" }}>
                                     <Dropdown.Item onClick={() => setCategoriaSeleccionada(null)}>
@@ -89,7 +92,7 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                         </div>
                         {openModalCrearProducto && 
                         <CrearProducto getProductos={getProductos} openModal={openModalCrearProducto} setOpenModal={setOpenModalCrearProducto} />}
-                        <Button onClick={handleOpenCrearProducto} variant="light">Agregar Producto</Button>
+                        <Button onClick={handleOpenCrearProducto} variant="outline-success" >AGREGAR PRODUCTO</Button>
                     </div>
                     <div>
                         <ListProductos productos={productosFiltrados} />
@@ -106,9 +109,9 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                 <div>
                     {/* Botón para agregar alérgeno */}
                     <Form className="d-flex">
-                    <button className="btn btn-primary my-3" onClick={toggleModal}>
-                        Agregar Alérgeno
-                    </button>
+                    <Button variant="outline-success" onClick={toggleModal} className="ms-auto" >
+                        AGREGAR ALERGENO
+                    </Button>
                     </Form>
 
                     {/* Modal para crear alérgeno */}
@@ -119,8 +122,8 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                     )}
 
                     {/* Lista de alérgenos */}
-                    <div>
-                        <h3>Alérgenos</h3>
+                    <div className={styles.divTablaAlergenos}>
+                        
                         {alergenosData ? (
                             <ListAlergeno alergenos={alergenosData}/>
                         ) : (

@@ -6,6 +6,7 @@ import styles from "./CardSucursal.module.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { removeSucursalActiva, setSucursalActiva } from "../../redux/slices/SucursalReducer";
 import { EditarSucursal } from "../../modals/SucursalModals/EditarSucursal";
+import { VerSucursal } from "../../modals/SucursalModals/VerSucursal";
 
 interface ICardSucursal {
   sucursal: ISucursal;
@@ -13,6 +14,7 @@ interface ICardSucursal {
 
 export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
   const [openModal, setOpenModal] = useState(false);
+  const [openVerModal, setOpenVerModal] = useState(false);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -29,6 +31,10 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
     dispatch(setSucursalActiva({ element: sucursal }));
     setOpenModal(!openModal)
   }
+
+  const handleVerSucursal = () => {
+    setOpenVerModal(!openVerModal); 
+  };
 
   return (
     <div className={styles.divPrincipal}>
@@ -64,9 +70,9 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
             overlay={
               <Tooltip id="button-tooltip-ver">Ver</Tooltip>
             }>
-            <Button variant="custom" className={styles.botonSucursalHome}>
-              <span className="material-symbols-outlined">table_eye</span>
-            </Button>
+          <Button  variant="custom" className={styles.botonSucursalHome} onClick={handleVerSucursal}>
+            <span className="material-symbols-outlined">table_eye</span>
+          </Button>
           </OverlayTrigger>
 
           <OverlayTrigger placement="bottom"
@@ -81,7 +87,12 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
         </Card.Footer>
       </Card>
 
-      {openModal && sucursalActiva && <EditarSucursal openModal={openModal} setOpenModal={setOpenModal} sucursalActiva={sucursalActiva} />}
+
+      
+
+      {openModal && sucursalActiva && <EditarSucursal openModal={openModal} setOpenModal={setOpenModal} sucursalActiva={sucursalActiva}/>}
+      {openVerModal && <VerSucursal sucursal={sucursal} />}
+
     </div>
   );
 };

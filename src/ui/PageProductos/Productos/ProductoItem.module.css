@@ -27,12 +27,16 @@
     visibility: visible; 
     opacity: 1; 
 }
+.denominacion:hover .tooltip{
+    visibility: visible; 
+    opacity: 1;
+}
 
 .tooltip {
     visibility: hidden; 
     opacity: 0; 
     position: absolute; 
-    right: 16rem;
+    right: 30rem;
     background-color: #fff;
     border: 1px solid #ccc; 
     padding: 5px; 
@@ -54,3 +58,4 @@
     border: none;
     cursor: pointer;
 }
+
