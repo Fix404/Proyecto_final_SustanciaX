@@ -1,10 +1,10 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { IProductos } from "../../../types/dtos/productos/IProductos";
 import styles from "./ProductoItem.module.css";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { ProductoService } from "../../../services/ParticularServices/ProductoService";
 import { removeProductoElementActive, setProductoElementActive } from "../../../redux/slices/ProductosReducer";
-import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button, ListGroup, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { EditarProducto } from "../../../modals/ProductosModals/EditarProducto";
 import { VerProducto } from "../../../modals/ProductosModals/VerProducto/VerProducto";
 import { DeleteProducto } from "../../../alerts/DeleteProductoAlert/DeleteProducto";
@@ -53,7 +53,8 @@ export const ProductoItem: FC<IProductosItem> = ({ producto }) => {
     //   }, [openModalEdit, openModalVer, openModalDelete]);
     
     return (
-        <div className={styles.itemContainer}>
+      <ListGroup>
+      <ListGroup.Item><div className={styles.itemContainer}>
             <div className={styles.productoContainer}>
                 <p>{`${producto?.denominacion}`}
                 <span className={styles.tooltip}>{`${producto?.denominacion}`}</span>
@@ -107,6 +108,8 @@ export const ProductoItem: FC<IProductosItem> = ({ producto }) => {
             {openModalEdit && <EditarProducto getProductos={getProductos} openModal={openModalEdit} setOpenModal={setOpenModalEdit}/>}
             {openModalVer && <VerProducto producto={productoActivo!}/>}
             {openModalDelete && <DeleteProducto getProductos={getProductos} productoActivo={productoActivo!}/>}
-        </div>
+        </div></ListGroup.Item>
+    </ListGroup>
+        
     );
 } 

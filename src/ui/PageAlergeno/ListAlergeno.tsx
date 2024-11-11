@@ -2,6 +2,7 @@ import { FC } from "react";
 import styles from "./ListAlergeno.module.css"
 import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
 import { AlergenoItem } from "./AlergenoItem";
+import { ListGroup } from "react-bootstrap";
 
 interface IListAlergeno {
     alergenos: IAlergenos[];
@@ -9,8 +10,10 @@ interface IListAlergeno {
 
 export const ListAlergeno: FC<IListAlergeno> = ({ alergenos }) => {
     return (
-        <div className={styles.itemContainer}>
-            <div className={styles.menuContainer}>
+        <>
+            <ListGroup>
+                <ListGroup.Item>
+                <div className={styles.menuContainer}>
             <div className={styles.clasificacionesContainer}>
                 <p>Denominación</p>
                 <p>Imagen</p>
@@ -22,6 +25,8 @@ export const ListAlergeno: FC<IListAlergeno> = ({ alergenos }) => {
                     <AlergenoItem alergeno={alergeno} key={alergeno.id} />
                 ))}
             </div>
-        </div>
+                </ListGroup.Item>
+            </ListGroup>
+        </>
     )
 }

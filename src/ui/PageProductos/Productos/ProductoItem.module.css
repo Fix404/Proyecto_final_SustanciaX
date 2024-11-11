@@ -1,15 +1,14 @@
 .itemContainer {
     display: flex;
     flex-direction: row;
-    border-top: 1px solid #5f5e5e;
     text-align: center;
-    background-color: rgb(226, 228, 230);
+    height: 8vh;
 }
 
 .productoContainer {
     display: flex;
     flex-direction: row;
-    width: 75%;
+    width: 80%;
     justify-content: space-around;
     position: relative;
     margin-top: 1rem;
@@ -43,9 +42,10 @@
 .accionesContainer{
     display: flex;
     flex-direction: row;
-    width: 25%;
+    width: 20%;
     justify-content: center;
     margin-top: 1rem;
+    margin-left: 6rem;
 }
 
 .accionesContainer button{

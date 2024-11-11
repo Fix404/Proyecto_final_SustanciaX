@@ -14,7 +14,6 @@ export const VerAlergeno: React.FC<AlergenosModalProps> = ({ alergeno }) => {
     if (!esVisible) return null;
     return (
         <div className={styles.modalBackdrop}>
-            <div className={styles.modalContainer}>
                 <div className="modal show" style={{ display: 'block', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
                     <Modal.Dialog>
                         <Modal.Header>
@@ -29,6 +28,5 @@ export const VerAlergeno: React.FC<AlergenosModalProps> = ({ alergeno }) => {
                         </Modal.Footer>
                     </Modal.Dialog>
                 </div>
-            </div>
         </div>);
 }

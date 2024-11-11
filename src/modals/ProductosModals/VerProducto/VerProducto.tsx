@@ -14,18 +14,17 @@ export const VerProducto: React.FC<ProductosModalProps> = ({ producto }) => {
     if (!esVisible) return null;
     return (
         <div className={styles.modalBackdrop}>
-            <div className={styles.modalContainer}>
                 <div className="modal show" style={{ display: 'block', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
                     <Modal.Dialog>
                         <Modal.Header>
                             <Modal.Title style={{ textAlign: "center", width: "100%" }}>Producto</Modal.Title>
                         </Modal.Header>
-                        <Modal.Body style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-                            <p><b>Denominación: </b> {producto?.denominacion}</p>
+                        <Modal.Body style={{display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem"}}>
+                            <p><b>Denominación: </b><br /> {producto?.denominacion}</p>
                             <p><b>Precio:</b> {producto?.precioVenta}</p>
-                            <p><b>Descripción: </b> {producto?.descripcion}</p>
+                            <p><b>Descripción: </b><br /> {producto?.descripcion}</p>
                             {/* <p><b>Categoría: </b> {categoria.categoriaPadre?.subCategorias}</p> */}
-                            <p><b>Habilitado: </b> {producto?.habilitado}</p>
+                            <p><b>Habilitado: </b> {producto?.habilitado ? <p>Si</p> : <p>No</p>}</p>
                             <p><b>Código: </b> {producto?.codigo}</p>
                             {/* <p><b>Alérgenos: </b> {}</p> */}
                             {/* <p><b>Imágenes: </b> {imagenes}</p> */}
@@ -35,6 +34,5 @@ export const VerProducto: React.FC<ProductosModalProps> = ({ producto }) => {
                         </Modal.Footer>
                     </Modal.Dialog>
                 </div>
-            </div>
         </div>);
 }

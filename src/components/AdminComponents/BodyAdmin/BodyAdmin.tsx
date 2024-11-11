@@ -5,7 +5,6 @@ import { FC, useEffect, useState } from "react";
 import { ListAlergeno } from "../../../ui/PageAlergeno/ListAlergeno";
 import { useAppSelector } from "../../../hooks/redux";
 import { setAlergenoList } from "../../../redux/slices/AlergenoReducer";
-import categoriasEjemplo from "../../../data/categoriasEjemplo";
 import { CrearProducto } from "../../../modals/ProductosModals/CrearProducto";
 import { ProductoService } from "../../../services/ParticularServices/ProductoService";
 import { useAppDispatch } from "../../../hooks/redux";
@@ -24,6 +23,7 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
     const [openModal, setOpenModal] = useState(false);
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<number | null>(null);
     const [openModalCrearProducto, setOpenModalCrearProducto] = useState(false);
+
     const dispatch = useAppDispatch();
     const apiAlergeno = new AlergenoService("/api/alergenos");
 
@@ -86,14 +86,14 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                             <Dropdown>
                                 <Dropdown.Toggle variant="outline-success" id="dropdown-basic" style={{ width: "28vh", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                                     {categoriaSeleccionada !== null
-                                        ? categoriasEjemplo.find(categoria => categoria.id === categoriaSeleccionada)?.denominacion
+                                        ? categoriasData.find(categoria => categoria.id === categoriaSeleccionada)?.denominacion
                                         : "Filtrar por categoría"}
                                 </Dropdown.Toggle>
-                                <Dropdown.Menu style={{ width: "28vh" }}>
+                                <Dropdown.Menu >
                                     <Dropdown.Item onClick={() => setCategoriaSeleccionada(null)}>
                                         Todos los productos
                                     </Dropdown.Item>
-                                    {categoriasEjemplo.map((categoria) => (
+                                    {categoriasData.map((categoria) => (
                                         <Dropdown.Item
                                             key={categoria.id}
                                             onClick={() => setCategoriaSeleccionada(categoria.id)}

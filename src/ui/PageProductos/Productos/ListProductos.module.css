@@ -1,8 +1,3 @@
-.itemContainer{
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(226, 228, 230);
-}
 .menuContainer{
     display: flex;
     flex-direction: row;
@@ -18,5 +13,5 @@
 }
 .textoAcciones{
     margin-top: 2vh;
-    margin-left: 5rem;
+    margin-left: 6rem;
 } 

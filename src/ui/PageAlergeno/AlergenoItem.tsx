@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import styles from "./AlergenoItem.module.css";
 import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
-import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button, ListGroup, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { removeAlergenoActivo, setAlergenoActivo } from "../../redux/slices/AlergenoReducer";
 import { EditarAlergeno } from "../../modals/AlergenoModals/EditarAlergeno/EditarAlergeno";
@@ -55,7 +55,9 @@ export const AlergenoItem: FC<IAlergenosItem> = ({ alergeno }) => {
       // }, [openModalEdit, openModalVer])
 
     return (
-        <div className={styles.itemContainer}>
+      <ListGroup>
+      <ListGroup.Item>
+      <div className={styles.itemContainer}>
             <div className={styles.productoContainer}>
                 <p>{`${alergeno.denominacion}`}</p>
                 <p>{`${alergeno.imagen}`}</p>
@@ -97,5 +99,7 @@ export const AlergenoItem: FC<IAlergenosItem> = ({ alergeno }) => {
             {openModalVer && <VerAlergeno alergeno={alergenoActivo!}/>}
             {openModalDelete && <DeleteAlergeno getAlergenos={getAlergenos} alergenoActivo={alergenoActivo!}/>}
         </div>
+      </ListGroup.Item>
+      </ListGroup>
     );
 }

@@ -1,9 +1,7 @@
 .itemContainer {
     display: flex;
     flex-direction: row;
-    border-top: 1px solid #5f5e5e;
     text-align: center;
-    background-color: rgb(226, 228, 230);
 }
 
 .productoContainer {
