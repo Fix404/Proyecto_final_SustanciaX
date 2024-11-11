@@ -27,4 +27,4 @@ export const ListProductos: FC<IListProductos> = ({ productos }) => {
             </div>
         </div>
     )
-}
+} 
