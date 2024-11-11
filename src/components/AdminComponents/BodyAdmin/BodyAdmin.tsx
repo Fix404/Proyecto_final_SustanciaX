@@ -12,6 +12,7 @@ import { useAppDispatch } from "../../../hooks/redux";
 import { AlergenoService } from "../../../services/ParticularServices/AlergenoService";
 import { setDataProductoList } from "../../../redux/slices/ProductosReducer";
 import { CrearAlergeno } from "../../../modals/AlergenoModals/CrearAlergeno/CrearAlergeno";
+import { ListCategorias } from "../../../ui/PageCategorias/ListCategorias";
 
 interface BodyAdminProps {
     activeSection: string;
@@ -21,17 +22,17 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
     const [openModal, setOpenModal] = useState(false);
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<number | null>(null);
     const [openModalCrearProducto, setOpenModalCrearProducto] = useState(false);
-    const dispatch=useAppDispatch();
-    const apiAlergeno=new AlergenoService("/api/alergenos");
+    const dispatch = useAppDispatch();
+    const apiAlergeno = new AlergenoService("/api/alergenos");
 
-    const getAlergenos= async ()=>{
-        await apiAlergeno.getAll().then((alergenosData) => 
-        dispatch(setAlergenoList(alergenosData)));
+    const getAlergenos = async () => {
+        await apiAlergeno.getAll().then((alergenosData) =>
+            dispatch(setAlergenoList(alergenosData)));
     }
 
-    const alergenosData=useAppSelector(state => state.alergenoReducer.alergenosList);
-    
-    const toggleModal= (event: React.MouseEvent<HTMLButtonElement>) => {
+    const alergenosData = useAppSelector(state => state.alergenoReducer.alergenosList);
+
+    const toggleModal = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         setOpenModal(!openModal);
     }
@@ -47,7 +48,7 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
         });
     };
 
-    const productosData=useAppSelector((state) => state.productosReducer.dataList);
+    const productosData = useAppSelector((state) => state.productosReducer.dataList);
 
 
     const productosFiltrados = categoriaSeleccionada
@@ -90,8 +91,8 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
-                        {openModalCrearProducto && 
-                        <CrearProducto getProductos={getProductos} openModal={openModalCrearProducto} setOpenModal={setOpenModalCrearProducto} />}
+                        {openModalCrearProducto &&
+                            <CrearProducto getProductos={getProductos} openModal={openModalCrearProducto} setOpenModal={setOpenModalCrearProducto} />}
                         <Button onClick={handleOpenCrearProducto} variant="outline-success" >AGREGAR PRODUCTO</Button>
                     </div>
                     <div>
@@ -101,7 +102,11 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
             )}
 
             {activeSection === "CATEGORIAS" && (
-                <div>
+                <div >
+                    <div style={{display: "flex", justifyContent: "flex-end", marginBottom: "1rem"}}>
+                        <Button variant="outline-success">AGREGAR CATEGORÍA</Button>
+                    </div>
+                    <ListCategorias categorias={categoriasEjemplo} />
                 </div>
             )}
 
@@ -109,23 +114,23 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                 <div>
                     {/* Botón para agregar alérgeno */}
                     <Form className="d-flex">
-                    <Button variant="outline-success" onClick={toggleModal} className="ms-auto" >
-                        AGREGAR ALERGENO
-                    </Button>
+                        <Button variant="outline-success" onClick={toggleModal} className="ms-auto" >
+                            AGREGAR ALERGENO
+                        </Button>
                     </Form>
 
                     {/* Modal para crear alérgeno */}
                     {openModal && (
                         <CrearAlergeno
                             openModal={openModal}
-              setOpenModal={setOpenModal} getAlergenos={getAlergenos}/>
+                            setOpenModal={setOpenModal} getAlergenos={getAlergenos} />
                     )}
 
                     {/* Lista de alérgenos */}
                     <div className={styles.divTablaAlergenos}>
-                        
+
                         {alergenosData ? (
-                            <ListAlergeno alergenos={alergenosData}/>
+                            <ListAlergeno alergenos={alergenosData} />
                         ) : (
                             <p>No hay alergenos disponibles.</p>
                         )}
