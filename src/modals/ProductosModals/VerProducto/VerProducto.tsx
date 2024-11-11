@@ -7,7 +7,6 @@ interface ProductosModalProps {
 }
 
 export const VerProducto: React.FC<ProductosModalProps> = ({ producto }) => {
-    const { id, denominacion, precioVenta, descripcion, categoria, eliminado, habilitado, codigo, alergenos, imagenes } = producto;
     const [esVisible, setEsVisible] = useState(true);
     const onClose = () => {
         setEsVisible(false);
@@ -22,12 +21,12 @@ export const VerProducto: React.FC<ProductosModalProps> = ({ producto }) => {
                             <Modal.Title style={{ textAlign: "center", width: "100%" }}>Producto</Modal.Title>
                         </Modal.Header>
                         <Modal.Body style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-                            <p><b>Denominación: </b> {denominacion}</p>
-                            <p><b>Precio:</b> {precioVenta}</p>
-                            <p><b>Descripción: </b> {descripcion}</p>
+                            <p><b>Denominación: </b> {producto?.denominacion}</p>
+                            <p><b>Precio:</b> {producto?.precioVenta}</p>
+                            <p><b>Descripción: </b> {producto?.descripcion}</p>
                             {/* <p><b>Categoría: </b> {categoria.categoriaPadre?.subCategorias}</p> */}
-                            <p><b>Habilitado: </b> {habilitado}</p>
-                            <p><b>Código: </b> {codigo}</p>
+                            <p><b>Habilitado: </b> {producto?.habilitado}</p>
+                            <p><b>Código: </b> {producto?.codigo}</p>
                             {/* <p><b>Alérgenos: </b> {}</p> */}
                             {/* <p><b>Imágenes: </b> {imagenes}</p> */}
                         </Modal.Body>

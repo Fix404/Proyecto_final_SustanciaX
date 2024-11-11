@@ -1,143 +1,34 @@
-import { FC, useEffect, useState } from "react";
-import { IPais } from "../../../types/IPais";
-import { IProvincia } from "../../../types/IProvincia";
-import { ILocalidad } from "../../../types/ILocalidad";
-import styles from "./CrearSucursal.module.css";
-
-interface Props {
-  onLocalidadChange: (localidad: string) => void;
+import styles from "./VerAlergeno.module.css";
+import { useState } from "react";
+import { Modal } from "react-bootstrap";
+import { IAlergenos } from "../../../types/dtos/alergenos/IAlergenos";
+interface AlergenosModalProps {
+    alergeno: IAlergenos;
 }
 
-export const Selectors: FC<Props> = ({ onLocalidadChange }) => {
-  const [paises, setPaises] = useState<IPais[]>([]);
-  const [provincias, setProvincias] = useState<IProvincia[]>([]);
-  const [localidades, setLocalidades] = useState<ILocalidad[]>([]);
-  const [selectedPais, setSelectedPais] = useState('');
-  const [selectedLocalidad, setSelectedLocalidad] = useState('');
-  const [selectedProvincia, setSelectedProvincia] = useState('');
-  const [loadingProvincias, setLoadingProvincias] = useState(false);
-  const [loadingLocalidades, setLoadingLocalidades] = useState(false);
-
-  useEffect(() => {
-    const fetchPaises = async () => {
-      try {
-        const response = await fetch('http://190.221.207.224:8090/paises');
-        if (!response.ok) throw new Error('Error al obtener países');
-        const data = await response.json();
-        setPaises(data);
-      } catch (error) {
-        console.error('Error al obtener países:', error);
-      }
+export const VerAlergeno: React.FC<AlergenosModalProps> = ({ alergeno }) => {
+    const [esVisible, setEsVisible] = useState(true);
+    const onClose = () => {
+        setEsVisible(false);
     };
-
-    fetchPaises();
-  }, []);
-
-  useEffect(() => {
-    const fetchProvincias = async () => {
-      if (!selectedPais) return;
-
-      setLoadingProvincias(true);
-      try {
-        const response = await fetch(`http://190.221.207.224:8090/provincias/findByPais/${selectedPais}`);
-        if (!response.ok) throw new Error('Error al obtener provincias');
-        const data = await response.json();
-        setProvincias(data);
-      } catch (error) {
-        console.error('Error al obtener provincias:', error);
-      } finally {
-        setLoadingProvincias(false);
-      }
-    };
-
-    fetchProvincias();
-  }, [selectedPais]);
-
-  useEffect(() => {
-    const fetchLocalidades = async () => {
-      if (!selectedProvincia) return;
-
-      setLoadingLocalidades(true);
-      try {
-        const response = await fetch(`http://190.221.207.224:8090/localidades/findByProvincia/${selectedProvincia}`);
-        if (!response.ok) throw new Error('Error al obtener localidades');
-        const data = await response.json();
-        setLocalidades(data);
-      } catch (error) {
-        console.error('Error al obtener localidades:', error);
-      } finally {
-        setLoadingLocalidades(false);
-      }
-    };
-
-    fetchLocalidades();
-  }, [selectedProvincia]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = event.target;
-
-    if (name === 'pais') {
-      setSelectedPais(value);
-      setSelectedProvincia(''); 
-      setLocalidades([]); 
-    } else if (name === 'provincia') {
-      setSelectedProvincia(value);
-    } else if (name === 'localidad') {
-      setSelectedLocalidad(value);
-      onLocalidadChange(value);
-    }
-  };
-
-  return (
-    <>
-      <select
-        required
-        name="pais"
-        className={styles.largeInput}
-        value={selectedPais}
-        onChange={handleChange}
-      >
-        <option value="" disabled>Seleccione un País</option>
-        {paises.map(pais => (
-          <option key={pais.id} value={pais.id}>{pais.nombre}</option>
-        ))}
-      </select>
-
-      <select
-        required
-        name="provincia"
-        className={styles.largeInput}
-        value={selectedProvincia}
-        onChange={handleChange}
-        disabled={!selectedPais || loadingProvincias}
-      >
-        <option value="" disabled>Seleccione una Provincia</option>
-        {loadingProvincias ? (
-          <option>Cargando...</option>
-        ) : (
-          provincias.map(provincia => (
-            <option key={provincia.id} value={provincia.id}>{provincia.nombre}</option>
-          ))
-        )}
-      </select>
-
-      <select
-        required
-        name="localidad"
-        className={styles.largeInput}
-        onChange={handleChange}
-        disabled={!selectedProvincia || loadingLocalidades}
-        value={selectedLocalidad}
-      >
-        <option value="" disabled>Seleccione una Localidad</option>
-        {loadingLocalidades ? (
-          <option>Cargando...</option>
-        ) : (
-          localidades.map(localidad => (
-            <option key={localidad.id} value={localidad.id}>{localidad.nombre}</option>
-          ))
-        )}
-      </select>
-    </>
-  );
-};
+    if (!esVisible) return null;
+    return (
+        <div className={styles.modalBackdrop}>
+            <div className={styles.modalContainer}>
+                <div className="modal show" style={{ display: 'block', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                    <Modal.Dialog>
+                        <Modal.Header>
+                            <Modal.Title style={{ textAlign: "center", width: "100%" }}>Alérgeno</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                            <p><b>Denominación: </b> {alergeno?.denominacion}</p>
+                            {/* <p><b>Imágen: </b> {alergeno?.imagen}</p> */}
+                        </Modal.Body>
+                        <Modal.Footer style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                            <button className={styles.closeButton} onClick={onClose}>Cerrar</button>
+                        </Modal.Footer>
+                    </Modal.Dialog>
+                </div>
+            </div>
+        </div>);
+}
