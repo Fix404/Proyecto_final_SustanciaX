@@ -3,13 +3,15 @@ import SucursalReducer from "./slices/SucursalReducer"
 import EmpresasReducer from "./slices/EmpresasReducer"
 import AlergenoReducer from "./slices/AlergenoReducer"
 import ProductosReducer from "./slices/ProductosReducer"
+import CategoriaReducer from "./slices/CategoriaReducer";
 
 export const store = configureStore({
     reducer: {
       sucursalReducer: SucursalReducer,
       empresaReducer: EmpresasReducer, // Agregamos el reducer del slice TablaReducer al estado global con la clave tablaReducer
       alergenoReducer: AlergenoReducer,
-      productosReducer: ProductosReducer
+      productosReducer: ProductosReducer,
+      categoriaReducer: CategoriaReducer
     },
   });
   

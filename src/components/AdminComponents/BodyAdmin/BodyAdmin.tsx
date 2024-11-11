@@ -13,6 +13,8 @@ import { AlergenoService } from "../../../services/ParticularServices/AlergenoSe
 import { setDataProductoList } from "../../../redux/slices/ProductosReducer";
 import { CrearAlergeno } from "../../../modals/AlergenoModals/CrearAlergeno/CrearAlergeno";
 import { ListCategorias } from "../../../ui/PageCategorias/ListCategorias";
+import { CategoriaService } from "../../../services/ParticularServices/CategoriaService";
+import { setDataCategoriaList } from "../../../redux/slices/CategoriaReducer";
 
 interface BodyAdminProps {
     activeSection: string;
@@ -50,10 +52,17 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
 
     const productosData = useAppSelector((state) => state.productosReducer.dataList);
 
-
     const productosFiltrados = categoriaSeleccionada
         ? productosData.filter(producto => producto.categoria && producto.categoria.id === categoriaSeleccionada)
         : productosData;
+
+        const categoriaService = new CategoriaService("api/categorias");
+        const getCategorias = async () => {
+            await categoriaService.getAll().then((categoriasData) => {
+                dispatch(setDataCategoriaList(categoriasData));
+            });
+        };
+        const categoriasData = useAppSelector((state) => state.categoriaReducer.dataList);
 
     useEffect(() => {
         getProductos();
@@ -62,6 +71,10 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
     useEffect(() => {
         getAlergenos();
     }, [activeSection]);
+
+    useEffect(() => {
+        getCategorias();
+    }, []);
 
     return (
         <div className={styles.containerGeneralBody}>
@@ -106,7 +119,7 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                     <div style={{display: "flex", justifyContent: "flex-end", marginBottom: "1rem"}}>
                         <Button variant="outline-success">AGREGAR CATEGORÍA</Button>
                     </div>
-                    <ListCategorias categorias={categoriasEjemplo} />
+                    <ListCategorias categorias={categoriasData} />
                 </div>
             )}
 
