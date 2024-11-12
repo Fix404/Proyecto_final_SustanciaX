@@ -39,7 +39,8 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
         setOpenModal(!openModal);
     }
 
-    const handleOpenCrearProducto = () => {
+    const handleOpenCrearProducto = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
         setOpenModalCrearProducto(!openModalCrearProducto);
     }
 
@@ -104,9 +105,11 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
-                        {openModalCrearProducto &&
-                            <CrearProducto getProductos={getProductos} openModal={openModalCrearProducto} setOpenModal={setOpenModalCrearProducto} />}
+                        <Form className="d-flex">
                         <Button onClick={handleOpenCrearProducto} variant="outline-success" >AGREGAR PRODUCTO</Button>
+                        </Form>
+                        {openModalCrearProducto && 
+                        <CrearProducto getProductos={getProductos} openModal={openModalCrearProducto} setOpenModal={setOpenModalCrearProducto} />}
                     </div>
                     <div>
                         <ListProductos productos={productosFiltrados} />
