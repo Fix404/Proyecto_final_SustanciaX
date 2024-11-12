@@ -7,6 +7,7 @@ import { SucursalService } from "../../services/ParticularServices/SucursalServi
 import { useEffect } from "react";
 import { setDataSucursalList } from "../../redux/slices/SucursalReducer";
 import { IEmpresa } from "../../types/dtos/empresa/IEmpresa";
+import styles from "./Sucursal.module.css"
 
 interface IPropsCreateSucursal {
   openModal: boolean;
@@ -65,18 +66,15 @@ export const CrearSucursal = ({
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
+        centered
         data-bs-theme="dark"
         size="lg"
         id={"modal"}
       >
         <Modal.Header
-          style={{
-            display: "flex",
-            alignContent: "center",
-            justifyContent: "center",
-          }}
+        className={styles.modalSucursalTitulo}
         >
-        <Modal.Title style={{ color: "white" }}>Crear Sucursal</Modal.Title>
+        <Modal.Title>Crear Sucursal</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Formik
@@ -106,46 +104,43 @@ export const CrearSucursal = ({
           >
             {({ values, handleChange, handleSubmit }) => (
               <>
-                <Form
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(3, 1fr)",
-                  }}
-                  onSubmit={handleSubmit}
-                >
-                  <div>
+                <Form  onSubmit={handleSubmit} >
+
+                  <div className={styles.containerSucursalForm}>
+
                     <Form.Group className="mb-3" controlId="nombre">
                       <Form.Control
                         type="text"
-                        placeholder="Ingrese un nombre aquí"
+                        placeholder="Nombre de la sucursal"
                         name="nombre"
                         onChange={handleChange}
                         value={values.nombre}
                         autoFocus
                       />
                     </Form.Group>
+
                     <Form.Group className="mb-3" controlId="horarioApertura">
                       <Form.Control
                         type="text"
-                        placeholder="Ingrese horario de apertura"
+                        placeholder="Horario de apertura"
                         name="horarioApertura"
                         onChange={handleChange}
                         value={values.horarioApertura}
                         autoFocus
                       />
                     </Form.Group>
+
                     <Form.Group className="mb-3" controlId="horarioCierre">
                       <Form.Control
                         type="text"
-                        placeholder="Ingrese horario de clausura"
+                        placeholder="Horario de cierre"
                         name="horarioCierre"
                         onChange={handleChange}
                         value={values.horarioCierre}
                         autoFocus
                       />
                     </Form.Group>
-                  </div>
-                  <div>
+
                     <Form.Select aria-label="Default select example" id="pais">
                       <option>País</option>
                       <option value="1">Argentina</option>
@@ -170,55 +165,61 @@ export const CrearSucursal = ({
                       <option value="2">Las Heras</option>
                       <option value="3">Godoy Cruz</option>
                     </Form.Select>
+
                     <Form.Group className="mb-3" controlId="latitud">
                       <Form.Control
                         type="text"
-                        placeholder="Ingrese latitud"
+                        placeholder="Latitud"
                         name="latitud"
                         onChange={handleChange}
-                        value={values.latitud}
+                        value={values.latitud === 0? "" : values.latitud}
                         autoFocus
                       />
                     </Form.Group>
+
                     <Form.Group className="mb-3" controlId="longitud">
                       <Form.Control
                         type="text"
-                        placeholder="Ingrese longitud"
+                        placeholder="Longitud"
                         name="longitud"
                         onChange={handleChange}
-                        value={values.longitud}
+                        value={values.longitud === 0 ? "" : values.longitud}
                         autoFocus
                       />
                     </Form.Group>
-                  </div>
-                  <div>
-                    <Form.Group className="mb-3" controlId="nombreCalle">
+
+                    <Form.Group />
+
+                    <Form.Group  controlId="nombreCalle">
                       <Form.Control
                         type="text"
-                        placeholder="Nombre de la calle"
+                        placeholder="Calle"
                         name="calle"
                         onChange={handleChange}
                         // value={values.}
                         autoFocus
                       />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="numeroDeCalle">
+
+                    <Form.Group controlId="numeroDeCalle">
                       <Form.Control
                         type="text"
-                        placeholder="Número de la calle"
+                        placeholder="Altura calle"
                         name="horarioApertura"
                         onChange={handleChange}
                         // value={values.calle}
                         autoFocus
                       />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="codigoPostal">
+
+                    <Form.Group controlId="codigoPostal">
                       <Form.Control
                         type="text"
                         placeholder="Código Postal"
                         autoFocus
                       />
                     </Form.Group>
+
                     <Form.Group className="mb-3" controlId="numeroDePiso">
                       <Form.Control
                         type="text"
@@ -226,6 +227,7 @@ export const CrearSucursal = ({
                         autoFocus
                       />
                     </Form.Group>
+
                     <Form.Group
                       className="mb-3"
                       controlId="numeroDeDepartamento"
@@ -236,22 +238,24 @@ export const CrearSucursal = ({
                         autoFocus
                       />
                     </Form.Group>
-                  </div>
-                  <div>
-                    <Form.Group controlId="imagenSucursal" className="mb-3">
-                      <Form.Label>Suba una imagen</Form.Label>
+
+                    <Form.Group />
+                 
+                    <Form.Group controlId="imagenSucursal" className={styles.containerImagen}>
                       <Form.Control
                         type="file"
                         name="logo"
                         onChange={handleChange}
+                        style={{ textAlign: 'center', width: '100%' }}
                       />
                     </Form.Group>
                   </div>
-                  <div>
-                    <Button variant="danger" onClick={handleClose}>
+
+                  <div className={styles.modalSucursalBotones}>
+                    <Button variant="custom" className={styles.sucursalBoton} onClick={handleClose}>
                       Cancelar
                     </Button>
-                    <Button variant="primary" type="submit">
+                    <Button variant="custom" className={styles.sucursalBoton} type="submit">
                       Aceptar
                     </Button>
                   </div>

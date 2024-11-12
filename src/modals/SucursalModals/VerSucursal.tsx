@@ -1,4 +1,4 @@
-import styles from "./VerSucursal.module.css";
+import styles from "./Sucursal.module.css";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 import { useState } from "react";
 import { Modal } from "react-bootstrap";

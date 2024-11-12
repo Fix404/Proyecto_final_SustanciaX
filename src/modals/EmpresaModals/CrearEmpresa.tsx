@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { ICreateEmpresaDto } from "../../types/dtos/empresa/ICreateEmpresaDto";
 import { EmpresaService } from "../../services/ParticularServices/EmpresaService";
 import { removeEmpresaActiva } from "../../redux/slices/EmpresasReducer";
+import styles from "./EmpresaModal.module.css"
 
 interface IPropsCreateEmpresa {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
@@ -34,25 +35,23 @@ export const CrearEmpresa = ({
     dispatch(removeEmpresaActiva());
   };
   return (
-    <div>
+    <div className={styles.modalCrearEmpresa}>
       <Modal
         show={openModal}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
         data-bs-theme="dark"
+        centered
         size="lg"
         id={"modal"}
       >
         <Modal.Header
-          style={{
-            display: "flex",
-            alignContent: "center",
-            justifyContent: "center",
-          }}
-          closeButton
+          className={styles.modalEmpresaTitulo}
         >
-          <Modal.Title style={{ color: "white" }}>Crear Empresa</Modal.Title>
+
+          <Modal.Title >Crear Empresa</Modal.Title>
+
         </Modal.Header>
         <Modal.Body>
           <Formik
@@ -64,7 +63,7 @@ export const CrearEmpresa = ({
             initialValues={initialValues}
             enableReinitialize={true}
             onSubmit={async (values: ICreateEmpresaDto) => {
-                await apiEmpresa.post(values);
+              await apiEmpresa.post(values);
               getEmpresas();
               handleClose();
             }}
@@ -72,55 +71,57 @@ export const CrearEmpresa = ({
             {({ values, handleChange, handleSubmit }) => (
               <>
                 <Form
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(3, 1fr)",
-                  }}
                   onSubmit={handleSubmit}
                 >
-                  <div>
-                    <Form.Group className="mb-3" controlId="nombre">
-                      <Form.Control
-                        type="text"
-                        placeholder="Ingrese un nombre aquí"
-                        autoFocus
-                        name="nombre"
-                        onChange={handleChange}
-                        value={values.nombre}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="razonSocial">
-                      <Form.Control
-                        type="text"
-                        placeholder="Ingrese su razon social"
-                        autoFocus
-                        name="razonSocial"
-                        onChange={handleChange}
-                        value={values.razonSocial}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="cuit">
-                      <Form.Control
-                        type="text"
-                        placeholder="Ingrese su CUIT"
-                        autoFocus
-                        name="cuit"
-                        onChange={handleChange}
-                        value={values.cuit}
-                      />
-                    </Form.Group>
-                  </div>
+                  <div className={styles.modalCrearEmpresaForm}>
+                    <div>
+                      <Form.Group className="mb-3" controlId="nombre">
+                        <Form.Control
+                          type="text"
+                          placeholder="Nombre de la empresa"
+                          autoFocus
+                          name="nombre"
+                          onChange={handleChange}
+                          value={values.nombre}
+                        />
+                      </Form.Group>
+                    </div>
+                    <div>
+                      <Form.Group className="mb-3" controlId="razonSocial">
+                        <Form.Control
+                          type="text"
+                          placeholder="Razón Social"
+                          name="razonSocial"
+                          onChange={handleChange}
+                          value={values.razonSocial}
+                        />
+                      </Form.Group>
+                    </div>
+                    <div>
+                      <Form.Group className="mb-3" controlId="cuit">
+                        <Form.Control
+                          type="text"
+                          placeholder="CUIT"
+                          name="cuit"
+                          onChange={handleChange}
+                          value={values.cuit === 0 ? "" : values.cuit} //Cambio para que se vea el placeholder en lugar de un 0
+                        />
+                      </Form.Group>
+                    </div>
+                  
                   <div>
                     <Form.Group controlId="imagenEmpresa" className="mb-3">
                       <Form.Label>Suba una imagen</Form.Label>
                       <Form.Control type="file" />
                     </Form.Group>
                   </div>
-                  <div>
-                    <Button variant="danger" onClick={handleClose}>
+                  </div>
+
+                  <div className={styles.modalEmpresaBotones}>
+                    <Button variant="custom" className={styles.modalBoton}  onClick={handleClose}>
                       Cancelar
                     </Button>
-                    <Button variant="primary" type="submit">
+                    <Button variant="custom" className={styles.modalBoton} type="submit">
                       Aceptar
                     </Button>
                   </div>

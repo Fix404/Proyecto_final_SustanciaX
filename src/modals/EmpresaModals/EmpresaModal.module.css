@@ -1,14 +1,46 @@
-.modalContainer{
-    margin-top: 14vh;
+/* CREAR-EDITAR EMPRESA */
+
+.modalEmpresaTitulo {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    text-align: center;
+    color: #d4d3d3;
+
 }
-.closeButton{
-    width: 4rem;
-    height: 2rem;
+
+.modalCrearEmpresaForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 2rem;
+}
+
+.modalCrearEmpresaForm div {
+    width: 500px;
+}
+
+.modalEmpresaBotones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 180px;
+    margin-top: 2rem;
+    padding: 0.7rem;
+}
+
+.modalEmpresaBotones .modalBoton {
+    border: 1px solid rgb(39, 155, 49);
+    color: #d4d3d3;
+    border-radius: 0.25rem;
+    width: 10rem;
+}
+
+.modalEmpresaBotones .modalBoton:hover {
     background-color: rgb(39, 155, 49);
-    border-radius: 2px;
-    color: #fff;
+    color: black;
 }
+
+
+
+
