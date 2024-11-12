@@ -20,7 +20,7 @@ export const ListProductos: FC<IListProductos> = ({ productos }) => {
             </div>
             <p className={styles.textoAcciones}>Acciones</p>
             </div>
-            <div >
+            <div className={styles.containerTablaProducto} >
                 {productos.map((producto) => (
                     <ProductoItem producto={producto} key={producto.id} />
                 ))}

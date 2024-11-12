@@ -20,3 +20,8 @@
     margin-top: 2vh;
     margin-left: 5rem;
 }
+
+.containerTablaAlergenos{
+    max-height: 72vh;
+    overflow-y: auto;
+}
