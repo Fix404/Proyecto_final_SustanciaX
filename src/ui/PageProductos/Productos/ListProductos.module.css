@@ -1,8 +1,6 @@
-.menuContainer{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-
+.mainContainer{
+    border: none;
+    text-align: center;
 }
 .clasificacionesContainer{
     width: 76%;
