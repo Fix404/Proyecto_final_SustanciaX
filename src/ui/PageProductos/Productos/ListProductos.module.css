@@ -8,6 +8,8 @@
 .mainContainer {
     width: 100%;
     border-collapse: collapse;
+    border-radius: 6px; 
+    overflow: hidden;
 }
 
 .fixedHeader {
@@ -19,6 +21,8 @@
 }
 
 .containerTablaProducto {
+    border-radius: 10px; /* Ajusta el valor según tus necesidades */
+    overflow: hidden; 
 }
 
 /*.clasificacionesContainer {
