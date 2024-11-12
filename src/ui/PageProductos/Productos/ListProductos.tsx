@@ -10,9 +10,9 @@ interface IListProductos {
 
 export const ListProductos: FC<IListProductos> = ({ productos }) => {
     return (
-        <>
+        <div className={styles.scrollContainer}>
             <Table className={styles.mainContainer}>
-                <thead>
+                <thead className={styles.fixedHeader}>
                     <tr>
                         <th>Nombre</th>
                         <th>Precio</th>
@@ -22,13 +22,13 @@ export const ListProductos: FC<IListProductos> = ({ productos }) => {
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className={styles.containerTablaProducto}>
                     {productos.map((producto) => (
                         <ProductoItem producto={producto} key={producto.id} />
                     ))}
                 </tbody>
             </Table>
-        </>
+        </div>
     );
 };
 

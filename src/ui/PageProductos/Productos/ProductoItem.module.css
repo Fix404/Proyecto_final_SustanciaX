@@ -23,3 +23,7 @@
     background-color: rgb(179, 184, 184);
 }
 
+.containerTablaProducto {
+    max-height: 72vh;
+    overflow-y: auto;
+}
