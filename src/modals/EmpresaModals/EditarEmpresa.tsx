@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { removeSucursalActiva } from "../../redux/slices/SucursalReducer";
+import styles from "./EmpresaModal.module.css"
 
 interface IPropsUpdateEmpresaDto {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
@@ -46,17 +47,14 @@ export const EditarEmpresa = ({
         backdrop="static"
         keyboard={false}
         data-bs-theme="dark"
+        centered
         size="lg"
         id={"modal"}
       >
         <Modal.Header
-          style={{
-            display: "flex",
-            alignContent: "center",
-            justifyContent: "center",
-          }}
+          className={styles.modalEmpresaTitulo}
         >
-          <Modal.Title style={{ color: "white" }}>Editar Empresa</Modal.Title>
+          <Modal.Title>Editar Empresa</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Formik
@@ -76,66 +74,69 @@ export const EditarEmpresa = ({
             {({ values, handleChange, handleSubmit }) => (
               <>
                 <Form
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(3, 1fr)",
-                  }}
                   onSubmit={handleSubmit}
                 >
-                  <div>
-                    <Form.Group className="mb-3" controlId="nombre">
-                      <Form.Control
-                        type="text"
-                        placeholder="Ingrese un nombre aquí"
-                        autoFocus
-                        name="nombre"
-                        onChange={handleChange}
-                        value={values.nombre}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="razonSocial">
-                      <Form.Control
-                        type="text"
-                        placeholder="Ingrese razon social"
-                        name="razonSocial"
-                        onChange={handleChange}
-                        value={values.razonSocial}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="cuit">
-                      <Form.Control
-                        type="text"
-                        placeholder="Ingrese su CUIT"
-                        name="cuit"
-                        onChange={handleChange}
-                        value={values.cuit}
-                      />
-                    </Form.Group>
+                  <div className={styles.modalCrearEmpresaForm}>
+
+                    <div>
+                      <Form.Group className="mb-3" controlId="nombre">
+                        <Form.Control
+                          type="text"
+                          placeholder="Ingrese un nombre aquí"
+                          autoFocus
+                          name="nombre"
+                          onChange={handleChange}
+                          value={values.nombre}
+                        />
+                      </Form.Group>
+                    </div>
+
+                    <div>
+                      <Form.Group className="mb-3" controlId="razonSocial">
+                        <Form.Control
+                          type="text"
+                          placeholder="Ingrese razon social"
+                          name="razonSocial"
+                          onChange={handleChange}
+                          value={values.razonSocial}
+                        />
+                      </Form.Group>
+                    </div>
+
+                    <div>
+                      <Form.Group className="mb-3" controlId="cuit">
+                        <Form.Control
+                          type="text"
+                          placeholder="Ingrese su CUIT"
+                          name="cuit"
+                          onChange={handleChange}
+                          value={values.cuit}
+                        />
+                      </Form.Group>
+                    </div>
+
+                    <div>
+                      <Form.Group controlId="imagenEmpresa" className="mb-3">
+                        <Form.Label>Suba una imagen</Form.Label>
+                        <Form.Control
+                          type="file"
+                          name="logo"
+                          onChange={handleChange}
+                        />
+                      </Form.Group>
+                    </div>
+
                   </div>
-                  <div>
-                    <Form.Group controlId="imagenEmpresa" className="mb-3">
-                      <Form.Label>Suba una imagen</Form.Label>
-                      <Form.Control
-                        type="file"
-                        name="logo"
-                        onChange={handleChange}
-                      />
-                    </Form.Group>
-                    <Modal.Footer
-                      style={{
-                        display: "flex",
-                        alignContent: "center",
-                        justifyContent: "space-evenly",
-                      }}
-                    >
-                      <Button variant="danger" onClick={handleClose}>
+
+                    <div className={styles.modalEmpresaBotones}>
+                      <Button variant="custom" className={styles.modalBoton} onClick={handleClose}>
                         Cancelar
                       </Button>
-                      <Button variant="primary" type="submit">
+                      <Button variant="custom" className={styles.modalBoton} type="submit">
                         Guardar cambios
                       </Button>
-                    </Modal.Footer>
-                  </div>
+                    </div>
+                
                 </Form>
               </>
             )}

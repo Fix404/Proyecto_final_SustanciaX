@@ -20,7 +20,7 @@ export const ListAlergeno: FC<IListAlergeno> = ({ alergenos }) => {
             </div>
             <p className={styles.textoAcciones}>Acciones</p>
             </div>
-            <div >
+            <div className={styles.containerTablaAlergenos}>
                 {alergenos.map((alergeno) => (
                     <AlergenoItem alergeno={alergeno} key={alergeno.id} />
                 ))}
