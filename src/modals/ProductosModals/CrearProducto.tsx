@@ -24,7 +24,7 @@ export const CrearProducto = ({
     descripcion: "",
     habilitado: false,
     codigo: "",
-    idCategoria: 0,
+    idCategoria: 5,
     idAlergenos: [],
     imagenes: [],
   };
@@ -62,11 +62,11 @@ export const CrearProducto = ({
             validationSchema={Yup.object({
               denominacion: Yup.string().required("Campo requerido"),
               precioVenta: Yup.number().required("Campo requerido"),
-              descripcion: Yup.string(),
-              habilitado: Yup.boolean(),
-              codigo: Yup.string(),
-              idCategoria: Yup.number(),
-              idAlergenos: Yup.number(),
+              //descripcion: Yup.string(),
+              //habilitado: Yup.boolean(),
+              //codigo: Yup.string(),
+              //idCategoria: Yup.number(),
+              //idAlergenos: Yup.number(),
             })}
             initialValues={initialValues}
             enableReinitialize={true}

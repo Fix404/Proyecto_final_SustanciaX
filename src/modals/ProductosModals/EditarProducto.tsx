@@ -44,23 +44,23 @@ export const EditarProducto = ({
         <>
             <Modal show={openModal} onHide={handleClose} backdrop="static" keyboard={false} data-bs-theme="dark" size="lg" id={"modal"}>
                 <Modal.Header style={{ display: "flex", alignContent: "center", justifyContent: "center" }}>
-                    <Modal.Title style={{ color: "white" }}>Crear Artículo</Modal.Title>
+                    <Modal.Title style={{ color: "white" }}>Editar Artículo</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Formik validationSchema={Yup.object({
                         denominacion: Yup.string().required("Campo requerido"),
                         precioVenta: Yup.number().required("Campo requerido"),
-                        descripcion: Yup.string(),
-                        habilitado: Yup.boolean().required("Campo requerido"),
-                        codigo: Yup.string().required("Campo requerido"),
-                        idCategoria: Yup.number(),
-                        idAlergenos: Yup.number()
+                        //descripcion: Yup.string(),
+                        //habilitado: Yup.boolean().required("Campo requerido"),
+                        //codigo: Yup.string().required("Campo requerido"),
+                        //idCategoria: Yup.number(),
+                        //idAlergenos: Yup.number()
                     })}
                         initialValues={initialValues}
                         enableReinitialize={true}
                         onSubmit={async (values: IUpdateProducto) => {
                             if (productoActivo) {
-                                await apiProducto.post(values);
+                                await apiProducto.put(productoActivo?.id, values);
                             }
                             getProductos();
                             handleClose();
