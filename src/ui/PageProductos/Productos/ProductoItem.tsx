@@ -3,11 +3,12 @@ import { IProductos } from "../../../types/dtos/productos/IProductos";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux"; 
 import { ProductoService } from "../../../services/ParticularServices/ProductoService"; 
 import { removeProductoElementActive, setProductoElementActive } from "../../../redux/slices/ProductosReducer";
-import { VerProducto } from "../../../modals/ProductosModals/VerProducto/VerProducto";
+
 import { DeleteProducto } from "../../../alerts/DeleteProductoAlert/DeleteProducto";
 import { EditarProducto } from "../../../modals/ProductosModals/EditarProducto";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import styles from "./ProductoItem.module.css"
+import { VerProducto } from "../../../modals/ProductosModals/VerProducto";
 
 interface IProductosItem {
     producto: IProductos;

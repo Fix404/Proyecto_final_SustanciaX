@@ -1,7 +1,7 @@
-import styles from "./Sucursal.module.css";
+import styles from "./SucursalModal.module.css";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 import { useState } from "react";
-import { Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 interface SucursalModalProps {
     sucursal: ISucursal;
 }
@@ -15,7 +15,7 @@ export const VerSucursal: React.FC<SucursalModalProps> = ({ sucursal }) => {
     if (!esVisible) return null;
     return (
         <div className={styles.modalBackdrop}>
-                <div className="modal show" style={{ display: 'block', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                <div className="modal show" style={{ display: 'block', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -35%)' }}>
                     <Modal.Dialog>
                         <Modal.Header>
                             <Modal.Title style={{ textAlign: "center", width: "100%" }}>Sucursal</Modal.Title>
@@ -30,7 +30,9 @@ export const VerSucursal: React.FC<SucursalModalProps> = ({ sucursal }) => {
                             <p><b>Logo:</b><br/>{logo}</p>
                         </Modal.Body>
                         <Modal.Footer style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                            <button className={styles.closeButton} onClick={onClose}>Cerrar</button>
+                        <Button variant="custom" className={styles.modalBoton} onClick={onClose}>
+                            Cancelar
+                        </Button>
                         </Modal.Footer>
                     </Modal.Dialog>
             </div>

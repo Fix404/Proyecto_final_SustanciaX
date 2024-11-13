@@ -1,0 +1,83 @@
+
+/* CREAR-EDITAR ALERGENO */
+
+
+.modalAlergenoTitulo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #d4d3d3;
+
+}
+
+.modalCrearAlergenoForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 2rem;
+}
+
+.modalCrearAlergenoForm div {
+    width: 500px;
+}
+
+.modalAlergenoBotones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 180px;
+    margin-top: 2rem;
+    padding: 0.7rem;
+}
+
+.modalAlergenoBotones .modalBoton {
+    border: 1px solid rgb(39, 155, 49);
+    color: #d4d3d3;
+    border-radius: 0.25rem;
+    width: 10rem;
+}
+
+.modalAlergenoBotones .modalBoton:hover {
+    background-color: rgb(39, 155, 49);
+    color: black;
+}
+
+
+/* VER ALERGENO */
+
+
+.modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(66, 63, 63, 0.8); 
+    z-index: 1040;
+}
+
+/* .modalContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: auto;
+    height: 100%;
+} */
+
+
+.modal.show {
+    min-width: auto;
+}
+
+.modalBackdrop .modalBoton {
+    border: 1px solid rgb(39, 155, 49);
+    color: black;
+    border-radius: 0.25rem;
+    width: 10rem;
+}
+
+.modalBackdrop .modalBoton:hover {
+    background-color: rgb(39, 155, 49);
+    color: #d4d3d3;
+}

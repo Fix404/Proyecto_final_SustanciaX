@@ -10,7 +10,7 @@ import { ProductoService } from "../../../services/ParticularServices/ProductoSe
 import { useAppDispatch } from "../../../hooks/redux";
 import { AlergenoService } from "../../../services/ParticularServices/AlergenoService";
 import { setDataProductoList } from "../../../redux/slices/ProductosReducer";
-import { CrearAlergeno } from "../../../modals/AlergenoModals/CrearAlergeno/CrearAlergeno";
+import { CrearAlergeno } from "../../../modals/AlergenoModals/CrearAlergeno";
 import { ListCategorias } from "../../../ui/PageCategorias/ListCategorias";
 import { CategoriaService } from "../../../services/ParticularServices/CategoriaService";
 import { setDataCategoriaList } from "../../../redux/slices/CategoriaReducer";
