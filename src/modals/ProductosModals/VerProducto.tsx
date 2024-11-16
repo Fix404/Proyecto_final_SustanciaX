@@ -25,7 +25,7 @@ export const VerProducto: React.FC<ProductosModalProps> = ({ producto }) => {
                             <p><b>Precio:</b> {producto?.precioVenta}</p>
                             <p><b>Descripción: </b><br /> {producto?.descripcion}</p>
                             {/* <p><b>Categoría: </b> {categoria.categoriaPadre?.subCategorias}</p> */}
-                            <p><b>Habilitado: </b> {producto?.habilitado ? <p>Si</p> : <p>No</p>}</p>
+                            <p><b>Habilitado: </b> </p>{producto?.habilitado ? <p>Sí</p> : <p>No</p>}
                             <p><b>Código: </b> {producto?.codigo}</p>
                             {/* <p><b>Alérgenos: </b> {}</p> */}
                             {/* <p><b>Imágenes: </b> {imagenes}</p> */}

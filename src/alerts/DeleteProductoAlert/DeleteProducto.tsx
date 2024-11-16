@@ -9,7 +9,7 @@ interface IPropsDeleteProducto{
 }
 
 export const DeleteProducto:FC<IPropsDeleteProducto> = ({getProductos, productoActivo}) => {
-    const apiProducto=new ProductoService("api/articulos/delete");
+    const apiProducto=new ProductoService("api/articulos");
     const deleteProducto = async () => {
         await apiProducto.delete(productoActivo.id).then(() => {
             getProductos();

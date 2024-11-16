@@ -46,14 +46,7 @@ export const ProductoItem: FC<IProductosItem> = ({ producto }) => {
   }
 
   const productoActivo= useAppSelector((state) => state.productosReducer.elementActive);
-
-  // useEffect(() => {
-  //     if(!openModalEdit || !openModalVer || !openModalDelete){
-  //         getProductos();
-  //     }
-  //   }, [openModalEdit, openModalVer, openModalDelete]);
   
-
     return (
         <>
             <tr className={styles.productoContainer}>

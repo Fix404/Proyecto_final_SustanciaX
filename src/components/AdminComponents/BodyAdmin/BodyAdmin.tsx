@@ -23,6 +23,9 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
     const [openModal, setOpenModal] = useState(false);
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<number | null>(null);
     const [openModalCrearProducto, setOpenModalCrearProducto] = useState(false);
+    const categoriaActiva=useAppSelector((state) => state.categoriaReducer.elementActive);
+    const productoActivo =useAppSelector((state) => state.productosReducer.elementActive);
+    const alergenoActivo=useAppSelector((state) => state.alergenoReducer.alergenoActivo);
 
     const dispatch = useAppDispatch();
     const apiAlergeno = new AlergenoService("/api/alergenos");
@@ -67,15 +70,15 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
 
     useEffect(() => {
         getProductos();
-    }, []);
-
-    useEffect(() => {
         getAlergenos();
-    }, [activeSection]);
+        getCategorias();
+    }, []);
 
     useEffect(() => {
         getCategorias();
-    }, []);
+        getProductos();
+        getAlergenos();
+    }, [categoriaActiva, productoActivo, alergenoActivo])
 
     return (
         <div className={styles.containerGeneralBody}>
