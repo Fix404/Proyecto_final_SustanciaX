@@ -1,4 +1,4 @@
-import { Button, Dropdown, Form } from "react-bootstrap";
+import { Button, Dropdown, Form, Pagination } from "react-bootstrap";
 import { ListProductos } from "../../../ui/PageProductos/Productos/ListProductos";
 import styles from "./BodyAdmin.module.css";
 import { FC, useEffect, useState } from "react";
@@ -68,6 +68,47 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
         };
         const categoriasData = useAppSelector((state) => state.categoriaReducer.dataList);
 
+        const [active, setActive]=useState(1)
+  let items = [];
+  const pageAmount=Math.ceil((productosFiltrados.length)/7);
+  
+
+  // Handler paginado onClick
+  const handlePageActive=(pageNum:number) =>{
+    setActive(pageNum)
+  }
+
+  // Componente paginado
+  for (let pageNumber = 1; pageNumber <= pageAmount; pageNumber++) {
+    items.push(
+      <Pagination.Item key={pageNumber} active={pageNumber === active} onClick={() => handlePageActive(pageNumber)}>
+        {pageNumber}
+      </Pagination.Item>
+    );
+  }
+
+  let productosOnPage=[];
+
+  if(productosFiltrados.length>=7){
+    if(active==1){
+        for(let i=0; i<7; i++){
+            productosOnPage.push(productosFiltrados[i]);
+          }
+      }else if(active != pageAmount){
+        for(let i=(active-1)*7; i<(active)*7; i++){
+            productosOnPage.push(productosFiltrados[i]);
+          }
+      }else{
+        for(let i=(active-1)*7; i<productosFiltrados.length; i++){
+            productosOnPage.push(productosFiltrados[i]);
+          }
+      }
+  }else{
+    for(let i=0; i<productosFiltrados.length; i++){
+        productosOnPage.push(productosFiltrados[i]);
+      }
+  }
+
     useEffect(() => {
         getProductos();
         getAlergenos();
@@ -115,7 +156,8 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                         <CrearProducto getProductos={getProductos} openModal={openModalCrearProducto} setOpenModal={setOpenModalCrearProducto} />}
                     </div>
                     <div>
-                        <ListProductos productos={productosFiltrados} />
+                        <ListProductos productos={productosOnPage} />
+                        <Pagination size="lg">{items}</Pagination>
                     </div>
                 </div>
             )}
