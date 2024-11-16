@@ -18,7 +18,7 @@ export const ListProductos: FC<IListProductos> = ({ productos }) => {
                         <th>Precio</th>
                         <th>Descripción</th>
                         <th>Categoría</th>
-                        <th>Habilitado</th>
+                        <th className={styles.seccionHabilitado}>Habilitado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>

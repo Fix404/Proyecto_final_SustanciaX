@@ -1,5 +1,6 @@
 .productoContainer {
     text-align: center;
+
 }
 
 .productoContainer td{
@@ -9,7 +10,6 @@
     white-space: nowrap; 
     text-overflow: ellipsis; 
 }
-
 .accionesContainer{
     text-align: center;
 }
@@ -20,7 +20,7 @@
     cursor: pointer;
 }
 .accionesContainer button:hover{
-    background-color: rgb(179, 184, 184);
+    background-color: rgb(200, 206, 206);
 }
 
 .containerTablaProducto {
