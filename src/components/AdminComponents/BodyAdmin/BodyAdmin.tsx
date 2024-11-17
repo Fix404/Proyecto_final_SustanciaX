@@ -27,6 +27,7 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
     const productoActivo = useAppSelector((state) => state.productosReducer.elementActive);
     const alergenoActivo = useAppSelector((state) => state.alergenoReducer.alergenoActivo);
     const sucursalActiva = useAppSelector((state) => state.sucursalReducer.sucursalActiva);
+    const categoriasData = useAppSelector((state) => state.categoriaReducer.dataList);
 
     const dispatch = useAppDispatch();
     const apiAlergeno = new AlergenoService("/api/alergenos");
@@ -61,7 +62,7 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
         ? productosData.filter(producto => producto.categoria && producto.categoria.id === categoriaSeleccionada)
         : productosData;
 
-    const categoriaService = new CategoriaService("http://190.221.207.224:8090/categorias");
+    const categoriaService = new CategoriaService("api/categorias");
 
     const getCategorias = async () => {
         if (sucursalActiva && sucursalActiva.id) {
@@ -76,7 +77,6 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
             }
         }
     };
-    const categoriasData = useAppSelector((state) => state.categoriaReducer.dataList);
 
     const [active, setActive] = useState(1)
     let items = [];
@@ -177,8 +177,11 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                     <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "1rem" }}>
                         <Button variant="outline-success">AGREGAR CATEGORÍA</Button>
                     </div>
-                    <ListCategorias categorias={categoriasData} />
-                    {categoriasData.length === 0 && <p>No hay categorías disponibles</p>}
+                    {categoriasData.length > 0 ? (
+    <ListCategorias categorias={categoriasData} />
+) : (
+    <p>No hay categorías disponibles</p>
+)}
                 </div>
             )}
 
