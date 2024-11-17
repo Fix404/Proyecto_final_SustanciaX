@@ -1,7 +1,8 @@
-import { Accordion, Button, Card, useAccordionButton } from "react-bootstrap"
+import { Accordion, Button, Card, useAccordionButton } from "react-bootstrap";
 import { ICategorias } from "../../types/dtos/categorias/ICategorias";
-import { FC, useEffect, useState } from "react";
-import styles from "./CategoriaItem.module.css"
+import { FC, useState, useEffect } from "react";
+import styles from "./CategoriaItem.module.css";
+import { CategoriaService } from "../../services/ParticularServices/CategoriaService";
 
 interface ICategoriaItem {
     categoria: ICategorias;
@@ -9,53 +10,51 @@ interface ICategoriaItem {
 
 export const CategoriaItem: FC<ICategoriaItem> = ({ categoria }) => {
     const [isOpen, setIsOpen] = useState(false);
-    /*const [subcategorias, setSubcategorias] = useState<ICategorias[]>([]);
-    
-    useEffect(() => {
-        if (isOpen) {
-            const fetchSubcategorias = async () => {
-                try {
-                    const response = await fetch(`your_api_endpoint/getSubcategoriaByCategoriaId/${categoria.id}`);
-                    const data = await response.json();
-                    setSubcategorias(data);
-                } catch (error) {
-                    console.error("Error fetching subcategorias:", error);
-                }
-            };
+    const [subcategorias, setSubcategorias] = useState<ICategorias[]>([]);
 
-            fetchSubcategorias();
-        }
-    }, [isOpen, categoria.id]); */
+    const categoriaService = new CategoriaService("http://190.221.207.224:8090/categorias");
+
+    useEffect(() => {
+        const fetchSubcategorias = async () => {
+            try {
+                const subcategoriasData = await categoriaService.getByCategoriaId(categoria.id);
+                setSubcategorias(subcategoriasData);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchSubcategorias();
+    }, [categoria.id]);
 
     function CustomToggle({ children, eventKey }) {
         const decoratedOnClick = useAccordionButton(eventKey, () => {
             setIsOpen(!isOpen);
-            console.log('totally custom!');
         });
 
         return (
-            <button
-                type="button"
-                style={{ border: "none", backgroundColor: "transparent" }}
-                onClick={decoratedOnClick}
-            >
+            <button type="button" style={{ border: "none", backgroundColor: "transparent" }} onClick={decoratedOnClick}>
                 {children}
             </button>
         );
     }
 
     return (
-        <div >
-            <Accordion >
-                <Card >
+        <div>
+            <Accordion>
+                <Card>
                     <Card.Header className={styles.cardHeader}>
                         {`${categoria.denominacion}`}
                         <div className={styles.actionButtons}>
                             <Button variant="none">
-                                <span className="material-symbols-outlined" style={{ color: "#3e6d88" }}>edit</span>
+                                <span className="material-symbols-outlined" style={{ color: "#3e6d88" }}>
+                                    edit
+                                </span>
                             </Button>
                             <Button variant="none">
-                                <span className="material-symbols-outlined" style={{ color: "#933631" }}>delete</span>
+                                <span className="material-symbols-outlined" style={{ color: "#933631" }}>
+                                    delete
+                                </span>
                             </Button>
                             <CustomToggle eventKey="0">
                                 <span className="material-symbols-outlined">
@@ -65,10 +64,20 @@ export const CategoriaItem: FC<ICategoriaItem> = ({ categoria }) => {
                         </div>
                     </Card.Header>
                     <Accordion.Collapse eventKey="0">
-                        <Card.Body></Card.Body>
+                        <Card.Body>
+                            {subcategorias.length > 0 ? (
+                                <ul>
+                                    {subcategorias.map((subcategoria) => (
+                                        <li key={subcategoria.id}>{subcategoria.denominacion}</li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p>No hay subcategorías disponibles</p>
+                            )}
+                        </Card.Body>
                     </Accordion.Collapse>
                 </Card>
             </Accordion>
         </div>
     );
-}
+};

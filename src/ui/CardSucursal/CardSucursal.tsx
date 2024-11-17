@@ -87,9 +87,6 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
         </Card.Footer>
       </Card>
 
-
-      
-
       {openModal && sucursalActiva && <EditarSucursal openModal={openModal} setOpenModal={setOpenModal} sucursalActiva={sucursalActiva}/>}
       {openVerModal && <VerSucursal sucursal={sucursal} />}
 
