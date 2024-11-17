@@ -7,7 +7,7 @@ import { SucursalService } from "../../services/ParticularServices/SucursalServi
 import { useEffect } from "react";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 import { IUpdateSucursal } from "../../types/dtos/sucursal/IUpdateSucursal";
-import styles from "./Sucursal.module.css"
+import styles from "./SucursalModal.module.css"
 
 interface IPropsCreateSucursal {
   openModal: boolean;
@@ -122,7 +122,7 @@ export const EditarSucursal = ({
                     <Form.Group className="mb-3" controlId="horarioApertura">
                       <Form.Control
                         type="text"
-                        placeholder="Ingrese horario de apertura"
+                        placeholder="Horario de apertura"
                         name="horarioApertura"
                         onChange={handleChange}
                         value={values.horarioApertura}
@@ -133,7 +133,7 @@ export const EditarSucursal = ({
                     <Form.Group className="mb-3" controlId="horarioCierre">
                       <Form.Control
                         type="text"
-                        placeholder="Ingrese horario de clausura"
+                        placeholder="Horario de cierre"
                         name="horarioCierre"
                         onChange={handleChange}
                         value={values.horarioCierre}
@@ -170,10 +170,10 @@ export const EditarSucursal = ({
                     <Form.Group className="mb-3" controlId="latitud">
                       <Form.Control
                         type="text"
-                        placeholder="Ingrese latitud"
+                        placeholder="Latitud"
                         name="latitud"
                         onChange={handleChange}
-                        value={values.latitud}
+                        value={values.latitud === 0? "":values.latitud}
                         autoFocus
                       />
                     </Form.Group>
@@ -184,7 +184,7 @@ export const EditarSucursal = ({
                         placeholder="Longitud"
                         name="longitud"
                         onChange={handleChange}
-                        value={values.longitud}
+                        value={values.longitud === 0?"":values.longitud}
                         autoFocus
                       />
                     </Form.Group>

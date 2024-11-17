@@ -7,7 +7,7 @@ import { SucursalService } from "../../services/ParticularServices/SucursalServi
 import { useEffect } from "react";
 import { setDataSucursalList } from "../../redux/slices/SucursalReducer";
 import { IEmpresa } from "../../types/dtos/empresa/IEmpresa";
-import styles from "./Sucursal.module.css"
+import styles from "./SucursalModal.module.css"
 
 interface IPropsCreateSucursal {
   openModal: boolean;

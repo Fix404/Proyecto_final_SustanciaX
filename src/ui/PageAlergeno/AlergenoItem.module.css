@@ -1,4 +1,4 @@
-.itemContainer {
+/* .itemContainer {
     display: flex;
     flex-direction: row;
     text-align: center;
@@ -51,4 +51,34 @@
     background: none;
     border: none;
     cursor: pointer;
+} */
+
+.productoContainer {
+    text-align: center;
+}
+
+.productoContainer td{
+    padding: 5px;
+    max-width: 50px;
+    overflow: hidden; 
+    white-space: nowrap; 
+    text-overflow: ellipsis; 
+}
+
+.accionesContainer{
+    text-align: center;
+}
+
+.accionesContainer button{
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.accionesContainer button:hover{
+    background-color: rgb(179, 184, 184);
+}
+
+.containerTablaProducto {
+    max-height: 72vh;
+    overflow-y: auto;
 }

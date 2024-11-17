@@ -1,6 +1,6 @@
 import { Accordion, Button, Card, useAccordionButton } from "react-bootstrap"
 import { ICategorias } from "../../types/dtos/categorias/ICategorias";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import styles from "./CategoriaItem.module.css"
 
 interface ICategoriaItem {
@@ -9,6 +9,23 @@ interface ICategoriaItem {
 
 export const CategoriaItem: FC<ICategoriaItem> = ({ categoria }) => {
     const [isOpen, setIsOpen] = useState(false);
+    /*const [subcategorias, setSubcategorias] = useState<ICategorias[]>([]);
+    
+    useEffect(() => {
+        if (isOpen) {
+            const fetchSubcategorias = async () => {
+                try {
+                    const response = await fetch(`your_api_endpoint/getSubcategoriaByCategoriaId/${categoria.id}`);
+                    const data = await response.json();
+                    setSubcategorias(data);
+                } catch (error) {
+                    console.error("Error fetching subcategorias:", error);
+                }
+            };
+
+            fetchSubcategorias();
+        }
+    }, [isOpen, categoria.id]); */
 
     function CustomToggle({ children, eventKey }) {
         const decoratedOnClick = useAccordionButton(eventKey, () => {
@@ -28,9 +45,9 @@ export const CategoriaItem: FC<ICategoriaItem> = ({ categoria }) => {
     }
 
     return (
-        <div>
-            <Accordion>
-                <Card>
+        <div >
+            <Accordion >
+                <Card >
                     <Card.Header className={styles.cardHeader}>
                         {`${categoria.denominacion}`}
                         <div className={styles.actionButtons}>
@@ -48,7 +65,7 @@ export const CategoriaItem: FC<ICategoriaItem> = ({ categoria }) => {
                         </div>
                     </Card.Header>
                     <Accordion.Collapse eventKey="0">
-                        <Card.Body>Hello! I'm the body</Card.Body>
+                        <Card.Body></Card.Body>
                     </Accordion.Collapse>
                 </Card>
             </Accordion>

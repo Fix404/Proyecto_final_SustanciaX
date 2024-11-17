@@ -28,8 +28,8 @@ const CategoriaReducer = createSlice({
         removeCategoriaElementActive(state) {
             state.elementActive = null;
         }
-    },
-});
+    }},
+);
 
 export const { setDataCategoriaList, setCategoriaElementActive, removeCategoriaElementActive } = CategoriaReducer.actions;
 export default CategoriaReducer.reducer;
