@@ -1,13 +1,15 @@
-import { FC, useEffect, useState } from "react";
-import styles from "./AlergenoItem.module.css";
+import { FC,useState } from "react";
 import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
-import { Button, ListGroup, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button,OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { removeAlergenoActivo, setAlergenoActivo } from "../../redux/slices/AlergenoReducer";
-import { EditarAlergeno } from "../../modals/AlergenoModals/EditarAlergeno/EditarAlergeno";
+
 import { AlergenoService } from "../../services/ParticularServices/AlergenoService";
-import { VerAlergeno } from "../../modals/AlergenoModals/VerAlergeno/VerAlergeno";
+
 import { DeleteAlergeno } from "../../alerts/DeleteAlergenoAlert/DeleteAlergeno";
+import styles from "./AlergenoItem.module.css"
+import { EditarAlergeno } from "../../modals/AlergenoModals/EditarAlergeno";
+import { VerAlergeno } from "../../modals/AlergenoModals/VerAlergeno";
 
 interface IAlergenosItem {
     alergeno: IAlergenos;
@@ -55,18 +57,18 @@ export const AlergenoItem: FC<IAlergenosItem> = ({ alergeno }) => {
       // }, [openModalEdit, openModalVer])
 
     return (
-      <ListGroup>
-      <ListGroup.Item>
-      <div className={styles.itemContainer}>
-            <div className={styles.productoContainer}>
-                <p>{`${alergeno.denominacion}`}</p>
-                <p>{`${alergeno.imagen}`}</p>
-            </div>
-            <div className={styles.accionesContainer}>
+
+      <>
+       <tr className={styles.productoContainer}>
+                <td >
+                  {alergeno.denominacion}
+                  </td>
+                <td>
+                <div className={styles.accionesContainer}>
             <OverlayTrigger  placement="bottom"
             delay={{ show: 250, hide: 400 }}
             overlay={
-              <Tooltip id="button-tooltip-ver">Ver Alérgeno</Tooltip>
+              <Tooltip id="button-tooltip-ver">Ver Alergeno</Tooltip>
             }>
           <Button variant="primary" onClick={handleVerAlergeno}>
             <span className="material-symbols-outlined" style={{ color: "#ffb600" }}>table_eye</span>
@@ -75,7 +77,7 @@ export const AlergenoItem: FC<IAlergenosItem> = ({ alergeno }) => {
           <OverlayTrigger  placement="bottom"
             delay={{ show: 250, hide: 400 }}
             overlay={
-              <Tooltip id="button-tooltip-ver">Editar Alérgeno</Tooltip>
+              <Tooltip id="button-tooltip-ver">Editar Alergeno</Tooltip>
             }>
           <Button variant="primary" onClick={handleEditarAlergeno}>
             <span className="material-symbols-outlined" style={{ color: "#3e6d88" }}>edit</span>
@@ -86,7 +88,7 @@ export const AlergenoItem: FC<IAlergenosItem> = ({ alergeno }) => {
                   delay={{ show: 250, hide: 400 }}
                   overlay={
                     <Tooltip id="button-tooltip-delete-empresa">
-                      Eliminar Alérgeno
+                      Eliminar Alergeno
                     </Tooltip>
                   }
                 >
@@ -95,11 +97,56 @@ export const AlergenoItem: FC<IAlergenosItem> = ({ alergeno }) => {
                   </Button>
                 </OverlayTrigger>
             </div>
-            {openModalEdit && <EditarAlergeno getAlergenos={getAlergenos} openModal={openModalEdit} setOpenModal={setOpenModalEdit} />}
+            {openModalEdit && <EditarAlergeno getAlergenos={getAlergenos} openModal={openModalEdit} setOpenModal={setOpenModalEdit}/>}
             {openModalVer && <VerAlergeno alergeno={alergenoActivo!}/>}
             {openModalDelete && <DeleteAlergeno getAlergenos={getAlergenos} alergenoActivo={alergenoActivo!}/>}
-        </div>
-      </ListGroup.Item>
-      </ListGroup>
+                </td>
+            </tr>
+      </>
+      // <ListGroup>
+      // <ListGroup.Item>
+      // <div className={styles.itemContainer}>
+      //       <div className={styles.productoContainer}>
+      //           <p>{`${alergeno.denominacion}`}</p>
+      //       </div>
+      //       <div className={styles.accionesContainer}>
+      //       <OverlayTrigger  placement="bottom"
+      //       delay={{ show: 250, hide: 400 }}
+      //       overlay={
+      //         <Tooltip id="button-tooltip-ver">Ver Alérgeno</Tooltip>
+      //       }>
+      //     <Button variant="primary" onClick={handleVerAlergeno}>
+      //       <span className="material-symbols-outlined" style={{ color: "#ffb600" }}>table_eye</span>
+      //     </Button>
+      //     </OverlayTrigger>
+      //     <OverlayTrigger  placement="bottom"
+      //       delay={{ show: 250, hide: 400 }}
+      //       overlay={
+      //         <Tooltip id="button-tooltip-ver">Editar Alérgeno</Tooltip>
+      //       }>
+      //     <Button variant="primary" onClick={handleEditarAlergeno}>
+      //       <span className="material-symbols-outlined" style={{ color: "#3e6d88" }}>edit</span>
+      //     </Button>
+      //     </OverlayTrigger>
+      //     <OverlayTrigger
+      //             placement="bottom"
+      //             delay={{ show: 250, hide: 400 }}
+      //             overlay={
+      //               <Tooltip id="button-tooltip-delete-empresa">
+      //                 Eliminar Alérgeno
+      //               </Tooltip>
+      //             }
+      //           >
+      //             <Button variant="danger" onClick={handleDeleteAlergeno}>
+      //               <span className="material-symbols-outlined" style={{ color: "#933631" }}>delete</span>
+      //             </Button>
+      //           </OverlayTrigger>
+      //       </div>
+      //       {openModalEdit && <EditarAlergeno getAlergenos={getAlergenos} openModal={openModalEdit} setOpenModal={setOpenModalEdit} />}
+      //       {openModalVer && <VerAlergeno alergeno={alergenoActivo!}/>}
+      //       {openModalDelete && <DeleteAlergeno getAlergenos={getAlergenos} alergenoActivo={alergenoActivo!}/>}
+      //   </div>
+      // </ListGroup.Item>
+      // </ListGroup>
     );
 }

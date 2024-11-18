@@ -1,35 +1,35 @@
 import { FC } from "react";
 import { IProductos } from "../../../types/dtos/productos/IProductos";
-import { Table } from "react-bootstrap";
+import {  Table } from "react-bootstrap";
 import { ProductoItem } from "./ProductoItem";
-import styles from "./ListProductos.module.css"
+import styles from "./ListProductos.module.css";
 
 interface IListProductos {
-    productos: IProductos[];
+  productos: IProductos[];
 }
 
 export const ListProductos: FC<IListProductos> = ({ productos }) => {
-    return (
-        <div className={styles.scrollContainer}>
-            <Table className={styles.mainContainer}>
-                <thead className={styles.fixedHeader}>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Precio</th>
-                        <th>Descripción</th>
-                        <th>Categoría</th>
-                        <th className={styles.seccionHabilitado}>Habilitado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody className={styles.containerTablaProducto}>
-                    {productos.map((producto) => (
-                        <ProductoItem producto={producto} key={producto.id} />
-                    ))}
-                </tbody>
-            </Table>
-        </div>
-    );
+  return (
+    <div className={styles.scrollContainer}>
+      <Table className={styles.mainContainer}>
+        <thead className={styles.fixedHeader}>
+          <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Descripción</th>
+            <th>Categoría</th>
+            <th>Habilitado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody className={styles.containerTablaProducto}>
+          {productos.map((producto) => (
+            <ProductoItem producto={producto} key={producto.id} />
+          ))}
+        </tbody>
+      </Table>
+    </div>
+  );
 };
 
 /*<ListGroup>

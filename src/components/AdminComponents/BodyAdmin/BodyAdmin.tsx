@@ -1,4 +1,4 @@
-import { Button, Dropdown, Form } from "react-bootstrap";
+import { Button, Dropdown, Form, Pagination } from "react-bootstrap";
 import { ListProductos } from "../../../ui/PageProductos/Productos/ListProductos";
 import styles from "./BodyAdmin.module.css";
 import { FC, useEffect, useState } from "react";
@@ -10,7 +10,7 @@ import { ProductoService } from "../../../services/ParticularServices/ProductoSe
 import { useAppDispatch } from "../../../hooks/redux";
 import { AlergenoService } from "../../../services/ParticularServices/AlergenoService";
 import { setDataProductoList } from "../../../redux/slices/ProductosReducer";
-import { CrearAlergeno } from "../../../modals/AlergenoModals/CrearAlergeno/CrearAlergeno";
+import { CrearAlergeno } from "../../../modals/AlergenoModals/CrearAlergeno";
 import { ListCategorias } from "../../../ui/PageCategorias/ListCategorias";
 import { CategoriaService } from "../../../services/ParticularServices/CategoriaService";
 import { setDataCategoriaList } from "../../../redux/slices/CategoriaReducer";
@@ -23,6 +23,11 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
     const [openModal, setOpenModal] = useState(false);
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<number | null>(null);
     const [openModalCrearProducto, setOpenModalCrearProducto] = useState(false);
+    const categoriaActiva = useAppSelector((state) => state.categoriaReducer.elementActive);
+    const productoActivo = useAppSelector((state) => state.productosReducer.elementActive);
+    const alergenoActivo = useAppSelector((state) => state.alergenoReducer.alergenoActivo);
+    const sucursalActiva = useAppSelector((state) => state.sucursalReducer.sucursalActiva);
+    const categoriasData = useAppSelector((state) => state.categoriaReducer.dataList);
 
     const dispatch = useAppDispatch();
     const apiAlergeno = new AlergenoService("/api/alergenos");
@@ -57,25 +62,74 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
         ? productosData.filter(producto => producto.categoria && producto.categoria.id === categoriaSeleccionada)
         : productosData;
 
-        const categoriaService = new CategoriaService("api/categorias");
-        const getCategorias = async () => {
-            await categoriaService.getAll().then((categoriasData) => {
-                dispatch(setDataCategoriaList(categoriasData));
-            });
-        };
-        const categoriasData = useAppSelector((state) => state.categoriaReducer.dataList);
+    const categoriaService = new CategoriaService("api/categorias");
+
+    const getCategorias = async () => {
+        if (sucursalActiva && sucursalActiva.id) {
+            try {
+                const categoriasDataApi = await categoriaService.getBySucursalId(sucursalActiva.id);
+
+                if (Array.isArray(categoriasDataApi)) {
+                    dispatch(setDataCategoriaList(categoriasDataApi));
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
+
+    const [active, setActive] = useState(1)
+    let items = [];
+    const pageAmount = Math.ceil((productosFiltrados.length) / 7);
+
+
+    // Handler paginado onClick
+    const handlePageActive = (pageNum: number) => {
+        setActive(pageNum)
+    }
+
+    // Componente paginado
+    for (let pageNumber = 1; pageNumber <= pageAmount; pageNumber++) {
+        items.push(
+            <Pagination.Item key={pageNumber} active={pageNumber === active} onClick={() => handlePageActive(pageNumber)}>
+                {pageNumber}
+            </Pagination.Item>
+        );
+    }
+
+    let productosOnPage = [];
+
+    if (productosFiltrados.length >= 7) {
+        if (active == 1) {
+            for (let i = 0; i < 7; i++) {
+                productosOnPage.push(productosFiltrados[i]);
+            }
+        } else if (active != pageAmount) {
+            for (let i = (active - 1) * 7; i < (active) * 7; i++) {
+                productosOnPage.push(productosFiltrados[i]);
+            }
+        } else {
+            for (let i = (active - 1) * 7; i < productosFiltrados.length; i++) {
+                productosOnPage.push(productosFiltrados[i]);
+            }
+        }
+    } else {
+        for (let i = 0; i < productosFiltrados.length; i++) {
+            productosOnPage.push(productosFiltrados[i]);
+        }
+    }
 
     useEffect(() => {
         getProductos();
-    }, []);
-
-    useEffect(() => {
         getAlergenos();
-    }, [activeSection]);
+        getCategorias();
+    }, []);
 
     useEffect(() => {
         getCategorias();
-    }, []);
+        getProductos();
+        getAlergenos();
+    }, [categoriaActiva, productoActivo, alergenoActivo, sucursalActiva])
 
     return (
         <div className={styles.containerGeneralBody}>
@@ -106,23 +160,28 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                             </Dropdown>
                         </div>
                         <Form className="d-flex">
-                        <Button onClick={handleOpenCrearProducto} variant="outline-success" >AGREGAR PRODUCTO</Button>
+                            <Button onClick={handleOpenCrearProducto} variant="outline-success" >AGREGAR PRODUCTO</Button>
                         </Form>
-                        {openModalCrearProducto && 
-                        <CrearProducto getProductos={getProductos} openModal={openModalCrearProducto} setOpenModal={setOpenModalCrearProducto} />}
+                        {openModalCrearProducto &&
+                            <CrearProducto getProductos={getProductos} openModal={openModalCrearProducto} setOpenModal={setOpenModalCrearProducto} />}
                     </div>
                     <div>
-                        <ListProductos productos={productosFiltrados} />
+                        <ListProductos productos={productosOnPage} />
+                        <Pagination size="lg">{items}</Pagination>
                     </div>
                 </div>
             )}
 
             {activeSection === "CATEGORIAS" && (
                 <div >
-                    <div style={{display: "flex", justifyContent: "flex-end", marginBottom: "1rem"}}>
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "1rem" }}>
                         <Button variant="outline-success">AGREGAR CATEGORÍA</Button>
                     </div>
-                    <ListCategorias categorias={categoriasData} />
+                    {categoriasData.length > 0 ? (
+    <ListCategorias categorias={categoriasData} />
+) : (
+    <p>No hay categorías disponibles</p>
+)}
                 </div>
             )}
 

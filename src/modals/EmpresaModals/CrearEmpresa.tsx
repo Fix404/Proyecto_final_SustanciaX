@@ -74,6 +74,7 @@ export const CrearEmpresa = ({
                   onSubmit={handleSubmit}
                 >
                   <div className={styles.modalCrearEmpresaForm}>
+
                     <div>
                       <Form.Group className="mb-3" controlId="nombre">
                         <Form.Control
@@ -86,6 +87,7 @@ export const CrearEmpresa = ({
                         />
                       </Form.Group>
                     </div>
+
                     <div>
                       <Form.Group className="mb-3" controlId="razonSocial">
                         <Form.Control
@@ -97,6 +99,7 @@ export const CrearEmpresa = ({
                         />
                       </Form.Group>
                     </div>
+                    
                     <div>
                       <Form.Group className="mb-3" controlId="cuit">
                         <Form.Control

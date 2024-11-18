@@ -1,5 +1,5 @@
 .scrollContainer {
-    max-height: 72vh;
+    max-height: 79vh;
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
@@ -9,21 +9,26 @@
 .mainContainer {
     border-collapse: collapse; 
     width: 100%;
+    border-collapse: collapse;
+    border-radius: 0.25rem; 
+    overflow: hidden;
 }
 
 .fixedHeader {
     position: sticky;
     top: 0;
-    background-color: white; 
+    background-color: white;
     z-index: 10;
     text-align: center;
-
-}
-.seccionHabilitado{
-    width: 20px;
-    text-align: start;
-}
-.containerTablaProducto {
-    
 }
 
+.fixedHeader tr th{
+    padding: 1rem;
+    background-color: #343a40;
+    color: #d4d3d3;
+}
+
+.containerTablaProducto td {
+    vertical-align: middle;
+    text-align: center;
+}
