@@ -3,7 +3,7 @@ import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./CardSucursal.module.css";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useAppDispatch} from "../../hooks/redux";
 import { removeSucursalActiva, setSucursalActiva } from "../../redux/slices/SucursalReducer";
 import { EditarSucursal } from "../../modals/SucursalModals/EditarSucursal";
 import { VerSucursal } from "../../modals/SucursalModals/VerSucursal";
@@ -13,8 +13,8 @@ interface ICardSucursal {
 }
 
 export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
-  const [openModal, setOpenModal] = useState(false);
   const [openVerModal, setOpenVerModal] = useState(false);
+  const [openModalEditar, setOpenModalEditar]=useState(false);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -25,11 +25,9 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
     navigate("admin");
   };
 
-  const sucursalActiva = useAppSelector(state => state.sucursalReducer.sucursalActiva);
   const handleEditarSucursal = () => {
-    dispatch(removeSucursalActiva());
     dispatch(setSucursalActiva({ element: sucursal }));
-    setOpenModal(!openModal)
+    setOpenModalEditar(!openModalEditar)
   }
 
   const handleVerSucursal = () => {
@@ -86,10 +84,8 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
           </OverlayTrigger>
         </Card.Footer>
       </Card>
-
-      {openModal && sucursalActiva && <EditarSucursal openModal={openModal} setOpenModal={setOpenModal} sucursalActiva={sucursalActiva}/>}
+      {openModalEditar && <EditarSucursal openModal={openModalEditar} setOpenModal={setOpenModalEditar} sucursalActiva={sucursal}/>}
       {openVerModal && <VerSucursal sucursal={sucursal} />}
-
     </div>
   );
 };

@@ -4,7 +4,6 @@ import * as Yup from "yup";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { removeSucursalActiva, setDataSucursalList } from "../../redux/slices/SucursalReducer";
 import { SucursalService } from "../../services/ParticularServices/SucursalService";
-import { useEffect } from "react";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 import { IUpdateSucursal } from "../../types/dtos/sucursal/IUpdateSucursal";
 import styles from "./SucursalModal.module.css"
@@ -25,26 +24,26 @@ export const EditarSucursal = ({
   const apiSucursalGet=new SucursalService(`/api`)
 
   const initialValues:IUpdateSucursal = {
-    id:sucursalActiva.id,
-    nombre: sucursalActiva.nombre,
-  idEmpresa: sucursalActiva.empresa.id,
-  eliminado: sucursalActiva.eliminado,
-  latitud: sucursalActiva.latitud,
-  longitud: sucursalActiva.longitud,
+    id:sucursalActiva?.id,
+    nombre: sucursalActiva?.nombre,
+  idEmpresa: sucursalActiva?.empresa.id,
+  eliminado: sucursalActiva?.eliminado,
+  latitud: sucursalActiva?.latitud,
+  longitud: sucursalActiva?.longitud,
   domicilio: {
-    id: sucursalActiva.domicilio.id,
-    calle: sucursalActiva.domicilio.calle,
-    numero: sucursalActiva.domicilio.numero,
-    cp: sucursalActiva.domicilio.cp,
-    piso: sucursalActiva.domicilio.piso,
-    nroDpto: sucursalActiva.domicilio.nroDpto,
+    id: sucursalActiva?.domicilio.id,
+    calle: sucursalActiva?.domicilio.calle,
+    numero: sucursalActiva?.domicilio.numero,
+    cp: sucursalActiva?.domicilio.cp,
+    piso: sucursalActiva?.domicilio.piso,
+    nroDpto: sucursalActiva?.domicilio.nroDpto,
     idLocalidad: 1,
   },
   logo: "",
   categorias: [],
-  esCasaMatriz: sucursalActiva.esCasaMatriz,
-  horarioApertura: sucursalActiva.horarioApertura,
-  horarioCierre: sucursalActiva.horarioCierre
+  esCasaMatriz: sucursalActiva?.esCasaMatriz,
+  horarioApertura: sucursalActiva?.horarioApertura,
+  horarioCierre: sucursalActiva?.horarioCierre
   }
 
   const dispatch = useAppDispatch();
@@ -56,12 +55,9 @@ export const EditarSucursal = ({
   };
 
   const handleClose = () => {
-    setOpenModal(false);
+    setOpenModal(!openModal);
     dispatch(removeSucursalActiva());
   };
-
-  useEffect(()=>{
-  }, [empresaActiva]);
 
   return (
     <div>
