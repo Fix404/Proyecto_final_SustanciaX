@@ -3,9 +3,11 @@
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
+    border-radius: 6px; 
 }
 
 .mainContainer {
+    border-collapse: collapse; 
     width: 100%;
     border-collapse: collapse;
     border-radius: 0.25rem; 

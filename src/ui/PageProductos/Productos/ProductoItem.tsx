@@ -59,7 +59,7 @@ export const ProductoItem: FC<IProductosItem> = ({ producto }) => {
                   </td>
                 <td>{producto.categoria?.denominacion}
                 </td>
-                <td>
+                <td className={styles.productoHabilitado}>
                     {producto.habilitado ? (
                         <span className="material-symbols-outlined" style={{ color: "green" }}>check_circle</span>
                     ) : (
@@ -108,61 +108,3 @@ export const ProductoItem: FC<IProductosItem> = ({ producto }) => {
         </>
     );
 };
-/*<ListGroup>
-      <ListGroup.Item>
-        <div className={styles.itemContainer}>
-            <div className={styles.productoContainer}>
-                <p>{`${producto?.denominacion}`}
-                <span className={styles.tooltip}>{`${producto?.denominacion}`}</span>
-                </p>
-                <p>{`${producto?.precioVenta}`}</p>
-                <p className={styles.descripcion}>
-                    {`${producto?.descripcion}`}
-                    <span className={styles.tooltip}>{`${producto?.descripcion}`}</span>
-                </p>
-                <p>{`${producto?.categoria?.denominacion}`}
-                <span className={styles.tooltip}>{`${producto?.categoria?.denominacion}`}</span>
-                </p>
-                {producto?.habilitado ? (<span className="material-symbols-outlined" style={{ color: "green" }}>check_circle</span>)
-                    :
-                    (<span className="material-symbols-outlined" style={{ color: "red" }}>
-                        cancel</span>)}
-            </div>
-            <div className={styles.accionesContainer}>
-            <OverlayTrigger  placement="bottom"
-            delay={{ show: 250, hide: 400 }}
-            overlay={
-              <Tooltip id="button-tooltip-ver">Ver Producto</Tooltip>
-            }>
-          <Button variant="primary" onClick={handleVerProducto}>
-            <span className="material-symbols-outlined" style={{ color: "#ffb600" }}>table_eye</span>
-          </Button>
-          </OverlayTrigger>
-          <OverlayTrigger  placement="bottom"
-            delay={{ show: 250, hide: 400 }}
-            overlay={
-              <Tooltip id="button-tooltip-ver">Editar Producto</Tooltip>
-            }>
-          <Button variant="primary" onClick={handleEditarProducto}>
-            <span className="material-symbols-outlined" style={{ color: "#3e6d88" }}>edit</span>
-          </Button>
-          </OverlayTrigger>
-          <OverlayTrigger
-                  placement="bottom"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={
-                    <Tooltip id="button-tooltip-delete-empresa">
-                      Eliminar Producto
-                    </Tooltip>
-                  }
-                >
-                  <Button variant="danger" onClick={handleDeleteProducto}>
-                    <span className="material-symbols-outlined" style={{ color: "#933631" }}>delete</span>
-                  </Button>
-                </OverlayTrigger>
-            </div>
-            {openModalEdit && <EditarProducto getProductos={getProductos} openModal={openModalEdit} setOpenModal={setOpenModalEdit}/>}
-            {openModalVer && <VerProducto producto={productoActivo!}/>}
-            {openModalDelete && <DeleteProducto getProductos={getProductos} productoActivo={productoActivo!}/>}
-        </div></ListGroup.Item>
-    </ListGroup> */
