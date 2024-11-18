@@ -51,9 +51,9 @@ export const CategoriaItem: FC<ICategoriaItem> = ({ categoria }) => {
                                     edit
                                 </span>
                             </Button>
-                            <Button variant="none">
-                                <span className="material-symbols-outlined" style={{ color: "#933631" }}>
-                                    delete
+                            <Button variant="success">
+                            <span className="material-symbols-outlined" style={{color:"green"}}>
+                                    add_box
                                 </span>
                             </Button>
                             <CustomToggle eventKey="0">
@@ -64,13 +64,23 @@ export const CategoriaItem: FC<ICategoriaItem> = ({ categoria }) => {
                         </div>
                     </Card.Header>
                     <Accordion.Collapse eventKey="0">
-                        <Card.Body>
+                        <Card.Body style={{ paddingLeft: "10vh", paddingRight: "16vh" }}>
                             {subcategorias.length > 0 ? (
-                                <ul>
-                                    {subcategorias.map((subcategoria) => (
-                                        <li key={subcategoria.id}>{subcategoria.denominacion}</li>
+                                <div >
+                                    {subcategorias.map((subcategoria,  index) => (
+                                        <div>
+                                            {index !== 0 && <hr />}
+                                            <div className={styles.subCategoriasContainer}>
+                                                <p key={subcategoria.id} >-  {subcategoria.denominacion}</p>
+                                                <Button variant="none">
+                                                    <span className="material-symbols-outlined" style={{ color: "#3e6d88" }}>
+                                                        edit
+                                                    </span>
+                                                </Button>
+                                            </div>
+                                        </div>
                                     ))}
-                                </ul>
+                                </div>
                             ) : (
                                 <p>No hay subcategorías disponibles</p>
                             )}
