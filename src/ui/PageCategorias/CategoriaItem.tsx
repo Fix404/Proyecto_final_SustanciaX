@@ -69,7 +69,6 @@ export const CategoriaItem: FC<ICategoriaItem> = ({ categoria }) => {
                                 <div >
                                     {subcategorias.map((subcategoria,  index) => (
                                         <div>
-                                            {index !== 0 && <hr />}
                                             <div className={styles.subCategoriasContainer}>
                                                 <p key={subcategoria.id} >-  {subcategoria.denominacion}</p>
                                                 <Button variant="none">
@@ -78,6 +77,7 @@ export const CategoriaItem: FC<ICategoriaItem> = ({ categoria }) => {
                                                     </span>
                                                 </Button>
                                             </div>
+                                            {index !== subcategorias.length - 1 && <hr />}
                                         </div>
                                     ))}
                                 </div>

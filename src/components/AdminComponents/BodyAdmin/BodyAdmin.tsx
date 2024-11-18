@@ -14,6 +14,7 @@ import { CrearAlergeno } from "../../../modals/AlergenoModals/CrearAlergeno";
 import { ListCategorias } from "../../../ui/PageCategorias/ListCategorias";
 import { CategoriaService } from "../../../services/ParticularServices/CategoriaService";
 import { setDataCategoriaList } from "../../../redux/slices/CategoriaReducer";
+import { CrearCategoria } from "../../../modals/CategoriasModals/CrearCategoria";
 
 interface BodyAdminProps {
     activeSection: string;
@@ -21,13 +22,13 @@ interface BodyAdminProps {
 
 export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
     const [openModal, setOpenModal] = useState(false);
-    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<number | null>(null);
     const [openModalCrearProducto, setOpenModalCrearProducto] = useState(false);
+    const [openModalCrearCategoria, setOpenModalCrearCategoria] = useState(false);
+    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<number | null>(null);
     const categoriaActiva = useAppSelector((state) => state.categoriaReducer.elementActive);
     const productoActivo = useAppSelector((state) => state.productosReducer.elementActive);
     const alergenoActivo = useAppSelector((state) => state.alergenoReducer.alergenoActivo);
     const sucursalActiva = useAppSelector((state) => state.sucursalReducer.sucursalActiva);
-    const categoriasData = useAppSelector((state) => state.categoriaReducer.dataList);
 
     const dispatch = useAppDispatch();
     const apiAlergeno = new AlergenoService("/api/alergenos");
@@ -47,6 +48,11 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
     const handleOpenCrearProducto = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         setOpenModalCrearProducto(!openModalCrearProducto);
+    }
+
+    const handleOpenCrearCategoria = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        setOpenModalCrearCategoria(!openModalCrearCategoria);
     }
 
     const productoService = new ProductoService("api/articulos");
@@ -77,6 +83,7 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
             }
         }
     };
+    const categoriasData = useAppSelector((state) => state.categoriaReducer.dataList);
 
     const [active, setActive] = useState(1)
     let items = [];
@@ -175,13 +182,22 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
             {activeSection === "CATEGORIAS" && (
                 <div >
                     <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "1rem" }}>
-                        <Button variant="outline-success">AGREGAR CATEGORÍA</Button>
+                        <Button variant="outline-success" onClick={handleOpenCrearCategoria}>
+                            AGREGAR CATEGORÍA
+                        </Button>
                     </div>
+
+                    {openModalCrearCategoria && (
+                        <CrearCategoria
+                            openModal={openModalCrearCategoria}
+                            setOpenModal={setOpenModalCrearCategoria} getCategorias={getCategorias} />
+                    )}
+
                     {categoriasData.length > 0 ? (
-    <ListCategorias categorias={categoriasData} />
-) : (
-    <p>No hay categorías disponibles</p>
-)}
+                        <ListCategorias categorias={categoriasData} />
+                    ) : (
+                        <p>No hay categorías disponibles</p>
+                    )}
                 </div>
             )}
 

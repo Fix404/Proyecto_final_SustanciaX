@@ -1,0 +1,28 @@
+.modalCategoriaTitulo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #d4d3d3;
+
+}
+
+.modalCategoriaBotones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 180px;
+    margin-top: 2rem;
+    padding: 0.7rem;
+}
+
+.modalCategoriaBotones .modalBoton {
+    border: 1px solid rgb(39, 155, 49);
+    color: #d4d3d3;
+    border-radius: 0.25rem;
+    width: 10rem;
+}
+
+.modalCategoriaBotones .modalBoton:hover {
+    background-color: rgb(39, 155, 49);
+    color: black;
+}
