@@ -67,8 +67,9 @@ export const CategoriaItem: FC<ICategoriaItem> = ({ categoria }) => {
                         <Card.Body style={{ paddingLeft: "10vh", paddingRight: "16vh" }}>
                             {subcategorias.length > 0 ? (
                                 <div >
-                                    {subcategorias.map((subcategoria) => (
+                                    {subcategorias.map((subcategoria,  index) => (
                                         <div>
+                                            {index !== 0 && <hr />}
                                             <div className={styles.subCategoriasContainer}>
                                                 <p key={subcategoria.id} >-  {subcategoria.denominacion}</p>
                                                 <Button variant="none">
@@ -77,7 +78,6 @@ export const CategoriaItem: FC<ICategoriaItem> = ({ categoria }) => {
                                                     </span>
                                                 </Button>
                                             </div>
-                                            <hr />
                                         </div>
                                     ))}
                                 </div>
