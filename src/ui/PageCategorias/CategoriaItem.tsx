@@ -3,6 +3,9 @@ import { ICategorias } from "../../types/dtos/categorias/ICategorias";
 import { FC, useState, useEffect } from "react";
 import styles from "./CategoriaItem.module.css";
 import { CategoriaService } from "../../services/ParticularServices/CategoriaService";
+import { EditarCategoria } from "../../modals/CategoriasModals/EditarCategoria";
+import { removeCategoriaElementActive, setCategoriaElementActive } from "../../redux/slices/CategoriaReducer";
+import { useAppDispatch} from "../../hooks/redux";
 
 interface ICategoriaItem {
     categoria: ICategorias;
@@ -11,8 +14,10 @@ interface ICategoriaItem {
 export const CategoriaItem: FC<ICategoriaItem> = ({ categoria }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [subcategorias, setSubcategorias] = useState<ICategorias[]>([]);
+    const [openModalEditar, setOpenModalEditar] = useState(false);
+    const dispatch = useAppDispatch();
 
-    const categoriaService = new CategoriaService("http://190.221.207.224:8090/categorias");
+    const categoriaService = new CategoriaService("api/categorias");
 
     useEffect(() => {
         const fetchSubcategorias = async () => {
@@ -38,6 +43,17 @@ export const CategoriaItem: FC<ICategoriaItem> = ({ categoria }) => {
             </button>
         );
     }
+    const handleEditarCategoria = () => {
+        dispatch(removeCategoriaElementActive());
+        dispatch(setCategoriaElementActive({element:categoria}));
+        setOpenModalEditar(!openModalEditar)
+    }
+
+    const getCategorias = async () => {
+        await categoriaService.getAll().then(() => {
+            dispatch(setCategoriaElementActive({element:categoria}))
+        });
+    }
 
     return (
         <div>
@@ -46,11 +62,15 @@ export const CategoriaItem: FC<ICategoriaItem> = ({ categoria }) => {
                     <Card.Header className={styles.cardHeader}>
                         {`${categoria.denominacion}`}
                         <div className={styles.actionButtons}>
-                            <Button variant="none">
+                            <Button variant="none" onClick={handleEditarCategoria}>
                                 <span className="material-symbols-outlined" style={{ color: "#3e6d88" }}>
                                     edit
                                 </span>
                             </Button>
+                            {openModalEditar && 
+                            <EditarCategoria 
+                            getCategorias={getCategorias} openModal={openModalEditar} setOpenModal= {setOpenModalEditar}/>}
+
                             <Button variant="success">
                             <span className="material-symbols-outlined" style={{color:"green"}}>
                                     add_box
@@ -67,10 +87,10 @@ export const CategoriaItem: FC<ICategoriaItem> = ({ categoria }) => {
                         <Card.Body style={{ paddingLeft: "10vh", paddingRight: "16vh" }}>
                             {subcategorias.length > 0 ? (
                                 <div >
-                                    {subcategorias.map((subcategoria,  index) => (
-                                        <div>
+                                    {subcategorias.map((subcategoria, index) => (
+                                        <div key={subcategoria.id}>
                                             <div className={styles.subCategoriasContainer}>
-                                                <p key={subcategoria.id} >-  {subcategoria.denominacion}</p>
+                                                <p >-  {subcategoria.denominacion}</p>
                                                 <Button variant="none">
                                                     <span className="material-symbols-outlined" style={{ color: "#3e6d88" }}>
                                                         edit

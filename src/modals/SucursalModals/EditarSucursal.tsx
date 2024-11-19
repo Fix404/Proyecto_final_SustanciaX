@@ -9,7 +9,7 @@ import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 import { IUpdateSucursal } from "../../types/dtos/sucursal/IUpdateSucursal";
 import styles from "./SucursalModal.module.css"
 
-interface IPropsCreateSucursal {
+interface IPropsEditarSucursal {
   openModal: boolean;
   setOpenModal: (state: boolean) => void;
   sucursalActiva: ISucursal
@@ -19,7 +19,7 @@ export const EditarSucursal = ({
   openModal,
   setOpenModal,
   sucursalActiva
-}: IPropsCreateSucursal) => {
+}: IPropsEditarSucursal) => {
   const empresaActiva=useAppSelector((state)=> state.empresaReducer.empresaActiva!);
   const apiSucursalUpdate= new SucursalService(`/api/sucursales/update`);
   const apiSucursalGet=new SucursalService(`/api`)
