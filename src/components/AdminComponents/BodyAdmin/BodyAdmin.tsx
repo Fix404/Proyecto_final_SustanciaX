@@ -144,14 +144,14 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                 <div>
                     <div className={styles.headerContainer}>
                         <div className={styles.filtrarProductos}>
-                            {/* <p>Filtrar por categoría:</p> */}
+                          
                             <Dropdown>
-                                <Dropdown.Toggle variant="outline-success" id="dropdown-basic" style={{ width: "28vh", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                                <Dropdown.Toggle variant="outline-success" id="dropdown-basic" style={{ width: "auto", minWidth: "15vw", maxWidth:"35vw" ,display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                                     {categoriaSeleccionada !== null
                                         ? categoriasData.find(categoria => categoria.id === categoriaSeleccionada)?.denominacion
                                         : "Filtrar por categoría"}
                                 </Dropdown.Toggle>
-                                <Dropdown.Menu >
+                                <Dropdown.Menu className={styles.dropdownMenu} >
                                     <Dropdown.Item onClick={() => setCategoriaSeleccionada(null)}>
                                         Todos los productos
                                     </Dropdown.Item>

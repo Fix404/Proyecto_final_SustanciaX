@@ -11,6 +11,8 @@
     margin: 4px;
 }
 
+/* PRODUCTOS */
+
 .filtrarProductos{
     display: flex;
     flex-direction: row;
@@ -28,7 +30,22 @@
     height: min-content;
 }
 
+/* MENU CATEGORIAS */
+
+/* Estilo para el Dropdown */
+.dropdownMenu {
+    max-height: 600px; 
+    overflow-y: auto; 
+    overflow-x: hidden;
+    scrollbar-width: thin; 
+    scrollbar-color: #4caf50 #f1f1f1; 
+}
+
+
+
+
 .divTablaAlergenos{
     margin-top: 13px;
 
 }
+
