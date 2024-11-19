@@ -2,6 +2,8 @@ import { FC, useEffect } from "react";
 import Swal from "sweetalert2"
 import { AlergenoService } from "../../services/ParticularServices/AlergenoService";
 import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
+import { useAppDispatch } from "../../hooks/redux";
+import { removeAlergenoActivo } from "../../redux/slices/AlergenoReducer";
 
 interface IPropsDeleteAlergeno{
     getAlergenos: Function,
@@ -10,6 +12,7 @@ interface IPropsDeleteAlergeno{
 
 export const DeleteAlergeno:FC<IPropsDeleteAlergeno> = ({getAlergenos, alergenoActivo}) => {
     const apiAlergeno=new AlergenoService("api/alergenos/");
+    const dispatch=useAppDispatch();
     const deleteAlergeno = async () => {
         await apiAlergeno.delete(alergenoActivo.id).then(() => {
             getAlergenos();
@@ -36,6 +39,8 @@ export const DeleteAlergeno:FC<IPropsDeleteAlergeno> = ({getAlergenos, alergenoA
                   });
             })
           }
+          dispatch(removeAlergenoActivo())
+          getAlergenos();
         });
       }, []);
   return (
