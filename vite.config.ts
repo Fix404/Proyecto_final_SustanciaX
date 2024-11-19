@@ -9,6 +9,7 @@ export default defineConfig({
       // Redirige las solicitudes al backend
       '/api': {
         target: 'http://190.221.207.224:8090/', // Reemplaza con tu URL del backend
+        // target:'http://localhost:8090/' ,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '') // Opcional: elimina el prefijo /api
       },
