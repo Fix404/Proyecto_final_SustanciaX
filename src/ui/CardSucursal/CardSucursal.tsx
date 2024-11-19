@@ -1,23 +1,28 @@
 import { Button, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./CardSucursal.module.css";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { removeSucursalActiva, setSucursalActiva } from "../../redux/slices/SucursalReducer";
+import { useAppDispatch, useAppSelector} from "../../hooks/redux";
+import { removeSucursalActiva, setDataSucursalList, setSucursalActiva } from "../../redux/slices/SucursalReducer";
 import { EditarSucursal } from "../../modals/SucursalModals/EditarSucursal";
 import { VerSucursal } from "../../modals/SucursalModals/VerSucursal";
+import { SucursalService } from "../../services/ParticularServices/SucursalService";
 
 interface ICardSucursal {
   sucursal: ISucursal;
 }
 
 export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
-  const [openModal, setOpenModal] = useState(false);
   const [openVerModal, setOpenVerModal] = useState(false);
+  const [openModalEditar, setOpenModalEditar]=useState(false);
+  const sucursalService=new SucursalService("/api/");
+  
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const empresaActiva=useAppSelector((state) => state.empresaReducer.empresaActiva)!;
 
   const handleNavigateAdmin = () => {
     dispatch(removeSucursalActiva());
@@ -25,25 +30,31 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
     navigate("admin");
   };
 
-  const sucursalActiva = useAppSelector(state => state.sucursalReducer.sucursalActiva);
   const handleEditarSucursal = () => {
-    dispatch(removeSucursalActiva());
-    dispatch(setSucursalActiva({ element: sucursal }));
-    setOpenModal(!openModal)
+    setOpenModalEditar(!openModalEditar)
   }
 
   const handleVerSucursal = () => {
     setOpenVerModal(!openVerModal); 
   };
+  const getSucursales= async (id:number) => {
+    await sucursalService.getSucursalesPorEmpresaId(id).then((sucursalData) => {
+      dispatch(setDataSucursalList(sucursalData));
+    });
+  }
+
+  useEffect(() => {
+    
+  }, [openModalEditar, openVerModal])
 
   return (
     <div className={styles.divPrincipal}>
-      <Card className={styles.containerCardSucursal} >
+      <Card className={styles.containerCardSucursal}>
 
         <Card.Header className={styles.containerCardHeader}>
-          <Card.Title>{sucursal.nombre}</Card.Title>
+          <Card.Title>{sucursal?.nombre}</Card.Title>
           <Card.Text>
-            {sucursal.horarioApertura} - {sucursal.horarioCierre}
+            {sucursal?.horarioApertura} - {sucursal?.horarioCierre}
           </Card.Text>
         </Card.Header>
 
@@ -86,10 +97,8 @@ export const CardSucursal: FC<ICardSucursal> = ({ sucursal }) => {
           </OverlayTrigger>
         </Card.Footer>
       </Card>
-
-      {openModal && sucursalActiva && <EditarSucursal openModal={openModal} setOpenModal={setOpenModal} sucursalActiva={sucursalActiva}/>}
-      {openVerModal && <VerSucursal sucursal={sucursal} />}
-
+      {openModalEditar && <EditarSucursal openModal={openModalEditar} setOpenModal={setOpenModalEditar} getSucursales={() => getSucursales(empresaActiva.id)} sucursal={sucursal}/>}
+      {openVerModal && <VerSucursal openModal={openVerModal} setOpenModal={setOpenVerModal} sucursal={sucursal}/>}
     </div>
   );
 };

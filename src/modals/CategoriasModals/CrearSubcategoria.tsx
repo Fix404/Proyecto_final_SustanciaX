@@ -1,54 +1,42 @@
-import { Button, Form, Modal } from "react-bootstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { IUpdateCategoria } from "../../types/dtos/categorias/IUpdateCategoria";
-import { CategoriaService } from "../../services/ParticularServices/CategoriaService";
+import { Modal, Button, Form } from "react-bootstrap";
+import { useAppDispatch } from "../../hooks/redux";
 import { removeCategoriaElementActive } from "../../redux/slices/CategoriaReducer";
+import { CategoriaService } from "../../services/ParticularServices/CategoriaService";
+import { ICreateCategoria } from "../../types/dtos/categorias/ICreateCategoria";
 import styles from "./CategoriaModal.module.css"
 
-interface IPropsUpdateCategoria {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-    getCategorias: Function;
+interface IPropsCreateSubcategoria {
+    getCategorias: Function,
     openModal: boolean;
     setOpenModal: (state: boolean) => void;
+    idCategoriaPadre: number;
 }
 
-export const EditarCategoria = ({
-    getCategorias,
-    openModal,
-    setOpenModal,
-}: IPropsUpdateCategoria) => {
-    const categoriaActiva = useAppSelector(
-        (state) => state.categoriaReducer.elementActive 
-    )!;
-    //const empresaActiva = categoriaActiva?.sucursales?.[0]?.empresa;
-    const initialValues: IUpdateCategoria = {
-        id: categoriaActiva?.id,
-        denominacion: categoriaActiva?.denominacion,
-        eliminado: categoriaActiva?.eliminado,
-        idCategoriaPadre: null,
-        idSucursales: [],//categoriaActiva?.sucursales.map((sucursal)=>sucursal.id),
-        idEmpresa: 1, //NO SE RENDERIZA UTILIZANDO categoriaActiva.sucursales[0].empresa.id
-    
-    /*    id: elementoActivo.id,
-            denominacion: values.denominacion,
-            idSucursales: elementoActivo.sucursales.map((el) => el.id),
-            eliminado: elementoActivo.eliminado,
-            idEmpresa: empresaActiva!.id,
-            idCategoriaPadre: null, */
-    };
+export const CrearSubcategoria = ({
+        getCategorias,
+        openModal,
+        setOpenModal,
+        idCategoriaPadre
+    }: IPropsCreateSubcategoria) => {
+        
+    const initialValues: ICreateCategoria = {
+        denominacion: "",
+        idEmpresa: 1, //RESOLVER ACCESO A EMPRESA ID y CATEGORIA PADRE ID
+        idCategoriaPadre: idCategoriaPadre,
+    }
 
-    const apiCategoria = new CategoriaService("api/categorias/update");
+    const apiCategoria = new CategoriaService("api/categorias/create");
     const dispatch = useAppDispatch();
 
     const handleClose = () => {
         setOpenModal(false);
-        dispatch(removeCategoriaElementActive());
-    };
+        dispatch(removeCategoriaElementActive())
+    }
 
     return (
-        <>
+        <div>
             <Modal
                 show={openModal}
                 onHide={handleClose}
@@ -59,10 +47,8 @@ export const EditarCategoria = ({
                 size="lg"
                 id={"modal"}
             >
-                <Modal.Header
-                    className={styles.modalCategoriaTitulo}
-                >
-                    <Modal.Title>Editar Categoria</Modal.Title>
+                <Modal.Header className={styles.modalCategoriaTitulo}   >
+                    <Modal.Title>Crear Sub-Categoría</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Formik
@@ -71,8 +57,8 @@ export const EditarCategoria = ({
                         })}
                         initialValues={initialValues}
                         enableReinitialize={true}
-                        onSubmit={async (values: IUpdateCategoria) => {
-                            await apiCategoria.put(categoriaActiva.id, values);
+                        onSubmit={async (values: ICreateCategoria) => {
+                            await apiCategoria.post(values);
                             getCategorias();
                             handleClose();
                         }}
@@ -81,7 +67,7 @@ export const EditarCategoria = ({
                             <>
                                 <Form onSubmit={handleSubmit} >
                                         <div>
-                                            <Form.Group className="mb-3" controlId="denominacion">
+                                            <Form.Group className="mb-3" controlId="denominacionCategoria">
                                                 <Form.Control
                                                     type="text"
                                                     placeholder="Denominación"
@@ -106,7 +92,7 @@ export const EditarCategoria = ({
                     </Formik>
                 </Modal.Body>
             </Modal>
-        </>
+        </div>
     );
 };
 

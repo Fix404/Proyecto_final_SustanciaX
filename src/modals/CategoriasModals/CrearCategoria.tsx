@@ -18,10 +18,11 @@ export const CrearCategoria = ({
         openModal,
         setOpenModal
     }: IPropsCreateCategoria) => {
+        
     const initialValues: ICreateCategoria = {
         denominacion: "",
-        idEmpresa: 0,
-        idCategoriaPadre: 0,
+        idEmpresa: 1, //RESOLVER ACCESO A EMPRESA ID
+        idCategoriaPadre: null,
     }
 
     const apiCategoria = new CategoriaService("api/categorias/create");

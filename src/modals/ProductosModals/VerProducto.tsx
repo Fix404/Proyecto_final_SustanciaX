@@ -20,7 +20,7 @@ export const VerProducto: React.FC<ProductosModalProps> = ({ producto }) => {
                         <Modal.Header>
                             <Modal.Title style={{ textAlign: "center", width: "100%" }}>Producto</Modal.Title>
                         </Modal.Header>
-                        <Modal.Body style={{display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem"}}>
+                        <Modal.Body className={styles.modalBody}>
                             <p><b>Denominación: </b><br /> {producto?.denominacion}</p>
                             <p><b>Precio:</b> {producto?.precioVenta}</p>
                             <p><b>Descripción: </b><br /> {producto?.descripcion}</p>

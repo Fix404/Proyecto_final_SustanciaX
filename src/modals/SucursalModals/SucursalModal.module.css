@@ -56,13 +56,6 @@
     z-index: 1040;
 }
 
-.modalContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: auto;
-    height: 100%;
-}
 
 .modal.show {
     min-width: auto;
