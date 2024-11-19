@@ -1,40 +1,45 @@
-import styles from "./SucursalModal.module.css";
+import { FC } from "react";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
-import { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import styles from "./SucursalModal.module.css";
+import { Modal } from "react-bootstrap";
 interface SucursalModalProps {
-    sucursal: ISucursal;
+  openModal: boolean,
+  setOpenModal: (state: boolean) => void,
+  sucursal: ISucursal
 }
 
-export const VerSucursal: React.FC<SucursalModalProps> = ({ sucursal }) => {
-    const { nombre, empresa, domicilio, esCasaMatriz, horarioApertura, horarioCierre, logo } = sucursal;
-    const [esVisible, setEsVisible] = useState(true);
-    const onClose = () => {
-        setEsVisible(false);
-    };
-    if (!esVisible) return null;
-    return (
-        <div className={styles.modalBackdrop}>
-                <div className="modal show" style={{ display: 'block', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -35%)' }}>
-                    <Modal.Dialog>
-                        <Modal.Header>
-                            <Modal.Title style={{ textAlign: "center", width: "100%" }}>Sucursal</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body style={{display: "flex", flexDirection: "column", padding: "2rem", textAlign: "center", justifyContent: "normal", overflowWrap: "break-word", wordWrap: "break-word"}}>
-                            <p><b>Nombre:</b> {nombre}</p>
-                            <p><b>Empresa:</b> {empresa.nombre}</p>
-                            <p><b>Domicilio:</b> {domicilio.calle} {domicilio.numero}</p>
-                            <p><b>¿Casa matriz?</b> {esCasaMatriz ? "Si" : "No"}</p>
-                            <p><b>Horario apertura:</b> {horarioApertura}</p>
-                            <p><b>Horario cierre:</b> {horarioCierre}</p>
-                            <p><b>Logo:</b><br/>{logo}</p>
-                        </Modal.Body>
-                        <Modal.Footer style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                        <Button variant="custom" className={styles.modalBoton} onClick={onClose}>
-                            Cancelar
-                        </Button>
-                        </Modal.Footer>
-                    </Modal.Dialog>
-            </div>
-        </div>);
-}
+export const VerSucursal: FC<SucursalModalProps> = ({
+  openModal,
+  setOpenModal,
+  sucursal
+}) => {
+    console.log(sucursal);
+  const onClose = () => {
+    setOpenModal(!openModal);
+  };
+
+  return (
+    <Modal
+    show={openModal}
+    onHide={onClose}
+    backdrop="static"
+    keyboard={false}
+    centered
+    size="lg"
+    id="modal"
+  >
+    <Modal.Header closeButton>
+      <Modal.Title>Sucursal</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      <p><b>Nombre:</b> {sucursal?.nombre}</p>
+      <p><b>Empresa:</b> {sucursal?.empresa.nombre}</p>
+      <p><b>Es casa matriz: </b></p>{sucursal?.esCasaMatriz ? <p>Sí</p> : <p>No</p>}
+      <p><b>Logo:</b> {sucursal?.logo}</p>
+    </Modal.Body>
+    <Modal.Footer>
+      <button className={styles.closeButton} onClick={onClose}>Cerrar</button>
+    </Modal.Footer>
+  </Modal>
+  );
+};

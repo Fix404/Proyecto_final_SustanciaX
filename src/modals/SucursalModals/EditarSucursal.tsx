@@ -4,47 +4,48 @@ import * as Yup from "yup";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { removeSucursalActiva, setDataSucursalList } from "../../redux/slices/SucursalReducer";
 import { SucursalService } from "../../services/ParticularServices/SucursalService";
-import { useEffect } from "react";
-import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 import { IUpdateSucursal } from "../../types/dtos/sucursal/IUpdateSucursal";
 import styles from "./SucursalModal.module.css"
+import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 
-interface IPropsCreateSucursal {
-  openModal: boolean;
-  setOpenModal: (state: boolean) => void;
-  sucursalActiva: ISucursal
+interface IPropsUpdateSucursal {
+  openModal: boolean,
+  setOpenModal: (state: boolean) => void,
+  getSucursales: Function,
+  sucursal: ISucursal
 }
 
 export const EditarSucursal = ({
   openModal,
   setOpenModal,
-  sucursalActiva
-}: IPropsCreateSucursal) => {
+  getSucursales,
+  sucursal
+}: IPropsUpdateSucursal) => {
   const empresaActiva=useAppSelector((state)=> state.empresaReducer.empresaActiva!);
   const apiSucursalUpdate= new SucursalService(`/api/sucursales/update`);
   const apiSucursalGet=new SucursalService(`/api`)
 
   const initialValues:IUpdateSucursal = {
-    id:sucursalActiva.id,
-    nombre: sucursalActiva.nombre,
-  idEmpresa: sucursalActiva.empresa.id,
-  eliminado: sucursalActiva.eliminado,
-  latitud: sucursalActiva.latitud,
-  longitud: sucursalActiva.longitud,
+    id:sucursal?.id,
+    nombre: sucursal?.nombre,
+  idEmpresa: sucursal?.empresa.id,
+  eliminado: sucursal?.eliminado,
+  latitud: sucursal?.latitud,
+  longitud: sucursal?.longitud,
   domicilio: {
-    id: sucursalActiva.domicilio.id,
-    calle: sucursalActiva.domicilio.calle,
-    numero: sucursalActiva.domicilio.numero,
-    cp: sucursalActiva.domicilio.cp,
-    piso: sucursalActiva.domicilio.piso,
-    nroDpto: sucursalActiva.domicilio.nroDpto,
+    id: sucursal?.domicilio.id,
+    calle: sucursal?.domicilio.calle,
+    numero: sucursal?.domicilio.numero,
+    cp: sucursal?.domicilio.cp,
+    piso: sucursal?.domicilio.piso,
+    nroDpto: sucursal?.domicilio.nroDpto,
     idLocalidad: 1,
   },
   logo: "",
   categorias: [],
-  esCasaMatriz: sucursalActiva.esCasaMatriz,
-  horarioApertura: sucursalActiva.horarioApertura,
-  horarioCierre: sucursalActiva.horarioCierre
+  esCasaMatriz: sucursal?.esCasaMatriz,
+  horarioApertura: sucursal?.horarioApertura,
+  horarioCierre: sucursal?.horarioCierre
   }
 
   const dispatch = useAppDispatch();
@@ -56,13 +57,10 @@ export const EditarSucursal = ({
   };
 
   const handleClose = () => {
-    setOpenModal(false);
+    setOpenModal(!openModal);
     dispatch(removeSucursalActiva());
+    getSucursales();
   };
-
-  useEffect(()=>{
-  }, [empresaActiva]);
-
   return (
     <div>
       <Modal
@@ -99,7 +97,7 @@ export const EditarSucursal = ({
             initialValues={initialValues}
             enableReinitialize={true}
             onSubmit={async (values: IUpdateSucursal)=> {
-                await apiSucursalUpdate.put(sucursalActiva!.id, values);
+                await apiSucursalUpdate.put(sucursal!.id, values);
                 getSucursalesPorEmpresaId(empresaActiva.id);
                 handleClose();}}
           >
