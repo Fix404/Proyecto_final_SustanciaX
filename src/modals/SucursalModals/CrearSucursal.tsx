@@ -4,10 +4,16 @@ import * as Yup from "yup";
 import { useAppDispatch} from "../../hooks/redux";
 import { ICreateSucursal } from "../../types/dtos/sucursal/ICreateSucursal";
 import { SucursalService } from "../../services/ParticularServices/SucursalService";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setDataSucursalList } from "../../redux/slices/SucursalReducer";
 import { IEmpresa } from "../../types/dtos/empresa/IEmpresa";
 import styles from "./SucursalModal.module.css"
+import { PaisService } from "../../services/ParticularServices/PaisService";
+import { IPais } from "../../types/IPais";
+import { IProvincia } from "../../types/IProvincia";
+import { ProvinciaService } from "../../services/ParticularServices/ProvinciaService";
+import { LocalidadService } from "../../services/ParticularServices/LocalidadService";
+import { ILocalidad } from "../../types/ILocalidad";
 
 interface IPropsCreateSucursal {
   openModal: boolean;
@@ -20,9 +26,13 @@ export const CrearSucursal = ({
   setOpenModal,
   empresaActiva
 }: IPropsCreateSucursal) => {
+  const [paises, setPaises]=useState<IPais[]>([]);
+  const [provs, setProvs]=useState<IProvincia[]>([]);
+  const [localidades, setLocalidades]=useState<ILocalidad[]>([]);
   const apiSucursalCreate = new SucursalService(`/api/sucursales/create`);
   const apiSucursalGet=new SucursalService(`api/`);
-  const dispatch=useAppDispatch()
+  const apiPaisGet=new PaisService("/api/paises");
+  const dispatch=useAppDispatch();
 
   const initialValuesCreate: ICreateSucursal = {
     nombre: "",
@@ -49,6 +59,26 @@ export const CrearSucursal = ({
     });
   };
 
+  const getPaises = async () => {
+    await apiPaisGet.getAll().then((paisesData) => 
+    setPaises(paisesData))
+  }
+
+  const handleProvs = async (paisId:number) => {
+    const apiProvGetById=new ProvinciaService(`/api/`);
+      await apiProvGetById.getProvinciasPorPaisId(paisId).then((provsData) => 
+        setProvs(provsData)
+      )
+      console.log(provs)
+  }
+
+  const handleLocalidades = async (provId:number) => {
+    const apiLocalidGetById=new LocalidadService(`/api/`);
+    await apiLocalidGetById.getlocalidadesPorProvId(provId).then((localidData)=>{
+      setLocalidades(localidData);
+    })
+  }
+
   const handleClose = () => {
     setOpenModal(false);
   };
@@ -58,6 +88,10 @@ export const CrearSucursal = ({
       getSucursalesPorEmpresaId(empresaActiva.id);
     }
   }, [openModal]);
+
+  useEffect(()=> {
+    getPaises()
+  }, [])
 
   return (
     <div>
@@ -141,29 +175,36 @@ export const CrearSucursal = ({
                       />
                     </Form.Group>
 
-                    <Form.Select aria-label="Default select example" id="pais">
+                    <Form.Select aria-label="Default select example" id="pais" onChange={(e) => {
+    const paisId = Number(e.target.value);
+    if (paisId) handleProvs(paisId);
+  }}>
                       <option>País</option>
-                      <option value="1">Argentina</option>
-                      <option value="2">Burkina Faso</option>
-                      <option value="3">Tonga</option>
+                      {paises.map((pais, index) => (
+                        <option key={index} value={pais.id}>{pais.nombre}</option>
+                      ))}
                     </Form.Select>
                     <Form.Select
                       aria-label="Default select example"
                       id="provincia"
+                      onChange={(e) => {
+                        const provId = Number(e.target.value);
+                        if (provId) handleLocalidades(provId);
+                      }}
                     >
                       <option>Provincia</option>
-                      <option value="1">Mendoza</option>
-                      <option value="2">Córdoba</option>
-                      <option value="3">La Pampa</option>
+                     {provs.map((prov, index) => (
+                      <option key={index} value={prov.id}>{prov.nombre}</option>
+                     ))}
                     </Form.Select>
                     <Form.Select
                       aria-label="Default select example"
                       id="localidad"
                     >
                       <option>Localidad</option>
-                      <option value="1">Maipú</option>
-                      <option value="2">Las Heras</option>
-                      <option value="3">Godoy Cruz</option>
+                      {localidades.map((localid, index) => (
+                        <option key={index} value={localid.id}>{localid.nombre}</option>
+                      ))}
                     </Form.Select>
 
                     <Form.Group className="mb-3" controlId="latitud">
