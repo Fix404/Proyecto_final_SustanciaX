@@ -5,7 +5,7 @@ import styles from "./CategoriaItem.module.css";
 import { CategoriaService } from "../../services/ParticularServices/CategoriaService";
 import { EditarCategoria } from "../../modals/CategoriasModals/EditarCategoria";
 import { removeCategoriaElementActive, setCategoriaElementActive } from "../../redux/slices/CategoriaReducer";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useAppDispatch } from "../../hooks/redux";
 
 interface ICategoriaItem {
     categoria: ICategorias;
