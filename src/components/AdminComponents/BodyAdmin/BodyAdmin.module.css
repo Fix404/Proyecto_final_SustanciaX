@@ -32,14 +32,14 @@
 
 /* MENU CATEGORIAS */
 
-/* Estilo para el Dropdown */
 .dropdownMenu {
     max-height: 600px; 
     overflow-y: auto; 
     overflow-x: hidden;
     scrollbar-width: thin; 
-    scrollbar-color: #4caf50 #f1f1f1; 
+    scrollbar-color: rgb(39, 155, 49) #f1f1f1; 
 }
+
 
 
 
