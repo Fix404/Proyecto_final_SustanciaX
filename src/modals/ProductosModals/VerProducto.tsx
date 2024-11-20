@@ -1,5 +1,5 @@
 import styles from "./ProductosModal.module.css";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { IProductos } from "../../types/dtos/productos/IProductos";
 
@@ -7,12 +7,16 @@ interface ProductosModalProps {
     producto: IProductos;
 }
 
-export const VerProducto: React.FC<ProductosModalProps> = ({ producto }) => {
+export const VerProducto: FC<ProductosModalProps> = ({ producto }) => {
     const [esVisible, setEsVisible] = useState(true);
+    const alergenosList=producto?.alergenos?.map((alergeno, index) => (
+        <li key={index}>{alergeno?.denominacion}</li>
+    ))
     const onClose = () => {
         setEsVisible(false);
     };
     if (!esVisible) return null;
+
     return (
         <div className={styles.modalBackdrop}>
                 <div className="modal show" style={{ display: 'block', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -35%)' }}>
@@ -27,7 +31,11 @@ export const VerProducto: React.FC<ProductosModalProps> = ({ producto }) => {
                             {/* <p><b>Categoría: </b> {categoria.categoriaPadre?.subCategorias}</p> */}
                             <p><b>Habilitado: </b> </p>{producto?.habilitado ? <p>Sí</p> : <p>No</p>}
                             <p><b>Código: </b> {producto?.codigo}</p>
-                            {/* <p><b>Alérgenos: </b> {}</p> */}
+                            <p><b>Alérgenos: </b></p>
+                            <ul>
+                                {alergenosList.length > 0 ? alergenosList :
+                                <p>No contiene alérgenos</p>}
+                            </ul>
                             {/* <p><b>Imágenes: </b> {imagenes}</p> */}
                         </Modal.Body>
                         <Modal.Footer style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>

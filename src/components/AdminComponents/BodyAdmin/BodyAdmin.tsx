@@ -98,9 +98,11 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
     // Componente paginado
     for (let pageNumber = 1; pageNumber <= pageAmount; pageNumber++) {
         items.push(
-            <Pagination.Item key={pageNumber} active={pageNumber === active} onClick={() => handlePageActive(pageNumber)}>
-                {pageNumber}
-            </Pagination.Item>
+            
+                <Pagination.Item  key={pageNumber} active={pageNumber === active} onClick={() => handlePageActive(pageNumber)}>
+                    {pageNumber}
+                </Pagination.Item>
+       
         );
     }
 
@@ -175,6 +177,7 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                     <div>
                         <ListProductos productos={productosOnPage} />
                         <Pagination size="lg">{items}</Pagination>
+                      
                     </div>
                 </div>
             )}
@@ -190,9 +193,11 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                     {openModalCrearCategoria && (
                         <CrearCategoria
                             openModal={openModalCrearCategoria}
-                            setOpenModal={setOpenModalCrearCategoria} getCategorias={getCategorias} />
-                    )}
-
+                            setOpenModal={setOpenModalCrearCategoria} 
+                            getCategorias={getCategorias}
+                            idEmpresa={sucursalActiva?.empresa.id ?? 0} />
+                    )} 
+                    
                     {categoriasData.length > 0 ? (
                         <ListCategorias categorias={categoriasData} />
                     ) : (

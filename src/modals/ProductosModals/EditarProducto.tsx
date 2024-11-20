@@ -4,9 +4,9 @@ import { removeProductoElementActive } from "../../redux/slices/ProductosReducer
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { ProductoService } from "../../services/ParticularServices/ProductoService";
-import categoriasEjemplo from "../../data/categoriasEjemplo";
 import { IUpdateProducto } from "../../types/dtos/productos/IUpdateProducto";
 import styles from "./ProductosModal.module.css";
+import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
 
 interface IPropsEditarProducto {
   getProductos: Function;
@@ -20,6 +20,8 @@ export const EditarProducto = ({
   setOpenModal,
 }: IPropsEditarProducto) => {
   const dispatch = useAppDispatch();
+  const categorias=useAppSelector((state) => state.categoriaReducer.dataList);
+  const alergenos=useAppSelector((state) => state.alergenoReducer.alergenosList);
   const productoActivo = useAppSelector(
     (state) => state.productosReducer.elementActive
   )!;
@@ -32,7 +34,7 @@ export const EditarProducto = ({
     habilitado: productoActivo?.habilitado,
     codigo: productoActivo?.codigo,
     idCategoria: productoActivo?.categoria.id,
-    idAlergenos: [],
+    idAlergenos: productoActivo?.alergenos.map((alergeno:IAlergenos) => alergeno.id),
     imagenes: productoActivo?.imagenes,
   };
 
@@ -63,11 +65,11 @@ export const EditarProducto = ({
             validationSchema={Yup.object({
               denominacion: Yup.string().required("Campo requerido"),
               precioVenta: Yup.number().required("Campo requerido"),
-              //descripcion: Yup.string(),
-              //habilitado: Yup.boolean().required("Campo requerido"),
-              //codigo: Yup.string().required("Campo requerido"),
+              descripcion: Yup.string(),
+              habilitado: Yup.boolean(),
+              codigo: Yup.string().required("Campo requerido"),
               //idCategoria: Yup.number(),
-              //idAlergenos: Yup.number()
+              idAlergenos: Yup.array().of(Yup.number())
             })}
             initialValues={initialValues}
             enableReinitialize={true}
@@ -99,7 +101,7 @@ export const EditarProducto = ({
                             id="categoria"
                           >
                             <option>Categoría</option>
-                            {categoriasEjemplo.map((categoria) => (
+                            {categorias.map((categoria) => (
                               <option
                                 key={categoria.id}
                                 onClick={() => categoria.denominacion}
@@ -110,12 +112,29 @@ export const EditarProducto = ({
                           </Form.Select>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="alergenos">
-                          <Form.Select
-                            aria-label="Default select example"
-                            id="categoria"
-                          >
-                            <option>Alergenos</option>
-                          </Form.Select>
+                          <Form.Label style={{color:"white"}}>Alérgenos:</Form.Label>
+                          
+                            {alergenos.map((alergeno) => (
+                              <Form.Check key={alergeno.id} 
+                              type="checkbox"
+                              label={alergeno.denominacion}
+                              value={alergeno.id}
+                              name="idAlergenos"
+                              onChange={(e) => {
+                                const idElegida=Number(e.target.value)
+                                const nuevosValores=e.target.checked
+                                ? [... values.idAlergenos, idElegida]
+                                : values.idAlergenos.filter((id) => id != idElegida);
+                                handleChange({
+                                  target:{
+                                    name:"idAlergenos",
+                                    value:nuevosValores,
+                                  }
+                                })
+                              }}
+                              checked={values.idAlergenos.includes(alergeno.id)}
+                              style={{ color: "white" }}/>
+                            ))}
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="precioVenta">
                           <Form.Control
@@ -147,6 +166,9 @@ export const EditarProducto = ({
                             as="textarea"
                             rows={5}
                             placeholder="Descripción"
+                            name="descripcion"
+                            onChange={handleChange}
+                            value={values.descripcion}
                           />
                         </Form.Group>
 
@@ -159,6 +181,9 @@ export const EditarProducto = ({
                             label="Habilitado"
                             type="checkbox"
                             style={{ color: "#d4d3d3" }}
+                            name="habilitado"
+                            onChange={handleChange}
+                            checked={values.habilitado}
                           />
                         </Form.Group>
                       </div>

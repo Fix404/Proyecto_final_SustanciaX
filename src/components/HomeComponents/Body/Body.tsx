@@ -5,8 +5,6 @@ import { SucursalService } from "../../../services/ParticularServices/SucursalSe
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { setDataSucursalList } from "../../../redux/slices/SucursalReducer";
 
-
-
 export const Body = () => {
   const dispatch = useAppDispatch();
   const empresaActiva=useAppSelector((state) => state.empresaReducer.empresaActiva);
@@ -20,7 +18,6 @@ export const Body = () => {
   };
 
   const dataList=useAppSelector((state) => state.sucursalReducer.sucursalList);
-  
 
   useEffect(() => {
     if(empresaActiva && empresaActiva.id){

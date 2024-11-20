@@ -3,8 +3,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { ICreateProducto } from "../../types/dtos/productos/ICreateProducto";
 import { ProductoService } from "../../services/ParticularServices/ProductoService";
-import categoriasEjemplo from "../../data/categoriasEjemplo";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { removeProductoElementActive } from "../../redux/slices/ProductosReducer";
 import styles from "./ProductosModal.module.css"
 interface IPropsCrearProducto {
@@ -18,6 +17,10 @@ export const CrearProducto = ({
   openModal,
   setOpenModal,
 }: IPropsCrearProducto) => {
+  const dispatch = useAppDispatch();
+  const categorias=useAppSelector((state) => state.categoriaReducer.dataList);
+  const alergenos=useAppSelector((state) => state.alergenoReducer.alergenosList);
+
   const initialValues: ICreateProducto = {
     denominacion: "",
     precioVenta: 0,
@@ -30,7 +33,6 @@ export const CrearProducto = ({
   };
 
   const apiProducto = new ProductoService("/api/articulos/create");
-  const dispatch = useAppDispatch();
 
   const handleClose = () => {
     setOpenModal(false);
@@ -59,11 +61,11 @@ export const CrearProducto = ({
             validationSchema={Yup.object({
               denominacion: Yup.string().required("Campo requerido"),
               precioVenta: Yup.number().required("Campo requerido"),
-              //descripcion: Yup.string(),
-              //habilitado: Yup.boolean(),
-              //codigo: Yup.string(),
-              //idCategoria: Yup.number(),
-              //idAlergenos: Yup.number(),
+              descripcion: Yup.string(),
+              habilitado: Yup.boolean(),
+              codigo: Yup.string().required(),
+              // idCategoria: Yup.number().required(),
+              idAlergenos: Yup.array().of(Yup.number()),
             })}
             initialValues={initialValues}
             enableReinitialize={true}
@@ -96,9 +98,16 @@ export const CrearProducto = ({
                           <Form.Select
                             aria-label="Default select example"
                             id="categoria"
+                            name="idCategoria"
+                            // onChange={handleChange}
+                            // value={values.idCategoria}
+                            // onChange={() => {
+                            //   const categoriaId = Number(e.target.value);
+                            //   // if (categoriaId) handleProvs(paisId);
+                            // }}
                           >
                             <option>Categoría</option>
-                            {categoriasEjemplo.map((categoria) => (
+                            {categorias.map((categoria) => (
                               <option
                                 key={categoria.id}
                                 onClick={() => categoria.denominacion}
@@ -110,12 +119,29 @@ export const CrearProducto = ({
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="alergenos">
-                          <Form.Select
-                            aria-label="Default select example"
-                            id="categoria"
-                          >
-                            <option>Alérgenos</option>
-                          </Form.Select>
+                          <Form.Label style={{color:"white"}}>Alérgenos:</Form.Label>
+                          
+                            {alergenos.map((alergeno) => (
+                              <Form.Check key={alergeno.id} 
+                              type="checkbox"
+                              label={alergeno.denominacion}
+                              value={alergeno.id}
+                              name="idAlergenos"
+                              onChange={(e) => {
+                                const idElegida=Number(e.target.value)
+                                const nuevosValores=e.target.checked
+                                ? [... values.idAlergenos, idElegida]
+                                : values.idAlergenos.filter((id) => id != idElegida);
+                                handleChange({
+                                  target:{
+                                    name:"idAlergenos",
+                                    value:nuevosValores,
+                                  }
+                                })
+                              }}
+                              checked={values.idAlergenos.includes(alergeno.id)}
+                              style={{ color: "white" }}/>
+                            ))}
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="precioVenta">
                           <Form.Control
@@ -141,7 +167,10 @@ export const CrearProducto = ({
 
                       <div>
                         <Form.Group>
-                          <Form.Control className="mb-4" as="textarea" rows={5} placeholder="Descripción" />
+                          <Form.Control className="mb-4" as="textarea" rows={5} placeholder="Descripción" 
+                          name="descripcion"
+                          onChange={handleChange}
+                          value={values.descripcion}/>
                         </Form.Group>
 
                         <Form.Group controlId="imagenEmpresa" className="mb-4">
@@ -153,6 +182,9 @@ export const CrearProducto = ({
                           label="Habilitado"
                           type="checkbox"
                           style={{ color: "#d4d3d3" }}
+                          name="habilitado"
+                          onChange={handleChange}
+                          checked={values.habilitado}
                         />
                       </Form.Group>
 

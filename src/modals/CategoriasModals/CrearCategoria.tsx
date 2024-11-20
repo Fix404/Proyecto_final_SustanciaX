@@ -5,26 +5,29 @@ import { useAppDispatch } from "../../hooks/redux";
 import { removeCategoriaElementActive } from "../../redux/slices/CategoriaReducer";
 import { CategoriaService } from "../../services/ParticularServices/CategoriaService";
 import { ICreateCategoria } from "../../types/dtos/categorias/ICreateCategoria";
-import styles from "./CrearCategoria.module.css"
+import styles from "./CategoriaModal.module.css"
 
 interface IPropsCreateCategoria {
     getCategorias: Function,
     openModal: boolean;
     setOpenModal: (state: boolean) => void;
+    idEmpresa: number;
 }
 
 export const CrearCategoria = ({
         getCategorias,
         openModal,
-        setOpenModal
+        setOpenModal,
+        idEmpresa
     }: IPropsCreateCategoria) => {
+        
     const initialValues: ICreateCategoria = {
         denominacion: "",
-        idEmpresa: 0,
-        idCategoriaPadre: 0,
+        idEmpresa: idEmpresa,
+        idCategoriaPadre: null,
     }
 
-    const apiCategoria = new CategoriaService("api/categorias");
+    const apiCategoria = new CategoriaService("api/categorias/create");
     const dispatch = useAppDispatch();
 
     const handleClose = () => {

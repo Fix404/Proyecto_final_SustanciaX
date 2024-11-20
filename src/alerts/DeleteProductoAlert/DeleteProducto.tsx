@@ -2,6 +2,8 @@ import { FC, useEffect } from "react";
 import Swal from "sweetalert2"
 import { IProductos } from "../../types/dtos/productos/IProductos";
 import { ProductoService } from "../../services/ParticularServices/ProductoService";
+import { useAppDispatch } from "../../hooks/redux";
+import { removeProductoElementActive } from "../../redux/slices/ProductosReducer";
 
 interface IPropsDeleteProducto{
     getProductos: Function,
@@ -10,6 +12,7 @@ interface IPropsDeleteProducto{
 
 export const DeleteProducto:FC<IPropsDeleteProducto> = ({getProductos, productoActivo}) => {
     const apiProducto=new ProductoService("api/articulos");
+    const dispatch=useAppDispatch();
     const deleteProducto = async () => {
         await apiProducto.delete(productoActivo.id).then(() => {
             getProductos();
@@ -36,6 +39,8 @@ export const DeleteProducto:FC<IPropsDeleteProducto> = ({getProductos, productoA
                   });
             })
           }
+          getProductos();
+          dispatch(removeProductoElementActive());
         });
       }, []);
   return (
