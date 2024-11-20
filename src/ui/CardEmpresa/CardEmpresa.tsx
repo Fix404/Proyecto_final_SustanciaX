@@ -11,6 +11,7 @@ import styles from "./CardEmpresa.module.css";
 import { EditarEmpresa } from "../../modals/EmpresaModals/EditarEmpresa";
 import { EmpresaService } from "../../services/ParticularServices/EmpresaService";
 import { VerEmpresa } from "../../modals/EmpresaModals/VerEmpresa";
+import { DeleteEmpresa } from "../../alerts/DeleteEmpresaAlert/DeleteEmpresa";
 
 interface ICardEmpresa {
   empresa: IEmpresa;
@@ -19,6 +20,7 @@ interface ICardEmpresa {
 export const CardEmpresa: FC<ICardEmpresa> = ({ empresa }) => {
   const [openModal, setOpenModal] = useState(false);
   const [openModalVer, setOpenModalVer]=useState(false);
+  const [openModalDelete, setopenModalDelete]=useState(false);
   const dispatch = useAppDispatch();
   const empresaService = new EmpresaService(`api/empresas`);
   const handleEmpresaActiva = () => {
@@ -41,6 +43,10 @@ export const CardEmpresa: FC<ICardEmpresa> = ({ empresa }) => {
   const handleVerEmpresa = () => {
     setOpenModalVer(!openModalVer);
     getEmpresas();
+  }
+
+  const handleDeleteEmpresa = () => {
+    setopenModalDelete(!openModalDelete);
   }
 
   return (
@@ -92,7 +98,7 @@ export const CardEmpresa: FC<ICardEmpresa> = ({ empresa }) => {
                   </Tooltip>
                 }
               >
-                <Button variant="custom" className={styles.botonEmpresaHome}>
+                <Button variant="custom" className={styles.botonEmpresaHome} onClick={handleDeleteEmpresa}>
                   <span className="material-symbols-outlined">delete</span>
                 </Button>
               </OverlayTrigger>
@@ -102,6 +108,7 @@ export const CardEmpresa: FC<ICardEmpresa> = ({ empresa }) => {
           </Card>
           {openModal && <EditarEmpresa openModal={openModal} setOpenModal={setOpenModal} getEmpresas={getEmpresas} />}
           {openModalVer && <VerEmpresa empresa={empresa} openModal={openModalVer} setOpenModal={setOpenModalVer}/>}
+          {openModalDelete && <DeleteEmpresa getEmpresas={getEmpresas}/>}
         </div>
       )}
     </>
