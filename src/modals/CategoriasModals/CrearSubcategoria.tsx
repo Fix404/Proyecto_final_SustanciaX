@@ -18,12 +18,12 @@ export const CrearSubcategoria = ({
         getCategorias,
         openModal,
         setOpenModal,
-        idCategoriaPadre
+        idCategoriaPadre,
     }: IPropsCreateSubcategoria) => {
         
     const initialValues: ICreateCategoria = {
         denominacion: "",
-        idEmpresa: 1, //RESOLVER ACCESO A EMPRESA ID y CATEGORIA PADRE ID
+        idEmpresa: 1, 
         idCategoriaPadre: idCategoriaPadre,
     }
 

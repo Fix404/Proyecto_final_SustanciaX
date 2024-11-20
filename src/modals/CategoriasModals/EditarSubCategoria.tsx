@@ -7,32 +7,42 @@ import { CategoriaService } from "../../services/ParticularServices/CategoriaSer
 import { removeCategoriaElementActive } from "../../redux/slices/CategoriaReducer";
 import styles from "./CategoriaModal.module.css"
 
-interface IPropsUpdateCategoria {
+interface IPropsUpdateSubCategoria {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-    getCategorias: Function;
+    getSubCategorias: Function;
     openModal: boolean;
     setOpenModal: (state: boolean) => void;
-    idSucursales: number[];
+    idCategoriaPadre: number;
     idEmpresa: number;
+    idSucursales: number[];
 }
 
-export const EditarCategoria = ({
-    getCategorias,
+export const EditarSubCategoria = ({
+    getSubCategorias,
     openModal,
     setOpenModal,
-    idSucursales,
-    idEmpresa
-}: IPropsUpdateCategoria) => {
+    idCategoriaPadre,
+    idEmpresa,
+    idSucursales
+}: IPropsUpdateSubCategoria) => {
     const categoriaActiva = useAppSelector(
-        (state) => state.categoriaReducer.elementActive 
+        (state) => state.categoriaReducer.elementActive
     )!;
+    //const empresaActiva = categoriaActiva?.sucursales?.[0]?.empresa;
     const initialValues: IUpdateCategoria = {
         id: categoriaActiva?.id,
         denominacion: categoriaActiva?.denominacion,
         eliminado: categoriaActiva?.eliminado,
-        idCategoriaPadre: null,
-        idSucursales: idSucursales,
-        idEmpresa: idEmpresa, 
+        idCategoriaPadre: idCategoriaPadre,
+        idSucursales: idSucursales, //categoriaActiva?.sucursales.map((sucursal)=>sucursal.id),
+        idEmpresa: idEmpresa, //NO SE RENDERIZA UTILIZANDO categoriaActiva.sucursales[0].empresa.id
+
+        /*    id: elementoActivo.id,
+                denominacion: values.denominacion,
+                idSucursales: elementoActivo.sucursales.map((el) => el.id),
+                eliminado: elementoActivo.eliminado,
+                idEmpresa: empresaActiva!.id,
+                idCategoriaPadre: categoriaPadre.id, */
     };
 
     const apiCategoria = new CategoriaService("api/categorias/update");
@@ -58,7 +68,7 @@ export const EditarCategoria = ({
                 <Modal.Header
                     className={styles.modalCategoriaTitulo}
                 >
-                    <Modal.Title>Editar Categoria</Modal.Title>
+                    <Modal.Title>Editar Sub-Categoría</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Formik
@@ -69,25 +79,29 @@ export const EditarCategoria = ({
                         enableReinitialize={true}
                         onSubmit={async (values: IUpdateCategoria) => {
                             await apiCategoria.put(categoriaActiva.id, values);
-                            getCategorias();
+                            getSubCategorias();
                             handleClose();
                         }}
                     >
                         {({ values, handleChange, handleSubmit }) => (
                             <>
-                                <Form onSubmit={handleSubmit} >
-                                        <div>
-                                            <Form.Group className="mb-3" controlId="denominacion">
-                                                <Form.Control
-                                                    type="text"
-                                                    placeholder="Denominación"
-                                                    autoFocus
-                                                    name="denominacion"
-                                                    onChange={handleChange}
-                                                    value={values.denominacion}
-                                                />
-                                            </Form.Group>
-                                        </div>
+                                <Form onSubmit={(e) => {
+                                    e.stopPropagation();
+                                    handleSubmit(e);
+                                }} >
+                                    <div>
+                                        <Form.Group className="mb-3" controlId="denominacion">
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Denominación"
+                                                autoFocus
+                                                name="denominacion"
+                                                onChange={handleChange}
+                                                value={values.denominacion}
+                                                onClick={(e) => e.stopPropagation()}
+                                            />
+                                        </Form.Group>
+                                    </div>
                                     <div className={styles.modalCategoriaBotones}>
                                         <Button variant="custom" className={styles.modalBoton} onClick={handleClose}>
                                             Cancelar
