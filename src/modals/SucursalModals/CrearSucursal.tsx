@@ -69,7 +69,6 @@ export const CrearSucursal = ({
       await apiProvGetById.getProvinciasPorPaisId(paisId).then((provsData) => 
         setProvs(provsData)
       )
-      console.log(provs)
   }
 
   const handleLocalidades = async (provId:number) => {
@@ -119,11 +118,11 @@ export const CrearSucursal = ({
               latitud: Yup.number(),
               longitud: Yup.number(),
               domicilio: Yup.object({
-                calle: Yup.string(),
+                calle: Yup.string().required("Campo requerido"),
                 numero: Yup.number(),
                 cp: Yup.number(),
-                piso: Yup.number(),
-                nroDpto: Yup.number(),
+                piso: Yup.number().notRequired(),
+                nroDpto: Yup.number().notRequired(),
               }),
               logo: Yup.string(),
               idEmpresa: Yup.number()
@@ -213,7 +212,7 @@ export const CrearSucursal = ({
                         placeholder="Latitud"
                         name="latitud"
                         onChange={handleChange}
-                        value={values.latitud === 0? "" : values.latitud}
+                        value={values.latitud === 0 ? "" : values.latitud}
                         autoFocus
                       />
                     </Form.Group>
@@ -235,9 +234,9 @@ export const CrearSucursal = ({
                       <Form.Control
                         type="text"
                         placeholder="Calle"
-                        name="calle"
+                        name="domicilio.calle"
                         onChange={handleChange}
-                        // value={values.}
+                        value={values.domicilio.calle}
                         autoFocus
                       />
                     </Form.Group>
@@ -246,9 +245,9 @@ export const CrearSucursal = ({
                       <Form.Control
                         type="text"
                         placeholder="Altura calle"
-                        name="horarioApertura"
+                        name="domicilio.numero"
                         onChange={handleChange}
-                        // value={values.calle}
+                        value={values.domicilio.numero}
                         autoFocus
                       />
                     </Form.Group>
@@ -257,6 +256,9 @@ export const CrearSucursal = ({
                       <Form.Control
                         type="text"
                         placeholder="Código Postal"
+                        name="domicilio.cp"
+                        onChange={handleChange}
+                        value={values.domicilio.cp}
                         autoFocus
                       />
                     </Form.Group>
@@ -265,6 +267,9 @@ export const CrearSucursal = ({
                       <Form.Control
                         type="text"
                         placeholder="Número de piso"
+                        name="domicilio.piso"
+                        onChange={handleChange}
+                        value={values.domicilio.piso}
                         autoFocus
                       />
                     </Form.Group>
@@ -276,6 +281,9 @@ export const CrearSucursal = ({
                       <Form.Control
                         type="text"
                         placeholder="Número de departamento"
+                        name="domicilio.nroDpto"
+                        onChange={handleChange}
+                        value={values.domicilio.nroDpto}
                         autoFocus
                       />
                     </Form.Group>
