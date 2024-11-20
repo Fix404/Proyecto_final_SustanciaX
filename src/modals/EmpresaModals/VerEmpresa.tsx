@@ -30,7 +30,7 @@ export const VerEmpresa: React.FC<EmpresaModalProps> = ({ empresa, openModal, se
           <Modal.Header>
             <Modal.Title>Empresa</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className={styles.containerBody} >
             <p><b>Nombre:</b> {nombre}</p>
             <p><b>Razón Social:</b> {razonSocial}</p>
             <p><b>CUIT:</b> {cuit}</p>

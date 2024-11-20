@@ -193,7 +193,7 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                     </div>
                     <div>
                         <ListProductos productos={productosFiltrados} />
-                        <Pagination size="lg">{itemsPaginados}</Pagination>
+                        <Pagination size="sm">{itemsPaginados}</Pagination>
                       
                     </div>
                 </div>
