@@ -7,24 +7,24 @@ import { CategoriaService } from "../../services/ParticularServices/CategoriaSer
 import { ICreateCategoria } from "../../types/dtos/categorias/ICreateCategoria";
 import styles from "./CategoriaModal.module.css"
 
-interface IPropsCreateCategoria {
+interface IPropsCreateSubcategoria {
     getCategorias: Function,
     openModal: boolean;
     setOpenModal: (state: boolean) => void;
-    idEmpresa: number;
+    idCategoriaPadre: number;
 }
 
-export const CrearCategoria = ({
+export const CrearSubcategoria = ({
         getCategorias,
         openModal,
         setOpenModal,
-        idEmpresa
-    }: IPropsCreateCategoria) => {
+        idCategoriaPadre
+    }: IPropsCreateSubcategoria) => {
         
     const initialValues: ICreateCategoria = {
         denominacion: "",
-        idEmpresa: idEmpresa,
-        idCategoriaPadre: null,
+        idEmpresa: 1, //RESOLVER ACCESO A EMPRESA ID y CATEGORIA PADRE ID
+        idCategoriaPadre: idCategoriaPadre,
     }
 
     const apiCategoria = new CategoriaService("api/categorias/create");
@@ -48,7 +48,7 @@ export const CrearCategoria = ({
                 id={"modal"}
             >
                 <Modal.Header className={styles.modalCategoriaTitulo}   >
-                    <Modal.Title>Crear Categoría</Modal.Title>
+                    <Modal.Title>Crear Sub-Categoría</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Formik
