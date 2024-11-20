@@ -15,6 +15,7 @@ import { ListCategorias } from "../../../ui/PageCategorias/ListCategorias";
 import { CategoriaService } from "../../../services/ParticularServices/CategoriaService";
 import { setDataCategoriaList } from "../../../redux/slices/CategoriaReducer";
 import { CrearCategoria } from "../../../modals/CategoriasModals/CrearCategoria";
+import { IProductos } from "../../../types/dtos/productos/IProductos";
 
 interface BodyAdminProps {
     activeSection: string;
@@ -25,10 +26,12 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
     const [openModalCrearProducto, setOpenModalCrearProducto] = useState(false);
     const [openModalCrearCategoria, setOpenModalCrearCategoria] = useState(false);
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<number | null>(null);
+    const [paginasTotales, setPaginasTotales] = useState(1);
+    const [productosFiltrados, setProductosFiltrados] = useState<IProductos[]>([]);
     const categoriaActiva = useAppSelector((state) => state.categoriaReducer.elementActive);
     const productoActivo = useAppSelector((state) => state.productosReducer.elementActive);
     const alergenoActivo = useAppSelector((state) => state.alergenoReducer.alergenoActivo);
-    const sucursalActiva = useAppSelector((state) => state.sucursalReducer.sucursalActiva);
+    const sucursalActiva = useAppSelector((state) => state.sucursalReducer.sucursalActiva)!;
 
     const dispatch = useAppDispatch();
     const apiAlergeno = new AlergenoService("/api/alergenos");
@@ -54,20 +57,7 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
         event.preventDefault();
         setOpenModalCrearCategoria(!openModalCrearCategoria);
     }
-
-    const productoService = new ProductoService("api/articulos");
-    const getProductos = async () => {
-        await productoService.getAll().then((productosData) => {
-            dispatch(setDataProductoList(productosData));
-        });
-    };
-
     const productosData = useAppSelector((state) => state.productosReducer.dataList);
-
-    const productosFiltrados = categoriaSeleccionada
-        ? productosData.filter(producto => producto.categoria && producto.categoria.id === categoriaSeleccionada)
-        : productosData;
-
     const categoriaService = new CategoriaService("api/categorias");
 
     const getCategorias = async () => {
@@ -86,59 +76,86 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
     const categoriasData = useAppSelector((state) => state.categoriaReducer.dataList);
 
     const [active, setActive] = useState(1)
-    let items = [];
-    const pageAmount = Math.ceil((productosFiltrados.length) / 7);
+    const itemsPaginados=[]
+    // const pageAmount = Math.ceil((productosFiltrados.length) / 7);
 
 
     // Handler paginado onClick
-    const handlePageActive = (pageNum: number) => {
-        setActive(pageNum)
-    }
+    const handlePageChange = (page: number) => {
+        setActive(page);
+        fetchProductosBySucursalId(sucursalActiva?.id, page);
+    };
 
     // Componente paginado
-    for (let pageNumber = 1; pageNumber <= pageAmount; pageNumber++) {
-        items.push(
+    for (let pageNumber = 1; pageNumber <= paginasTotales; pageNumber++) {
+        itemsPaginados.push(
             
-                <Pagination.Item  key={pageNumber} active={pageNumber === active} onClick={() => handlePageActive(pageNumber)}>
+                <Pagination.Item  key={pageNumber} active={pageNumber === active} onClick={() => handlePageChange(pageNumber)}>
                     {pageNumber}
                 </Pagination.Item>
        
         );
     }
 
-    let productosOnPage = [];
+    // if (productosFiltrados.length >= 7) {
+    //     if (active == 1) {
+    //         for (let i = 0; i < 7; i++) {
+    //             productosOnPage.push(productosFiltrados[i]);
+    //         }
+    //     } else if (active != pageAmount) {
+    //         for (let i = (active - 1) * 7; i < (active) * 7; i++) {
+    //             productosOnPage.push(productosFiltrados[i]);
+    //         }
+    //     } else {
+    //         for (let i = (active - 1) * 7; i < productosFiltrados.length; i++) {
+    //             productosOnPage.push(productosFiltrados[i]);
+    //         }
+    //     }
+    // } else {
+    //     for (let i = 0; i < productosFiltrados.length; i++) {
+    //         productosOnPage.push(productosFiltrados[i]);
+    //     }
+    // }
 
-    if (productosFiltrados.length >= 7) {
-        if (active == 1) {
-            for (let i = 0; i < 7; i++) {
-                productosOnPage.push(productosFiltrados[i]);
+    const productosBySucursalId=new ProductoService("api/articulos/");
+    const fetchProductosBySucursalId = async (sucursalId:number, pagina:number) => {
+        try{
+            const response=await productosBySucursalId.getProductosBySucursalId(sucursalId, (pagina-1), 7);
+                dispatch(setDataProductoList(response.content))
+                setPaginasTotales(response.totalPages);
             }
-        } else if (active != pageAmount) {
-            for (let i = (active - 1) * 7; i < (active) * 7; i++) {
-                productosOnPage.push(productosFiltrados[i]);
-            }
-        } else {
-            for (let i = (active - 1) * 7; i < productosFiltrados.length; i++) {
-                productosOnPage.push(productosFiltrados[i]);
-            }
+        catch(error){
+            console.error("Error al traer los productos paginados: ", error)
         }
-    } else {
-        for (let i = 0; i < productosFiltrados.length; i++) {
-            productosOnPage.push(productosFiltrados[i]);
-        }
+        
     }
 
     useEffect(() => {
-        getProductos();
+        // getProductos();
+        fetchProductosBySucursalId(sucursalActiva?.id, active);
         getAlergenos();
         getCategorias();
+        console.log(productosData);
     }, []);
 
     useEffect(() => {
         getCategorias();
-        getProductos();
+        // getProductos();
+        fetchProductosBySucursalId(sucursalActiva?.id, active);
         getAlergenos();
     }, [categoriaActiva, productoActivo, alergenoActivo, sucursalActiva])
+
+    useEffect(() => {
+        if (categoriaSeleccionada) {
+            setProductosFiltrados(
+                productosData.filter(
+                    (producto) => producto.categoria && producto.categoria.id === categoriaSeleccionada
+                )
+            );
+        } else {
+            setProductosFiltrados(productosData);
+        }
+    }, [categoriaSeleccionada, productosData]);
 
     return (
         <div className={styles.containerGeneralBody}>
@@ -172,11 +189,11 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                             <Button onClick={handleOpenCrearProducto} variant="outline-success" >AGREGAR PRODUCTO</Button>
                         </Form>
                         {openModalCrearProducto &&
-                            <CrearProducto getProductos={getProductos} openModal={openModalCrearProducto} setOpenModal={setOpenModalCrearProducto} />}
+                            <CrearProducto getProductos={() => fetchProductosBySucursalId(sucursalActiva?.id, paginasTotales)} openModal={openModalCrearProducto} setOpenModal={setOpenModalCrearProducto} />}
                     </div>
                     <div>
-                        <ListProductos productos={productosOnPage} />
-                        <Pagination size="lg">{items}</Pagination>
+                        <ListProductos productos={productosFiltrados} />
+                        <Pagination size="lg">{itemsPaginados}</Pagination>
                       
                     </div>
                 </div>
