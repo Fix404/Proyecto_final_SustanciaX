@@ -28,21 +28,13 @@ export const EditarSubCategoria = ({
     const categoriaActiva = useAppSelector(
         (state) => state.categoriaReducer.elementActive
     )!;
-    //const empresaActiva = categoriaActiva?.sucursales?.[0]?.empresa;
     const initialValues: IUpdateCategoria = {
         id: categoriaActiva?.id,
         denominacion: categoriaActiva?.denominacion,
         eliminado: categoriaActiva?.eliminado,
         idCategoriaPadre: idCategoriaPadre,
-        idSucursales: idSucursales, //categoriaActiva?.sucursales.map((sucursal)=>sucursal.id),
-        idEmpresa: idEmpresa, //NO SE RENDERIZA UTILIZANDO categoriaActiva.sucursales[0].empresa.id
-
-        /*    id: elementoActivo.id,
-                denominacion: values.denominacion,
-                idSucursales: elementoActivo.sucursales.map((el) => el.id),
-                eliminado: elementoActivo.eliminado,
-                idEmpresa: empresaActiva!.id,
-                idCategoriaPadre: categoriaPadre.id, */
+        idSucursales: idSucursales, 
+        idEmpresa: idEmpresa, 
     };
 
     const apiCategoria = new CategoriaService("api/categorias/update");
