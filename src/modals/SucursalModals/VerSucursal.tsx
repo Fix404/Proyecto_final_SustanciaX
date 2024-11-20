@@ -13,7 +13,6 @@ export const VerSucursal: FC<SucursalModalProps> = ({
   setOpenModal,
   sucursal
 }) => {
-    console.log(sucursal);
   const onClose = () => {
     setOpenModal(!openModal);
   };

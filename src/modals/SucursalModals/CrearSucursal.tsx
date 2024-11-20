@@ -118,6 +118,7 @@ export const CrearSucursal = ({
               latitud: Yup.number(),
               longitud: Yup.number(),
               domicilio: Yup.object({
+                idLocalidad: Yup.number(),
                 calle: Yup.string().required("Campo requerido"),
                 numero: Yup.number(),
                 cp: Yup.number(),
@@ -131,7 +132,9 @@ export const CrearSucursal = ({
             enableReinitialize={true}
             onSubmit={(async (values: ICreateSucursal) => {
                 await apiSucursalCreate.post(values);
-                handleClose();
+                await getSucursalesPorEmpresaId(empresaActiva.id).then(() => {
+                  handleClose();
+                })
             })}
           
           >
@@ -199,6 +202,9 @@ export const CrearSucursal = ({
                     <Form.Select
                       aria-label="Default select example"
                       id="localidad"
+                      name="domicilio.idLocalidad"
+                      value={values.domicilio.idLocalidad}
+                      onChange={handleChange}
                     >
                       <option>Localidad</option>
                       {localidades.map((localid, index) => (
@@ -269,7 +275,7 @@ export const CrearSucursal = ({
                         placeholder="Número de piso"
                         name="domicilio.piso"
                         onChange={handleChange}
-                        value={values.domicilio.piso}
+                        value={values.domicilio.piso || ""}
                         autoFocus
                       />
                     </Form.Group>
@@ -283,7 +289,7 @@ export const CrearSucursal = ({
                         placeholder="Número de departamento"
                         name="domicilio.nroDpto"
                         onChange={handleChange}
-                        value={values.domicilio.nroDpto}
+                        value={values.domicilio.nroDpto || ""}
                         autoFocus
                       />
                     </Form.Group>

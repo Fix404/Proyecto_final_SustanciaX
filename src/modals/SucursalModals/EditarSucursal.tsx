@@ -128,13 +128,11 @@ export const EditarSucursal = ({
                 calle: Yup.string(),
                 numero: Yup.number(),
                 cp: Yup.number(),
-                piso: Yup.number(),
-                nroDpto: Yup.number(),
+                piso: Yup.number().notRequired(),
+                nroDpto: Yup.number().notRequired(),
                 idLocalidad: Yup.number()
               }),
               logo: Yup.string(),
-              idEmpresa: Yup.number(),
-
             })}
             initialValues={initialValues}
             enableReinitialize={true}
@@ -188,8 +186,6 @@ export const EditarSucursal = ({
                         const paisId = Number(e.target.value);
                         if (paisId) handleProvs(paisId);
                       }}
-                      name="sucursal.domicilio.localidad.provincia.pais.id"
-                      value={sucursal.domicilio.localidad.provincia.pais.id}
                     >
                       <option>
                         {sucursal.domicilio.localidad.provincia.pais.nombre}
@@ -207,8 +203,6 @@ export const EditarSucursal = ({
                         const provId = Number(e.target.value);
                         if (provId) handleLocalidades(provId);
                       }}
-                      name="sucursal.domicilio.localidad.provincia.id"
-                      value={sucursal.domicilio.localidad.provincia.id}
                     >
                       <option>
                         {sucursal.domicilio.localidad.provincia.nombre}
@@ -222,7 +216,7 @@ export const EditarSucursal = ({
                     <Form.Select
                       aria-label="Default select example"
                       id="localidad"
-                      name="sucursal.domicilio.idLocalidad"
+                      name="domicilio.idLocalidad"
                       value={values.domicilio.idLocalidad}
                       onChange={handleChange}
                     >
@@ -297,7 +291,7 @@ export const EditarSucursal = ({
                         placeholder="Número de piso"
                         name="domicilio.piso"
                         onChange={handleChange}
-                        value={values.domicilio.piso}
+                        value={values.domicilio.piso || ""}
                         autoFocus
                       />
                     </Form.Group>
@@ -311,7 +305,7 @@ export const EditarSucursal = ({
                         placeholder="Número de departamento"
                         name="domicilio.nroDpto"
                         onChange={handleChange}
-                        value={values.domicilio.nroDpto}
+                        value={values.domicilio.nroDpto || ""}
                         autoFocus
                       />
                     </Form.Group>
