@@ -6,7 +6,7 @@ import { ICategorias } from "../../types/dtos/categorias/ICategorias";
 export class CategoriaService extends BackendClient<ICreateCategoria | IUpdateCategoria | ICategorias> {
     
     async getBySucursalId(idSucursal: number): Promise<ICategorias[]> {
-        const response = await fetch(`${this.baseUrl}/allCategoriasPorSucursal/${idSucursal}`);
+        const response = await fetch(`${this.baseUrl}/allCategoriasPadrePorSucursal/${idSucursal}`);
         if (!response.ok) {
             throw new Error('Error al obtener las categorías');
         }
