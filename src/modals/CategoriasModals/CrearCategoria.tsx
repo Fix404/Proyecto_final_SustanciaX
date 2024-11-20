@@ -11,17 +11,19 @@ interface IPropsCreateCategoria {
     getCategorias: Function,
     openModal: boolean;
     setOpenModal: (state: boolean) => void;
+    idEmpresa: number;
 }
 
 export const CrearCategoria = ({
         getCategorias,
         openModal,
-        setOpenModal
+        setOpenModal,
+        idEmpresa
     }: IPropsCreateCategoria) => {
         
     const initialValues: ICreateCategoria = {
         denominacion: "",
-        idEmpresa: 1, //RESOLVER ACCESO A EMPRESA ID
+        idEmpresa: idEmpresa,
         idCategoriaPadre: null,
     }
 

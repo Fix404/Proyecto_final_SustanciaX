@@ -5,7 +5,7 @@ import styles from "./CategoriaItem.module.css";
 import { CategoriaService } from "../../services/ParticularServices/CategoriaService";
 import { EditarCategoria } from "../../modals/CategoriasModals/EditarCategoria";
 import { removeCategoriaElementActive, setCategoriaElementActive } from "../../redux/slices/CategoriaReducer";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
 interface ICategoriaItem {
     categoria: ICategorias;
@@ -16,6 +16,7 @@ export const CategoriaItem: FC<ICategoriaItem> = ({ categoria }) => {
     const [subcategorias, setSubcategorias] = useState<ICategorias[]>([]);
     const [openModalEditar, setOpenModalEditar] = useState(false);
     //const [openModalCrearSubcategoria, setOpenModalCrearSubcategoria] = useState(false);
+    
     const dispatch = useAppDispatch();
 
     const categoriaService = new CategoriaService("api/categorias");
@@ -79,7 +80,9 @@ export const CategoriaItem: FC<ICategoriaItem> = ({ categoria }) => {
                             </Button>
                             {openModalEditar &&
                                 <EditarCategoria
-                                    getCategorias={getCategorias} openModal={openModalEditar} setOpenModal={setOpenModalEditar} />}
+                                    getCategorias={getCategorias} 
+                                    openModal={openModalEditar} 
+                                    setOpenModal={setOpenModalEditar} />}
 
                             <Button variant="success" /*onClick={handleCrearSubcategoria}*/>
                                 <span className="material-symbols-outlined" style={{ color: "green" }}>
