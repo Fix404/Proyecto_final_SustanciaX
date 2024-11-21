@@ -1,52 +1,38 @@
+import Swal from "sweetalert2";
 import { AbstractBackendClient } from "./AbstractBackendClient";
 
-
 export abstract class BackendClient<T> extends AbstractBackendClient<T> {
-    constructor(baseUrl: string) {
-      super(baseUrl);
-    }
-    
-    async get(endpoint:string):Promise<T[]>{
-      try{
-        const response= await fetch(`${this.baseUrl}${endpoint}`,
-          {
-            method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                }
-          }
-        );
-        if(!response.ok){
-          throw new Error("Error en la solicitud");
-        }
+  constructor(baseUrl: string) {
+    super(baseUrl);
+  }
 
-        const data= await response.json();
+  async getAll(): Promise<T[]> {
+    const response = await fetch(`${this.baseUrl}`);
+    if (!response.ok) {
+      throw new Error(`Error`);
+    }
+    const data = await response.json();
+    return data as T[];
+  }
 
-        return data as T[];
-      }catch(error){
-        console.error("Error en la request GET: ", error);
-        throw error;
-      }
+  async getById(id: string): Promise<T | null> {
+    const response = await fetch(`${this.baseUrl}/${id}`);
+    if (!response.ok) {
+      throw new Error(`Error`);
     }
+    const data = await response.json();
+    return data as T;
+  }
 
-    async getAll(): Promise<T[]> {
-      const response = await fetch(`${this.baseUrl}`
-      );
-      const data = await response.json();
-      return data as T[];
-    }
-  
-    async getById(id: number): Promise<T | null> {
-      const response = await fetch(`${this.baseUrl}/${id}`);
-      if (!response.ok) {
-        return null;
-      }
-      const data = await response.json();
-      return data as T;
-    }
-  
-    async post(data: T): Promise<T> {
-      console.log(data);
+  async post(data: T): Promise<T> {
+    Swal.fire({
+      title: "Enviando datos...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+    try {
       const response = await fetch(`${this.baseUrl}`, {
         method: "POST",
         headers: {
@@ -54,19 +40,25 @@ export abstract class BackendClient<T> extends AbstractBackendClient<T> {
         },
         body: JSON.stringify(data),
       });
-
       if (!response.ok) {
-        const errorDetails = await response.text(); // Obtenemos los detalles del error
-        console.error("Error en el POST:", response.status, errorDetails);
-        throw new Error(`Error en POST: ${response.status} ${errorDetails}`);
+        throw new Error(`Error`);
       }
-      
       const newData = await response.json();
       return newData as T;
+    } finally {
+      Swal.close();
     }
-  
-    async put(id: number, data: T): Promise<T> {
-      console.log(data);
+  }
+
+  async put(id: number, data: T): Promise<T> {
+    Swal.fire({
+      title: "Editando datos...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+    try {
       const response = await fetch(`${this.baseUrl}/${id}`, {
         method: "PUT",
         headers: {
@@ -74,23 +66,34 @@ export abstract class BackendClient<T> extends AbstractBackendClient<T> {
         },
         body: JSON.stringify(data),
       });
-
       if (!response.ok) {
-        const errorDetails = await response.text(); // Obtenemos los detalles del error
-        console.error("Error en el PUT:", response.status, errorDetails);
-        throw new Error(`Error en PUT: ${response.status} ${errorDetails}`);
+        throw new Error(`Error`);
       }
-      
       const newData = await response.json();
       return newData as T;
+    } finally {
+      Swal.close();
     }
-  
-    async delete(id: number): Promise<void> {
+  }
+
+  // Método para eliminar un elemento por su ID
+  async delete(id: number): Promise<void> {
+    Swal.fire({
+      title: "Eliminando...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+    try {
       const response = await fetch(`${this.baseUrl}/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {
-        throw new Error(`Error al eliminar el elemento con ID ${id}`);
+        throw new Error(`Error`);
       }
+    } finally {
+      Swal.close();
     }
   }
+}

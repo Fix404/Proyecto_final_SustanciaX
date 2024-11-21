@@ -5,8 +5,8 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { IUpdateAlergeno } from "../../types/dtos/alergenos/IUpdateAlergeno";
 import { AlergenoService } from "../../services/ParticularServices/AlergenoService";
 import { removeAlergenoActivo } from "../../redux/slices/AlergenoReducer";
-import styles from "./AlergenoModal.module.css"
-
+import styles from "./AlergenoModal.module.css";
+import { UploadImage } from "../../components/UploadImage";  // Asegúrate de que este componente maneja la carga de imágenes correctamente.
 
 interface IPropsUpdateAlergeno {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
@@ -22,11 +22,12 @@ export const EditarAlergeno = ({
 }: IPropsUpdateAlergeno) => {
   const elementActive = useAppSelector(
     (state) => state.alergenoReducer.alergenoActivo
-  )!
+  )!;
+
   const initialValues: IUpdateAlergeno = {
     id: elementActive?.id,
     denominacion: elementActive?.denominacion,
-    imagen: elementActive?.imagen
+    imagen: elementActive?.imagen, // Aquí traemos la imagen actual si existe
   };
 
   const apiAlergeno = new AlergenoService("/api/alergenos");
@@ -50,30 +51,28 @@ export const EditarAlergeno = ({
         size="lg"
         id={"modal"}
       >
-        <Modal.Header
-          className={styles.modalAlergenoTitulo}
-        >
+        <Modal.Header className={styles.modalAlergenoTitulo}>
           <Modal.Title>Editar Alérgeno</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Formik
             validationSchema={Yup.object({
               denominacion: Yup.string().required("Campo requerido"),
-              //   imagen: Yup.object()
+              //   imagen: Yup.object()  // Si es necesario validar la imagen, puedes hacerlo aquí
             })}
             initialValues={initialValues}
             enableReinitialize={true}
             onSubmit={async (values: IUpdateAlergeno) => {
+              // Enviamos los datos con la imagen actualizada
               await apiAlergeno.put(elementActive.id, values);
               getAlergenos();
               handleClose();
             }}
           >
-            {({ values, handleChange, handleSubmit }) => (
+            {({ values, handleChange, handleSubmit, setFieldValue }) => (
               <>
-                <Form onSubmit={handleSubmit} >
+                <Form onSubmit={handleSubmit}>
                   <div className={styles.modalCrearAlergenoForm}>
-
                     <div>
                       <Form.Group className="mb-3" controlId="denominacion">
                         <Form.Control
@@ -85,18 +84,38 @@ export const EditarAlergeno = ({
                           value={values.denominacion}
                         />
                       </Form.Group>
-                      </div>
+                    </div>
 
+                    {/* Aquí mostramos la imagen si existe */}
+                    {values.imagen && (
                       <div>
-                        <Form.Group controlId="imagenAlergeno" className="mb-3">
-                          <Form.Label>Imagen</Form.Label>
-                          <Form.Control type="file" />
-                        </Form.Group>
+                        <img
+                          src={values.imagen.url} // Mostramos la imagen actual
+                          alt="Imagen actual"
+                          style={{
+                            width: "150px",
+                            height: "auto",
+                            borderRadius: "8px",
+                            marginTop: "10px",
+                          }}
+                        />
                       </div>
-                      </div>
-                    
-              <div className={styles.modalAlergenoBotones}>
-                    <Button variant="custom" className={styles.modalBoton}  onClick={handleClose}>
+                    )}
+
+                    <div>
+                      <Form.Group controlId="imagenAlergeno" className="mb-3">
+                        <Form.Label>Imagen</Form.Label>
+                        {/* Cargamos la nueva imagen */}
+                        <UploadImage
+                          setImage={(image) => setFieldValue("imagen", image)} // Establecemos la nueva imagen
+                          setImageObjeto={(imageObjeto) => setFieldValue("imagen", imageObjeto?.url)}
+                        />
+                      </Form.Group>
+                    </div>
+                  </div>
+
+                  <div className={styles.modalAlergenoBotones}>
+                    <Button variant="custom" className={styles.modalBoton} onClick={handleClose}>
                       Cancelar
                     </Button>
                     <Button variant="custom" className={styles.modalBoton} type="submit">

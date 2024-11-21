@@ -1,15 +1,13 @@
 .divPrincipal {
-    height: 25rem;
-    width: 16rem;
+    height: 25rem; /* Ajusta la altura del contenedor */
+    width: 16rem;  /* Ajusta el ancho del contenedor */
 }
 
 .divPrincipal .containerCardSucursal {
-
     width: 100%;
     height: 100%;
     border: 1px solid #198754;
     border-radius: 0.25rem;
-
 }
 
 .containerCardSucursal:hover {
@@ -30,11 +28,21 @@
 }
 
 .containerCardBody {
-    height: 10rem;
+    height: 10rem; /* Define la altura para el contenedor de la imagen */
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%; /* Ocupa todo el ancho disponible */
+    position: relative; /* Asegura que la imagen se ajuste dentro de este contenedor */
+}
 
+.containerCardBody .containerImage {
+    max-width: 100%;  /* Limita el ancho de la imagen al tamaño del contenedor */
+    max-height: 100%; /* Limita la altura de la imagen al tamaño del contenedor */
+    width: auto;      /* Mantiene la proporción del ancho */
+    height: auto;     /* Mantiene la proporción de la altura */
+    object-fit: contain; /* Asegura que la imagen no se recorte y mantenga sus proporciones */
+    object-position: center; /* Centra la imagen en caso de que haya espacio vacío */
 }
 
 .cardSucursalFooterContainer {
@@ -42,8 +50,6 @@
     align-content: space-evenly;
     justify-content: center;
     gap: 0.6rem;
-
-
 }
 
 .containerCardSucursal .cardSucursalFooterContainer {
@@ -54,7 +60,6 @@
     background-color: transparent;
     border-top: none;
     align-items: center;
-
 }
 
 .cardSucursalFooterContainer .botonSucursalHome {
@@ -65,11 +70,9 @@
     color: #198754;
     height: 2rem;
     width: 2rem;
-
 }
 
 .cardSucursalFooterContainer .botonSucursalHome:hover {
-
     background-color: #198754;
     color: #f8f9fa;
 }
@@ -79,12 +82,10 @@
     height: 8px;
 }
 
-
 ::-webkit-scrollbar-track {
     background-color: #f1f1f1;
     border-radius: 10px;
 }
-
 
 ::-webkit-scrollbar-thumb {
     background-color: #198754;
