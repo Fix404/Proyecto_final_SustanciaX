@@ -5,7 +5,7 @@ import { BackendClient } from "./BackendClient";
 // Importamos el tipo de datos IImagen para manejar imágenes en nuestra aplicación
 import { IImagen } from "../types/IImagen";
 // Obtenemos la URL base de la API desde las variables de entorno
-const API_URL = import.meta.env.VITE_URL_API;
+const API_URL = import.meta.env.VITE_API_URL;
 
 // Clase ImageService que extiende BackendClient para manejar imágenes con la API
 export class ImageService extends BackendClient<IImagen> {
