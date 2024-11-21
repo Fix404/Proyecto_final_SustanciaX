@@ -81,13 +81,9 @@ export const CrearAlergeno = ({
                   </div>
 
                   <div>
-                    <Form.Group controlId="imagenAlergeno" className="mb-3">
-                      <Form.Label>Imagen</Form.Label>
-                      {/* Aquí pasamos setFieldValue al UploadImage */}
-                      <UploadImage
-                        setImage={(image) => setFieldValue("imagen", image)} // Pasamos la URL de la imagen
-                        setImageObjeto={(imageObjeto) => setFieldValue("imagen", imageObjeto?.url)}
-                      />
+                    <Form.Group controlId="imagenEmpresa" className="mb-3">
+                      <Form.Label>Suba una imagen</Form.Label>
+                      <Form.Control type="text" />
                     </Form.Group>
                   </div>
                 </div>
