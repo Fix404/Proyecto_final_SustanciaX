@@ -76,7 +76,9 @@
     width: 100%;
     max-width: 50vw; 
     max-height: 80vh; 
-    overflow-y: auto; 
+    overflow-y: auto;
+    overflow-x: hidden;
+    word-wrap: break-word;
     box-sizing: border-box;
     padding: 1rem;
 }

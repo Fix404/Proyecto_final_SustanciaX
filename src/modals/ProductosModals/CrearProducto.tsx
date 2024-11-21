@@ -6,6 +6,8 @@ import { ProductoService } from "../../services/ParticularServices/ProductoServi
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { removeProductoElementActive } from "../../redux/slices/ProductosReducer";
 import styles from "./ProductosModal.module.css"
+import Multiselect from "multiselect-react-dropdown";
+import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
 interface IPropsCrearProducto {
   getProductos: Function;
   openModal: boolean;
@@ -120,8 +122,40 @@ export const CrearProducto = ({
 
                         <Form.Group className="mb-3" controlId="alergenos">
                           <Form.Label style={{color:"white"}}>Alérgenos:</Form.Label>
-                          
-                            {alergenos.map((alergeno) => (
+                          <Formik
+    // Restante configuración de Formik
+    initialValues={initialValues}
+    onSubmit={async (values: ICreateProducto) => {
+      await apiProducto.post(values);
+      getProductos();
+      handleClose();
+    }}
+  >
+    {({ values, setFieldValue }) => (
+      <>
+        <Multiselect
+          options={alergenos} // Lista de alérgenos desde Redux
+          selectedValues={alergenos.filter((alergeno) =>
+            values.idAlergenos.includes(alergeno.id)
+          )} // Alérgenos actualmente seleccionados
+          displayValue="denominacion" // Campo a mostrar
+          onSelect={(selectedList) => {
+            const selectedIds = selectedList.map((item:IAlergenos) => item.id);
+            setFieldValue("idAlergenos", selectedIds); // Actualiza en Formik
+          }}
+          onRemove={(selectedList) => {
+            const selectedIds = selectedList.map((item:IAlergenos) => item.id);
+            setFieldValue("idAlergenos", selectedIds); // Actualiza en Formik
+          }}
+          placeholder="Seleccione los alérgenos"
+          style={{
+            multiselectContainer: { color: "black" },
+          }}
+        />
+      </>
+    )}
+  </Formik>
+                            {/* {alergenos.map((alergeno) => (
                               <Form.Check key={alergeno.id} 
                               type="checkbox"
                               label={alergeno.denominacion}
@@ -141,7 +175,7 @@ export const CrearProducto = ({
                               }}
                               checked={values.idAlergenos.includes(alergeno.id)}
                               style={{ color: "white" }}/>
-                            ))}
+                            ))} */}
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="precioVenta">
                           <Form.Control
