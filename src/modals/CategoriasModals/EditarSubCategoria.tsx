@@ -33,8 +33,8 @@ export const EditarSubCategoria = ({
         denominacion: categoriaActiva?.denominacion,
         eliminado: categoriaActiva?.eliminado,
         idCategoriaPadre: idCategoriaPadre,
-        idSucursales: idSucursales, 
-        idEmpresa: idEmpresa, 
+        idSucursales: idSucursales,
+        idEmpresa: idEmpresa,
     };
 
     const apiCategoria = new CategoriaService("api/categorias/update");
@@ -56,10 +56,9 @@ export const EditarSubCategoria = ({
                 data-bs-theme="dark"
                 size="lg"
                 id={"modal"}
+                onClick={(e) => e.stopPropagation()} 
             >
-                <Modal.Header
-                    className={styles.modalCategoriaTitulo}
-                >
+                <Modal.Header className={styles.modalCategoriaTitulo}>
                     <Modal.Title>Editar Sub-Categoría</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -76,34 +75,30 @@ export const EditarSubCategoria = ({
                         }}
                     >
                         {({ values, handleChange, handleSubmit }) => (
-                            <>
-                                <Form onSubmit={(e) => {
-                                    e.stopPropagation();
-                                    handleSubmit(e);
-                                }} >
-                                    <div>
-                                        <Form.Group className="mb-3" controlId="denominacion">
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="Denominación"
-                                                autoFocus
-                                                name="denominacion"
-                                                onChange={handleChange}
-                                                value={values.denominacion}
-                                                onClick={(e) => e.stopPropagation()}
-                                            />
-                                        </Form.Group>
-                                    </div>
-                                    <div className={styles.modalCategoriaBotones}>
-                                        <Button variant="custom" className={styles.modalBoton} onClick={handleClose}>
-                                            Cancelar
-                                        </Button>
-                                        <Button variant="custom" className={styles.modalBoton} type="submit">
-                                            Aceptar
-                                        </Button>
-                                    </div>
-                                </Form>
-                            </>
+                            <Form onSubmit={(e) => {
+                                e.preventDefault();
+                                handleSubmit();
+                            }}>
+                                <Form.Group className="mb-3" controlId="denominacion">
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Denominación"
+                                        autoFocus
+                                        name="denominacion"
+                                        onChange={handleChange}
+                                        value={values.denominacion}
+                                        onClick={(e) => e.stopPropagation()}
+                                    />
+                                </Form.Group>
+                                <div className={styles.modalCategoriaBotones}>
+                                    <Button variant="custom" className={styles.modalBoton} onClick={handleClose}>
+                                        Cancelar
+                                    </Button>
+                                    <Button variant="custom" className={styles.modalBoton} type="submit">
+                                        Aceptar
+                                    </Button>
+                                </div>
+                            </Form>
                         )}
                     </Formik>
                 </Modal.Body>
