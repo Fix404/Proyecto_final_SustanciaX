@@ -101,7 +101,7 @@ export const ProductoItem: FC<IProductosItem> = ({ producto }) => {
                 </OverlayTrigger>
             </div>
             {openModalEdit && <EditarProducto getProductos={getProductos} openModal={openModalEdit} setOpenModal={setOpenModalEdit}/>}
-            {openModalVer && <VerProducto producto={productoActivo!}/>}
+            {openModalVer && <VerProducto producto={productoActivo!} openModal={openModalVer} setOpenModal={setOpenModalVer}/>}
             {openModalDelete && <DeleteProducto getProductos={getProductos} productoActivo={productoActivo!}/>}
                 </td>
             </tr>

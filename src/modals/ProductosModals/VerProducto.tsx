@@ -5,6 +5,77 @@ import { IProductos } from "../../types/dtos/productos/IProductos";
 
 interface ProductosModalProps {
     producto: IProductos;
+    openModal:boolean;
+    setOpenModal: (state: boolean) => void;
+}
+
+export const VerProducto: FC<ProductosModalProps> = ({ producto, openModal, setOpenModal}) => {
+    const alergenosList = producto?.alergenos?.map((alergeno, index) => (
+        <li key={index}>{alergeno?.denominacion}</li>
+    ));
+
+    const onClose = () => {
+        setOpenModal(!openModal);
+    };
+
+    // Verifica si el producto tiene imágenes
+    const imagenesList = producto?.imagenes?.map((imagen, index) => (
+        <img
+            key={index}
+            src={imagen} 
+            alt={`Producto ${producto.denominacion} - Imagen ${index + 1}`}
+            className={styles.imagenProducto}
+        />
+    ));
+
+    return (
+                <Modal
+                show={openModal}
+                onHide={onClose}
+                backdrop="static"
+                keyboard={false}
+                centered
+                size="lg"
+                id="modal">
+                    <div className={styles.modalContainerProducto}>
+                        <Modal.Header>
+                            <Modal.Title style={{ textAlign: "center", width: "100%" }}>Producto</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className={styles.modalBodyProducto}>
+                            <p><b>Denominación: </b><br /> {producto?.denominacion}</p>
+                            <p><b>Precio:</b> {producto?.precioVenta}</p>
+                            <p><b>Descripción: </b><br /> {producto?.descripcion}</p>
+                            <p><b>Habilitado: </b> </p>{producto?.habilitado ? <p style={{display: "inline"}}>Sí</p> : <p style={{display: "inline"}}>No</p>}
+                            <p><b>Código: </b> {producto?.codigo}</p>
+                            <p><b>Alérgenos: </b></p>
+                            <ul style={{ listStyle: 'none', padding: "5px", margin: 0 }}>
+                                {alergenosList.length > 0 ? alergenosList :
+                                    <p>No contiene alérgenos</p>}
+                            </ul>
+
+                            {/* Mostrar imágenes del producto */}
+                            <p><b>Imágenes: </b></p>
+                            <div className={styles.imagenesProducto}>
+                                {imagenesList.length > 0 ? imagenesList : <p>No hay imágenes disponibles.</p>}
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                            <Button variant="custom" className={styles.modalBoton} onClick={onClose}>
+                                Cerrar
+                            </Button>
+                        </Modal.Footer>
+                    </div>
+                </Modal>
+    );
+};
+
+/*import styles from "./ProductosModal.module.css";
+import { FC, useState } from "react";
+import { Button, Modal } from "react-bootstrap";
+import { IProductos } from "../../types/dtos/productos/IProductos";
+
+interface ProductosModalProps {
+    producto: IProductos;
 }
 
 export const VerProducto: FC<ProductosModalProps> = ({ producto }) => {
@@ -23,7 +94,7 @@ export const VerProducto: FC<ProductosModalProps> = ({ producto }) => {
     const imagenesList = producto?.imagenes?.map((imagen, index) => (
         <img
             key={index}
-            src={imagen} // Asegúrate de que `imagen` es una URL válida
+            src={imagen} 
             alt={`Producto ${producto.denominacion} - Imagen ${index + 1}`}
             className={styles.imagenProducto}
         />
@@ -41,7 +112,7 @@ export const VerProducto: FC<ProductosModalProps> = ({ producto }) => {
                             <p><b>Denominación: </b><br /> {producto?.denominacion}</p>
                             <p><b>Precio:</b> {producto?.precioVenta}</p>
                             <p><b>Descripción: </b><br /> {producto?.descripcion}</p>
-                            <p><b>Habilitado: </b> </p>{producto?.habilitado ? <p>Sí</p> : <p>No</p>}
+                            <p><b>Habilitado: </b> </p>{producto?.habilitado ? <p style={{display: "inline"}}>Sí</p> : <p>No</p>}
                             <p><b>Código: </b> {producto?.codigo}</p>
                             <p><b>Alérgenos: </b></p>
                             <ul style={{ listStyle: 'none', padding: "5px", margin: 0 }}>
@@ -49,7 +120,7 @@ export const VerProducto: FC<ProductosModalProps> = ({ producto }) => {
                                     <p>No contiene alérgenos</p>}
                             </ul>
 
-                            {/* Mostrar imágenes del producto */}
+                            
                             <p><b>Imágenes: </b></p>
                             <div className={styles.imagenesProducto}>
                                 {imagenesList.length > 0 ? imagenesList : <p>No hay imágenes disponibles.</p>}
@@ -65,4 +136,4 @@ export const VerProducto: FC<ProductosModalProps> = ({ producto }) => {
             </div>
         </div>
     );
-};
+};*/ 

@@ -42,22 +42,23 @@ export const VerSucursal: FC<SucursalModalProps> = ({
           <p><b>Localidad: </b>{sucursal?.domicilio.localidad.nombre}</p>
           <p><b>Calle: </b>{sucursal?.domicilio.calle}</p>
           <p><b>Número: </b>{sucursal?.domicilio.numero}</p>
-          <p><b>Es casa matriz: </b>{sucursal?.esCasaMatriz ? <p>Sí</p> : <p>No</p>}</p>
+          <p><b>Es casa matriz: </b>{sucursal?.esCasaMatriz ? <p style={{display: "inline"}}>Sí</p> : <p style={{display: "inline"}}>No</p>}</p>
           
           <p><b>Logo:</b></p>
           {sucursal?.logo ? (
             <img
-              src={sucursal.logo} // Asegúrate de que 'logo' sea una URL válida
+              src={sucursal.logo} 
               alt="Logo de la sucursal"
               style={{
                 width: "150px",
                 height: "auto",
                 borderRadius: "8px",
                 marginTop: "10px",
+                alignSelf: "center"
               }}
             />
           ) : (
-            <p>No se ha cargado un logo.</p>
+            <p style={{display: "inline"}}>No se ha cargado un logo.</p>
           )}
         </Modal.Body>
         <Modal.Footer style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
