@@ -317,7 +317,7 @@ export const EditarSucursal = ({
                       className={styles.containerImagen}
                     >
                       <Form.Control
-                        type="file"
+                        type="text"
                         name="logo"
                         onChange={handleChange}
                       />

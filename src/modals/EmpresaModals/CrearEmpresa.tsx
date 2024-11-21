@@ -115,7 +115,7 @@ export const CrearEmpresa = ({
                   <div>
                     <Form.Group controlId="imagenEmpresa" className="mb-3">
                       <Form.Label>Suba una imagen</Form.Label>
-                      <Form.Control type="file" />
+                      <Form.Control type="text" />
                     </Form.Group>
                   </div>
                   </div>

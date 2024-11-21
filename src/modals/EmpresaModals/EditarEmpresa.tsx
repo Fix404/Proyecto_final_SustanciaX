@@ -119,7 +119,7 @@ export const EditarEmpresa = ({
                       <Form.Group controlId="imagenEmpresa" className="mb-3">
                         <Form.Label>Suba una imagen</Form.Label>
                         <Form.Control
-                          type="file"
+                          type="text"
                           name="logo"
                           onChange={handleChange}
                         />
