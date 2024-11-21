@@ -298,7 +298,7 @@ export const CrearSucursal = ({
                  
                     <Form.Group controlId="imagenSucursal" className={styles.containerImagen}>
                       <Form.Control
-                        type="file"
+                        type="text"
                         name="logo"
                         onChange={handleChange}
                         style={{ textAlign: 'center', width: '100%' }}
