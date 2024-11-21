@@ -7,6 +7,7 @@ import { ProductoService } from "../../services/ParticularServices/ProductoServi
 import { IUpdateProducto } from "../../types/dtos/productos/IUpdateProducto";
 import styles from "./ProductosModal.module.css";
 import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
+import Multiselect from "multiselect-react-dropdown";
 
 interface IPropsEditarProducto {
   getProductos: Function;
@@ -113,28 +114,39 @@ export const EditarProducto = ({
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="alergenos">
                           <Form.Label style={{color:"white"}}>Alérgenos:</Form.Label>
-                          
-                            {alergenos.map((alergeno) => (
-                              <Form.Check key={alergeno.id} 
-                              type="checkbox"
-                              label={alergeno.denominacion}
-                              value={alergeno.id}
-                              name="idAlergenos"
-                              onChange={(e) => {
-                                const idElegida=Number(e.target.value)
-                                const nuevosValores=e.target.checked
-                                ? [... values.idAlergenos, idElegida]
-                                : values.idAlergenos.filter((id) => id != idElegida);
-                                handleChange({
-                                  target:{
-                                    name:"idAlergenos",
-                                    value:nuevosValores,
-                                  }
-                                })
-                              }}
-                              checked={values.idAlergenos.includes(alergeno.id)}
-                              style={{ color: "white" }}/>
-                            ))}
+                          <Formik
+    // Restante configuración de Formik
+    initialValues={initialValues}
+    onSubmit={async (values: IUpdateProducto) => {
+      await apiProducto.post(values);
+      getProductos();
+      handleClose();
+    }}
+  >
+    {({ values, setFieldValue }) => (
+      <>
+        <Multiselect
+          options={alergenos} // Lista de alérgenos desde Redux
+          selectedValues={alergenos.filter((alergeno) =>
+            values.idAlergenos.includes(alergeno.id)
+          )} // Alérgenos actualmente seleccionados
+          displayValue="denominacion" // Campo a mostrar
+          onSelect={(selectedList) => {
+            const selectedIds = selectedList.map((item:IAlergenos) => item.id);
+            setFieldValue("idAlergenos", selectedIds); // Actualiza en Formik
+          }}
+          onRemove={(selectedList) => {
+            const selectedIds = selectedList.map((item:IAlergenos) => item.id);
+            setFieldValue("idAlergenos", selectedIds); // Actualiza en Formik
+          }}
+          placeholder="Seleccione los alérgenos"
+          style={{
+            multiselectContainer: { color: "black" },
+          }}
+        />
+      </>
+    )}
+  </Formik>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="precioVenta">
                           <Form.Control

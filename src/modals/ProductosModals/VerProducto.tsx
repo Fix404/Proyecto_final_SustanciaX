@@ -45,7 +45,7 @@ export const VerProducto: FC<ProductosModalProps> = ({ producto, openModal, setO
                             <p><b>Denominación: </b><br /> {producto?.denominacion}</p>
                             <p><b>Precio:</b> {producto?.precioVenta}</p>
                             <p><b>Descripción: </b><br /> {producto?.descripcion}</p>
-                            <p><b>Habilitado: </b> </p>{producto?.habilitado ? <p style={{display: "inline"}}>Sí</p> : <p style={{display: "inline"}}>No</p>}
+                            <p><b>Habilitado: </b></p>{producto?.habilitado ? <p style={{display: "inline"}}>Sí</p> : <p style={{display: "inline"}}>No</p>}
                             <p><b>Código: </b> {producto?.codigo}</p>
                             <p><b>Alérgenos: </b></p>
                             <ul style={{ listStyle: 'none', padding: "5px", margin: 0 }}>
