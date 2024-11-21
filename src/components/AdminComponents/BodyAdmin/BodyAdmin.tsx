@@ -225,7 +225,7 @@ export const BodyAdmin: FC<BodyAdminProps> = ({ activeSection }) => {
                             openModal={openModalCrearCategoria}
                             setOpenModal={setOpenModalCrearCategoria} 
                             getCategorias={getCategorias}
-                            idEmpresa={sucursalActiva?.empresa.id ?? 0} />
+                            idEmpresa={sucursalActiva!.empresa.id} />
                     )} 
                     
                     {categoriasData.length > 0 ? (
