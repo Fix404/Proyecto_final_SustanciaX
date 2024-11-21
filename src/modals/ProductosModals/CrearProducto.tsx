@@ -174,7 +174,7 @@ export const CrearProducto = ({
                         </Form.Group>
 
                         <Form.Group controlId="imagenEmpresa" className="mb-4">
-                          <Form.Control type="text" placeholder="Imagen" />
+                          <Form.Control type="file" placeholder="Imagen" />
                         </Form.Group>
 
                         <Form.Group>
