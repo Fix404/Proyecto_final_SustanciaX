@@ -1,5 +1,7 @@
-# Aplicación de gestión de Empresas
-Aplicación para la gestión de empresas y sus sucursales.
+# Gestor Comercial
+Aplicación web para gestionar comercios, sus sucursales, productos y categorías asociadas.
+
+Este proyecto fue desarrollado como trabajo final de la materia Metodología de Sistemas, en la Tecnicatura Universitaria en Programación - Universidad Tecnológica Nacional - Sede Mendoza. 
 
 **Video Demo:**
 https://www.youtube.com/watch?v=-2I8n7hwMvM
