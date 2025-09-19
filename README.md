@@ -42,7 +42,7 @@ crear, editar y eliminar alérgenos
   
 **Backend:**
 
- El proyecto consume una API externa para todas las operaciones de datos. Las llamadas se realizan mediante `fetch()` y están encapsuladas en clases genéricas que permiten realizar operaciones CRUD sobre entidades como empresas, sucursales, productos, categorías y alérgenos.
+ El proyecto consume una API externa para todas las operaciones de datos. Las llamadas se realizan mediante fetch y están encapsuladas en clases genéricas que permiten realizar operaciones CRUD sobre entidades como empresas, sucursales, productos, categorías y alérgenos.
 
 - Las URLs de la API se configuran mediante variables de entorno.
 - Las imágenes se gestionan a través de Cloudinary, incluyendo subida y eliminación.
