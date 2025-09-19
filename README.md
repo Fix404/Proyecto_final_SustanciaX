@@ -1,4 +1,4 @@
-# Aplicación de gestión Empresas
+# Aplicación de gestión de Empresas
 Aplicación para la gestión de empresas y sus sucursales.
 
 **Video Demo:**
