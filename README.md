@@ -1,7 +1,7 @@
 # Gestor Comercial
 Aplicación web para gestionar comercios, sus sucursales, productos y categorías asociadas.
 
-Este proyecto fue desarrollado como trabajo final de la materia Metodología de Sistemas, en la Tecnicatura Universitaria en Programación - UTN - Mendoza. 
+Este proyecto fue desarrollado por estudiantes de la Tecnicatura Universitaria en Programación - UTN - Mendoza. 
 
 ## Video Demo:
 https://www.youtube.com/watch?v=-2I8n7hwMvM
@@ -9,31 +9,31 @@ https://www.youtube.com/watch?v=-2I8n7hwMvM
 ## Funcionalidades Principales
 **Empresas:**
 
-Crear, editar, eliminar empresas
+- Crear, editar, eliminar empresas
 
-Visualizar sucursales asociadas
+- Visualizar sucursales asociadas
 
 **Sucursales:**
 
-Crear, editar, eliminar sucursales
+- Crear, editar, eliminar sucursales
 
-Acceso a categorías, productos y alérgenos
+- Acceso a categorías, productos y alérgenos
 
 **Categorías:**
 
-Crear y editar categorías
+- Crear y editar categorías
 
-Gestión de subcategorías
+- Gestión de subcategorías
 
 **Productos:**
 
-crear, editar y eliminar productos
+- Crear, editar y eliminar productos
 
-Filtro por categoría
+- Filtro por categoría
 
 **Alérgenos:**
 
-crear, editar y eliminar alérgenos
+- Crear, editar y eliminar alérgenos
 
 ## Tecnologías utilizadas
 **Frontend:**
