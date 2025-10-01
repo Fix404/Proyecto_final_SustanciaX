@@ -41,6 +41,7 @@ crear, editar y eliminar alérgenos
 - Vite
 - Redux
 - SweetAlert2
+- CSS / Bootstrap
   
 **Backend:**
 
