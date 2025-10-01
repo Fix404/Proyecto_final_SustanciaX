@@ -1,12 +1,12 @@
 # Gestor Comercial
 Aplicación web para gestionar comercios, sus sucursales, productos y categorías asociadas.
 
-Este proyecto fue desarrollado como trabajo final de la materia Metodología de Sistemas, en la Tecnicatura Universitaria en Programación - Universidad Tecnológica Nacional - Sede Mendoza. 
+Este proyecto fue desarrollado como trabajo final de la materia Metodología de Sistemas, en la Tecnicatura Universitaria en Programación - UTN - Mendoza. 
 
-**Video Demo:**
+## Video Demo:
 https://www.youtube.com/watch?v=-2I8n7hwMvM
 
-# Funcionalidades Principales
+## Funcionalidades Principales
 **Empresas:**
 
 Crear, editar, eliminar empresas
@@ -35,7 +35,7 @@ Filtro por categoría
 
 crear, editar y eliminar alérgenos
 
-# Tecnologías utilizadas
+## Tecnologías utilizadas
 **Frontend:**
 - React + Typescript
 - Vite
@@ -49,4 +49,11 @@ crear, editar y eliminar alérgenos
 - Las URLs de la API se configuran mediante variables de entorno.
 - Las imágenes se gestionan a través de Cloudinary, incluyendo subida y eliminación.
 
+## Autores:
+Camila Irisarri
 
+Maximiliano Niscola
+
+Mariano Santi
+
+Sofía Ferraro
